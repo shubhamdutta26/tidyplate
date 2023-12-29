@@ -1,0 +1,53 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# tidyplate
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of plateTransformR is to convert different sizes of plates used in scientific studies to a tidy dataframe or tibble. plateTransformR accepts xlsx and csv files formatted in a specific way as input. plateTransformR supports 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
+
+## Installation
+
+You can install the development version of plateTransformR from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("shubhamdutta26/tidyplate")
+```
+
+## Formating the input data file
+
+```{r image, echo=FALSE, fig.cap = "This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only.", out.width = '100%'}
+knitr::include_graphics("man/figures/README_function_image.png")
+```
+
+The input xlsx or csv should be formatted in a specific way:
+
+  * Top left corner must hold the name for that plate.
+  * Column names should be: 1, 2, 3,...
+  * Row names should be: A, B, C, ...
+  * There must be an empty row between each plate.
+
+## Example
+
+This is an example which shows you how to use the `tidy_plate` function. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument.
+
+```{r example-xlsx}
+library(tidyplate)
+data <- tidy_plate("inst/extdata/example_12_well.xlsx")
+head(data)
+```
