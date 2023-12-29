@@ -58,6 +58,5 @@ head(data)
 ```
 
 ```{r check_plate-xlsx}
-library(tidyplate)
 check_plate("inst/extdata/example_12_well.xlsx")
 ```
