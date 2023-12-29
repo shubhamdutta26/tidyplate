@@ -1,0 +1,55 @@
+﻿coat_value,1,2,3,4,5,6,7,8
+A,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+B,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+C,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+D,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+E,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+F,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1
+,,,,,,,,
+coat_protein,1,2,3,4,5,6,7,8
+A,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+B,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+C,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+D,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+E,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+F,antigen,antigen,antigen,antigen,antigen,antigen,antigen,antigen
+,,,,,,,,
+primary_value,1,2,3,4,5,6,7,8
+A,10,10,10,10,10,10,10,10
+B,2.5,2.5,2.5,2.5,2.5,2.5,2.5,2.5
+C,0.625,0.625,0.625,0.625,0.625,0.625,0.625,0.625
+D,0.15625,0.15625,0.15625,0.15625,0.15625,0.15625,0.15625,0.15625
+E,0.0390625,0.0390625,0.0390625,0.0390625,0.0390625,0.0390625,0.0390625,0.0390625
+F,0.009765625,0.009765625,0.009765625,0.009765625,0.009765625,0.009765625,0.009765625,0.009765625
+,,,,,,,,
+primary_mab,1,2,3,4,5,6,7,8
+A,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+B,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+C,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+D,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+E,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+F,mab_1,mab_1,mab_1,mab_2,mab_2,mab_2,mab_3,mab_3
+,,,,,,,,
+secondary,1,2,3,4,5,6,7,8
+A,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+B,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+C,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+D,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+E,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+F,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000,1 to 5000
+,,,,,,,,
+secondary_mab,1,2,3,4,5,6,7,8
+A,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+B,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+C,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+D,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+E,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+F,HRP,HRP,HRP,HRP,HRP,HRP,HRP,HRP
+,,,,,,,,
+raw_data_value,1,2,3,4,5,6,7,8
+A,2.921,2.996,2.94,2.274,2.904,2.942,0.041,0.04
+B,2.919,3.02,3.012,2.971,2.941,2.921,0.04,0.042
+C,2.627,2.641,2.827,2.552,2.342,2.642,0.041,0.043
+D,1.76,1.913,1.841,1.801,1.742,1.644,0.043,0.043
+E,0.783,0.818,0.777,0.805,0.843,0.703,0.042,0.043
+F,0.274,0.261,0.261,0.23,0.242,0.253,0.042,0.043

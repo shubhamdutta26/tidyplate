@@ -1,0 +1,27 @@
+﻿coat_value,1,2,3
+A,0.1,0.1,0.1
+B,0.1,0.1,0.1
+,,,
+coat_protein,1,2,3
+A,antigen,antigen,antigen
+B,antigen,antigen,antigen
+,,,
+primary_value,1,2,3
+A,10,10,10
+B,2.5,2.5,2.5
+,,,
+primary_mab,1,2,3
+A,mab_1,mab_1,mab_1
+B,mab_1,mab_1,mab_1
+,,,
+secondary,1,2,3
+A,1 to 5000,1 to 5000,1 to 5000
+B,1 to 5000,1 to 5000,1 to 5000
+,,,
+secondary_mab,1,2,3
+A,HRP,HRP,HRP
+B,HRP,HRP,HRP
+,,,
+raw_data_value,1,2,3
+A,2.921,2.996,2.94
+B,2.919,3.02,3.012
