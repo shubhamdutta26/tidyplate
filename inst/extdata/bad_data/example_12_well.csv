@@ -1,0 +1,14 @@
+﻿drug,1,2,3,4
+A,Neomycin,Puromycin,Neomycin,Puromycin
+B,Neomycin,Puromycin,Neomycin,Puromycin
+C,DMSO,DMSO,DMSO,DMSO
+,,,,
+cell_line,1,2,3,4
+A,HEK293,HEK293,Hela,Hela
+B,HEK293,HEK293,Hela,Hela
+C,HEK293,HEK293,Hela,Hela
+,,,,
+percent_survived,1,2,3,4
+A,60,22,52,18
+B,62,23,54,16
+C,98,97,99,98
