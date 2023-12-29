@@ -3,7 +3,7 @@
 \name{check_plate}
 \alias{check_plate}
 \title{Checks whether the input file can be used to transform to a tidy plate using
-the tidy_plate function}
+the \code{tidy_plate()} function}
 \usage{
 check_plate(file, sheet = 1)
 }
@@ -17,11 +17,11 @@ number (integer).}
 }
 \value{
 An error or a message saying that input file can be used with the
-transform_plate function
+\code{tidy_plate()} function
 }
 \description{
 Checks whether the input file can be used to transform to a tidy plate using
-the tidy_plate function
+the \code{tidy_plate()} function
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")

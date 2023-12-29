@@ -1,5 +1,5 @@
 #' Checks whether the input file can be used to transform to a tidy plate using
-#' the tidy_plate function
+#' the `tidy_plate()` function
 #'
 #' @param file This is the path to a xlsx or csv file containing data for the
 #' following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
@@ -8,7 +8,7 @@
 #' number (integer).
 #'
 #' @return An error or a message saying that input file can be used with the
-#' transform_plate function
+#' `tidy_plate()` function
 #' @export
 #'
 #' @examples

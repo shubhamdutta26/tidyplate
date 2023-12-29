@@ -1,4 +1,4 @@
-#' Transforms a plate to a tidy dataframe/ tibble
+#' Transforms a plate to a tidy dataframe
 #'
 #' @param file This is the path to a xlsx or csv file containing data for the
 #' following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
@@ -6,7 +6,7 @@
 #' @param sheet If file type is xlsx this is the sheet name (character) or
 #' number (integer).
 #'
-#' @return A tidy dataframe/ tibble
+#' @return A tidy dataframe
 #' @export
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")

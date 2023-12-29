@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy_plate.R
 \name{tidy_plate}
 \alias{tidy_plate}
-\title{Transforms a plate to a tidy dataframe/ tibble}
+\title{Transforms a plate to a tidy dataframe}
 \usage{
 tidy_plate(file, sheet = 1)
 }
@@ -15,10 +15,10 @@ is described below.}
 number (integer).}
 }
 \value{
-A tidy dataframe/ tibble
+A tidy dataframe
 }
 \description{
-Transforms a plate to a tidy dataframe/ tibble
+Transforms a plate to a tidy dataframe
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")

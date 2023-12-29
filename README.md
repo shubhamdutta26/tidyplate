@@ -19,7 +19,7 @@ files formatted in a specific way as input. `tidyplate` supports all
 types of standard microplate formats namely: 6-well, 12-well, 24-well,
 48-well, 96-well, 384-well, and 1536-well plates.
 
-`tidyplate` has two functions:
+`tidyplate` package has two functions:
 
 - `tidy_plate`: This function takes the input file (xlsx or csv) and
   transforms into a tidy dataframe.

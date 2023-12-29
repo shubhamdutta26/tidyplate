@@ -1,0 +1,5 @@
+url: ~
+templates:
+  params:
+    bootswatch: lumen
+
