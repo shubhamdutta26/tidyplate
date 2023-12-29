@@ -1,4 +1,5 @@
-#' Transforms a plate to a tidy dataframe/ tibble
+#' Checks whether the input file can be used to transform to a tidy plate using
+#' the tidy_plate function
 #'
 #' @param file This is the path to a xlsx or csv file containing data for the
 #' following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
@@ -6,18 +7,17 @@
 #' @param sheet If file type is xlsx this is the sheet name (character) or
 #' number (integer).
 #'
-#' @return A tidy dataframe/ tibble
+#' @return An error or a message saying that input file can be used with the
+#' transform_plate function
 #' @export
+#'
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 #'
-#' data_12 <- tidy_plate(
+#' data_12 <- check_plate(
 #'    file = file_path
 #'    )
-#'
-#' head(data_12)
-tidy_plate <- function(file, sheet=1) {
-
+check_plate <- function (file, sheet = 1) {
   file_exists_check(file) # check if file exists
   check_if_one_file(file) # Checks if one file is provided by the user
   raw_data <- import_data(file, sheet = sheet) # Determine file ext and call appropriate function to import as raw_data
@@ -165,21 +165,7 @@ tidy_plate <- function(file, sheet=1) {
     stop("Error in plate map. Check row names in the input file.")
   }
 
-  # Run a loop to extract each plate and store it in list_of_plates
-  final_data_list <-list_of_plates |>
-    purrr::map(function(x) janitor::row_to_names(x, row_number = 1) |>
-                 tidyr::pivot_longer(-1, names_to = "name", values_to = "value", values_transform = list(value = as.character))
-    )
-
-  # Prep final_data as a dataframe/tibble
-  # Remove NAs in all rows (except well/ first column)
-  final_data <- final_data_list |>
-    purrr::map(naming_cols) |>
-    purrr::reduce(dplyr::full_join, by = "well") |>
-    dplyr::filter(!dplyr::if_all(-"well", is.na)) |>
-    utils::type.convert(as.is = TRUE)
-
-  # Return data with plate type
+  message("Input file is OK!")
   message(paste("Plate type: ", plate_type, " well plate", sep = ""))
-  return(final_data)
+
 }
