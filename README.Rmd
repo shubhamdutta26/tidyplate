@@ -22,8 +22,8 @@ The goal of `tidyplate` is to convert different sizes of plates used in scientif
 
 `tidyplate` has two functions:
 
-  * `tidy_plate`: This function takes the input file (xlsx or csv) and transforms into a tidy dataframe/ tibble
-  * `check_plate`: This function checks whether the input file is valid for use with `tidy_plate`
+  * `tidy_plate`: This function takes the input file (xlsx or csv) and transforms into a tidy dataframe/ tibble.
+  * `check_plate`: This function checks whether the input file is valid for use with `tidy_plate()` function.
 
 ## Installation
 
@@ -51,12 +51,16 @@ The input xlsx or csv should be formatted in a specific way:
 
 This is an example which shows you how to use the `tidy_plate` function. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument.
 
-```{r tidy_plate-xlsx}
+First check if the input file is valid or not:
+```{r check_plate-xlsx}
 library(tidyplate)
+check_plate("inst/extdata/example_12_well.xlsx")
+```
+
+Import the file as a tidy dataframe:
+```{r tidy_plate-xlsx}
 data <- tidy_plate("inst/extdata/example_12_well.xlsx")
 head(data)
 ```
 
-```{r check_plate-xlsx}
-check_plate("inst/extdata/example_12_well.xlsx")
-```
+
