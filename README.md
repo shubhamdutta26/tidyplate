@@ -50,7 +50,7 @@ Users can specify sheet using the `sheet` argument.
 ``` r
 library(tidyplate)
 data <- tidy_plate("inst/extdata/example_12_well.xlsx")
-#> [1] "Plate type: 12 well plate"
+#> Plate type: 12 well plate
 head(data)
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
