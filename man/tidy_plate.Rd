@@ -20,3 +20,12 @@ A tidy dataframe/ tibble
 \description{
 Transforms a plate to a tidy dataframe/ tibble
 }
+\examples{
+file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+
+data_12 <- tidy_plate(
+   file = file_path
+   )
+
+head(data_12)
+}

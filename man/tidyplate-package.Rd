@@ -8,6 +8,14 @@
 \description{
 This package helps researchers transform plate data to a tidy dataframe/ tibble.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/shubhamdutta26/tidyplate}
+  \item Report bugs at \url{https://github.com/shubhamdutta26/tidyplate/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Shubham Dutta \email{shubhamdutta26@gmail.com} (\href{https://orcid.org/0000-0001-8484-0717}{ORCID})
 

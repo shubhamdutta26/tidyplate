@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of tidyplate is to convert different sizes of plates used in scientific studies to a tidy dataframe or tibble. tidyplate accepts xlsx and csv files formatted in a specific way as input. tidyplate supports 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
+The goal of `tidyplate` is to convert different sizes of plates used in scientific studies to a tidy dataframe or tibble. `tidyplate` accepts xlsx and csv files formatted in a specific way as input. `tidyplate` supports 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
 
 ## Installation
 

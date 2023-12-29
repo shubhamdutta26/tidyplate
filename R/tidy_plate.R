@@ -9,6 +9,13 @@
 #' @return A tidy dataframe/ tibble
 #' @export
 #' @examples
+#' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+#'
+#' data_12 <- tidy_plate(
+#'    file = file_path
+#'    )
+#'
+#' head(data_12)
 tidy_plate <- function(file, sheet=1) {
 
   file_exists_check(file) # check if file exists
