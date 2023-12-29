@@ -20,6 +20,11 @@ knitr::opts_chunk$set(
 
 The goal of `tidyplate` is to convert different sizes of plates used in scientific studies to a tidy dataframe or tibble. `tidyplate` accepts xlsx and csv files formatted in a specific way as input. `tidyplate` supports 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
 
+`tidyplate` has two functions:
+
+  * `tidy_plate`: This function takes the input file (xlsx or csv) and transforms into a tidy dataframe/ tibble
+  * `check_plate`: This function checks whether the input file is valid for use with `tidy_plate`
+
 ## Installation
 
 You can install the development version of tidyplate from [GitHub](https://github.com/) with:
@@ -46,8 +51,13 @@ The input xlsx or csv should be formatted in a specific way:
 
 This is an example which shows you how to use the `tidy_plate` function. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument.
 
-```{r example-xlsx}
+```{r tidy_plate-xlsx}
 library(tidyplate)
 data <- tidy_plate("inst/extdata/example_12_well.xlsx")
 head(data)
+```
+
+```{r check_plate-xlsx}
+library(tidyplate)
+check_plate("inst/extdata/example_12_well.xlsx")
 ```

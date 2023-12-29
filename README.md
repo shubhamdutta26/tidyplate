@@ -12,6 +12,13 @@ xlsx and csv files formatted in a specific way as input. `tidyplate`
 supports 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and
 1536-well plates.
 
+`tidyplate` has two functions:
+
+- `tidy_plate`: This function takes the input file (xlsx or csv) and
+  transforms into a tidy dataframe/ tibble
+- `check_plate`: This function checks whether the input file is valid
+  for use with `tidy_plate`
+
 ## Installation
 
 You can install the development version of tidyplate from
@@ -61,4 +68,11 @@ head(data)
 #> 4 A4    Puromycin Hela                    18
 #> 5 B1    Neomycin  HEK293                  62
 #> 6 B2    Puromycin HEK293                  23
+```
+
+``` r
+library(tidyplate)
+check_plate("inst/extdata/example_12_well.xlsx")
+#> Input file is OK!
+#> Plate type: 12 well plate
 ```
