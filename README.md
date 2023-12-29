@@ -50,9 +50,9 @@ The input xlsx or csv should be formatted in a specific way:
 
 ## Example
 
-This is an example which shows you how to use the `tidy_plate` function.
+This is an example which shows you how to use the `tidyplate` package.
 If the input file is an xlsx file it reads the first sheet by default.
-Users can specify sheet using the `sheet` argument.
+Users can specify sheet using the `sheet` argument for an xlsx file.
 
 First check if the input file is valid or not:
 
