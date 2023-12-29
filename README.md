@@ -6,15 +6,15 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of plateTransformR is to convert different sizes of plates used
-in scientific studies to a tidy dataframe or tibble. plateTransformR
-accepts xlsx and csv files formatted in a specific way as input.
-plateTransformR supports 6-well, 12-well, 24-well, 48-well, 96-well,
-384-well, and 1536-well plates.
+The goal of tidyplate is to convert different sizes of plates used in
+scientific studies to a tidy dataframe or tibble. tidyplate accepts xlsx
+and csv files formatted in a specific way as input. tidyplate supports
+6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well
+plates.
 
 ## Installation
 
-You can install the development version of plateTransformR from
+You can install the development version of tidyplate from
 [GitHub](https://github.com/) with:
 
 ``` r
@@ -26,7 +26,7 @@ devtools::install_github("shubhamdutta26/tidyplate")
 
 <div class="figure">
 
-<img src="man/figures/README_function_image.png" alt="This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only." width="100%" />
+<img src="man/figures/README_tidy_plate.png" alt="This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only." width="100%" />
 <p class="caption">
 This figure demonstrates how to format the 12-well plate input file.
 Colors are for visualization purposes only.
