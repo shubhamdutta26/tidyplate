@@ -4,9 +4,9 @@
 \name{tidyplate-package}
 \alias{tidyplate}
 \alias{tidyplate-package}
-\title{tidyplate: What the Package Does (Title Case)}
+\title{tidyplate: This package helps researchers transform microplate data into a tidy dataframe}
 \description{
-This package helps researchers transform plate data to a tidy dataframe/ tibble.
+The goal of tidyplate package is to help researchers convert different types of microplates into tidy dataframes which can be used in data analysis. It accepts xlsx and csv files formatted in a specific way as input. This package supports all types of standard microplate formats namely: 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
 }
 \seealso{
 Useful links:
