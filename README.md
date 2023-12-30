@@ -87,7 +87,8 @@ head(data)
 #> 6 B2    Puromycin HEK293                  23
 ```
 
-If you want to import multiple files we can first check the files:
+If you want to import multiple files you can first check whether the
+formats for each file is good or not:
 
 ``` r
 file_list <- list.files(".", pattern='*.xlsx', recursive = T)
@@ -105,8 +106,8 @@ purrr::walk(file_list, purrr::possibly(tidyplate::check_plate, quiet = F))
 ```
 
 As you can see that the first two files threw error messages. They can
-be removed before importing using `tidy_plate()`. If not their
-corresponding list object will be empty.
+be removed before importing. Now you can import them using the
+`tidy_plate()` function.
 
 ``` r
 imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))
@@ -129,6 +130,9 @@ imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, qu
 #> Data: example_96_well.xlsx
 #> Plate type: 96 well plate
 ```
+
+If a file had an error during import their corresponding list object
+will be empty.
 
 ``` r
 imported_list[[1]]     # Empty since there was an error during import
