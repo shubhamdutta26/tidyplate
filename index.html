@@ -126,7 +126,7 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="co">#&gt; 4 A4    Puromycin Hela                    18</span></span>
 <span><span class="co">#&gt; 5 B1    Neomycin  HEK293                  62</span></span>
 <span><span class="co">#&gt; 6 B2    Puromycin HEK293                  23</span></span></code></pre></div>
-<p>If you want to import multiple files we can first check the files:</p>
+<p>If you want to import multiple files you can first check whether the formats for each file is good or not:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">file_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"."</span>, pattern<span class="op">=</span><span class="st">'*.xlsx'</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
 <span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">file_list</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/check_plate.html">check_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
@@ -140,7 +140,7 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="co">#&gt; example_6_well.xlsx: OK; Plate type: 6 well</span></span>
 <span><span class="co">#&gt; example_96_NA.xlsx: OK; Plate type: 96 well</span></span>
 <span><span class="co">#&gt; example_96_well.xlsx: OK; Plate type: 96 well</span></span></code></pre></div>
-<p>As you can see that the first two files threw error messages. They can be removed before importing using <code><a href="reference/tidy_plate.html">tidy_plate()</a></code>. If not their corresponding list object will be empty.</p>
+<p>As you can see that the first two files threw error messages. They can be removed before importing. Now you can import them using the <code><a href="reference/tidy_plate.html">tidy_plate()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imported_list</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">file_list</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/tidy_plate.html">tidy_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: bad_empty.xlsx is empty. Please verify input file.</span></span>
@@ -161,6 +161,7 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="co">#&gt; Plate type: 96 well plate</span></span>
 <span><span class="co">#&gt; Data: example_96_well.xlsx</span></span>
 <span><span class="co">#&gt; Plate type: 96 well plate</span></span></code></pre></div>
+<p>If a file had an error during import their corresponding list object will be empty.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imported_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>     <span class="co"># Empty since there was an error during import</span></span>
 <span><span class="co">#&gt; NULL</span></span>
