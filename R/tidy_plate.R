@@ -18,16 +18,46 @@
 #' head(data_12)
 tidy_plate <- function(file, sheet=1) {
 
-  file_exists_check(file) # check if file exists
-  check_if_one_file(file) # Checks if one file is provided by the user
-  raw_data <- import_data(file, sheet = sheet) # Determine file ext and call appropriate function to import as raw_data
-  check_that_data_is_empty(raw_data) # Check if file is empty
+  # Extract file name
+  file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
+  file_ext <- tools::file_ext(file)
+  file_full_name <- paste(file_name, file_ext, sep=".")
+
+  # Check if file exists
+  if (!(file.exists(file))) {
+    stop(paste0(file_full_name, " does not exist!"), call. = FALSE)
+  }
+
+  # check if one file is provided by the user
+  if (length(file) > 1) {
+    stop(
+      paste0("More than one file provided. Only one file should be provided"),
+      call. = FALSE)
+  }
+
+  # Determine file ext and call appropriate function to import as raw_data
+  if (!(file_ext %in% c("xlsx", "csv"))) {
+    stop(paste0(file_full_name, " must be either xlsx or csv file!"), call. = F)
+  } else if (tools::file_ext(file) == "xlsx") {
+    suppressMessages(raw_data <- readxl::read_excel(file, col_names = F, sheet = sheet))
+  } else {
+    suppressMessages(raw_data <- readr::read_csv(file, col_names = F))
+  }
+
+  # Check if file is empty
+  if(nrow(raw_data) == 0){
+    stop(paste0(file_full_name, " is empty. Please verify input file."), call. = FALSE)
+  }
 
   # Count number of columns and rows in raw_data
   count_columns = ncol(raw_data)
   count_rows_actual = nrow(raw_data)
 
-  check_if_valid_n_cols(count_columns) # Check if there are a exact number of columns
+  # Check if there are a exact number of columns
+  if (!(count_columns %in% c(4L, 5L, 7L, 9L, 13L, 25L, 49L))) {
+    stop(paste0(file_full_name, " is not a valid plate. Plate size must be one of the
+following: 6, 12, 24, 48, 96, 384, and 1536. Please review an example dataset."), call. = FALSE)
+  }
 
   # This counts the number of plates in the dataset
   # This counts the theoretical number of rows the raw_data should have for each plate type
@@ -103,7 +133,8 @@ tidy_plate <- function(file, sheet=1) {
   # This checks whether the input formating is correct or not.
   # There must be one empty row between each data.
   if (count_rows_theoretical != count_rows_actual) {
-    stop("This is not a valid input data. Please review an example dataset.")
+    stop(paste0(file_full_name, " is not a valid input file. Please review an example dataset."),
+         call. = F)
   }
 
   # Initialize empty list to store the raw_data.
@@ -132,9 +163,9 @@ tidy_plate <- function(file, sheet=1) {
 
   # Check if plate name exists and unique
   if (sum(is.na(each_plate_name)) != 0L) {
-    stop("Check input data. Each plate in the input data needs to have a name.")
+    stop(paste0("Verify that each plate in ",file_full_name, " a name."), call. = F)
   } else if (length(each_plate_name) != length(unique(each_plate_name))) {
-    stop("Plate names cannot be repeated. Each name should be unique.")
+    stop(paste0("Verify that each plate name in ",file_full_name, " is unique."), call. = F)
   }
 
   # Check if plates have 1:x as column names after plate name
@@ -154,21 +185,25 @@ tidy_plate <- function(file, sheet=1) {
     sum()  # has to be 0; otherwise there is at least one plate that has bad row names
 
   if (first_row_sum != 0L & first_col_sum != 0L) {
-    stop("Error in plate map. Check row names and column names in the input file.")
+    stop(paste0("Verify row names and column names in ", file_full_name, "."),
+         call. = FALSE)
   }
 
   if (first_row_sum != 0L) {
-    stop("Error in plate map. Check column names in the input file.")
+    stop(paste0("Verify column names in ", file_full_name, "."),
+         call. = FALSE)
   }
 
   if (first_col_sum != 0L) {
-    stop("Error in plate map. Check row names in the input file.")
+    stop(paste0("Verify row names in ", file_full_name, "."),
+         call. = FALSE)
   }
 
   # Run a loop to extract each plate and store it in list_of_plates
   final_data_list <-list_of_plates |>
     purrr::map(function(x) janitor::row_to_names(x, row_number = 1) |>
-                 tidyr::pivot_longer(-1, names_to = "name", values_to = "value", values_transform = list(value = as.character))
+                 tidyr::pivot_longer(-1, names_to = "name", values_to = "value",
+                                     values_transform = list(value = as.character))
     )
 
   # Prep final_data as a dataframe/tibble
@@ -180,6 +215,6 @@ tidy_plate <- function(file, sheet=1) {
     utils::type.convert(as.is = TRUE)
 
   # Return data with plate type
-  message(paste("Plate type: ", plate_type, " well plate", sep = ""))
+  message(paste("Data: ", file_full_name, "\nPlate type: ", plate_type, " well plate", sep = ""))
   return(final_data)
 }

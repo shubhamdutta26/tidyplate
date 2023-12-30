@@ -66,14 +66,14 @@ First check if the input file is valid or not:
 ``` r
 library(tidyplate)
 check_plate("inst/extdata/example_12_well.xlsx")
-#> Input file is OK!
-#> Plate type: 12 well plate
+#> example_12_well.xlsx: OK; Plate type: 12 well
 ```
 
 Import the file as a tidy dataframe:
 
 ``` r
 data <- tidy_plate("inst/extdata/example_12_well.xlsx")
+#> Data: example_12_well.xlsx
 #> Plate type: 12 well plate
 head(data)
 #> # A tibble: 6 × 4
