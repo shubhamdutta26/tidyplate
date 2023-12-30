@@ -97,25 +97,25 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <p>The input xlsx or csv should be formatted in a specific way:</p>
 <ul>
 <li>Top left corner must hold the name for that plate.</li>
-<li>Column names should be: 1, 2, 3,…</li>
-<li>Row names should be: A, B, C, …</li>
+<li>Column names should be: 1, 2, 3, and so on and so forth.</li>
+<li>Row names should be: A, B, C, and so on and so forth.</li>
 <li>There must be an empty row between each plate.</li>
 </ul>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is an example which shows you how to use the <code>tidyplate</code> package. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the <code>sheet</code> argument for an xlsx file.</p>
+<p>This is an example which shows you how to use the <code>tidyplate</code> package. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the <code>sheet</code> argument for an xlsx file. Users can also specify the variable name of column where well ids will be stored (defaults to “well”). Please make sure that <code>well_id</code> argument does not match individual plate names in the input file.</p>
 <p>First check if the input file is valid or not:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shubhamdutta26/tidyplate" class="external-link">tidyplate</a></span><span class="op">)</span></span>
-<span><span class="fu"><a href="reference/check_plate.html">check_plate</a></span><span class="op">(</span><span class="st">"inst/extdata/example_12_well.xlsx"</span><span class="op">)</span></span>
+<span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_12_well.xlsx"</span>, package <span class="op">=</span> <span class="st">"tidyplate"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/check_plate.html">check_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; example_12_well.xlsx: OK; Plate type: 12 well</span></span></code></pre></div>
 <p>Import the file as a tidy dataframe:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tidy_plate.html">tidy_plate</a></span><span class="op">(</span><span class="st">"inst/extdata/example_12_well.xlsx"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Data: example_12_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 12 well plate</span></span>
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tidy_plate.html">tidy_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Data: example_12_well.xlsx; Plate type: 12 well plate</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
 <span><span class="co">#&gt;   well  drug      cell_line percent_survived</span></span>
@@ -138,29 +138,19 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="co">#&gt; example_384_well.xlsx: OK; Plate type: 384 well</span></span>
 <span><span class="co">#&gt; example_48_well.xlsx: OK; Plate type: 48 well</span></span>
 <span><span class="co">#&gt; example_6_well.xlsx: OK; Plate type: 6 well</span></span>
-<span><span class="co">#&gt; example_96_NA.xlsx: OK; Plate type: 96 well</span></span>
 <span><span class="co">#&gt; example_96_well.xlsx: OK; Plate type: 96 well</span></span></code></pre></div>
 <p>As you can see that the first two files threw error messages. They can be removed before importing. Now you can import them using the <code><a href="reference/tidy_plate.html">tidy_plate()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imported_list</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">file_list</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/tidy_plate.html">tidy_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error: bad_empty.xlsx is empty. Please verify input file.</span></span>
 <span><span class="co">#&gt; Error: Verify row names and column names in bad_example_12_well.xlsx.</span></span>
-<span><span class="co">#&gt; Data: example_12_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 12 well plate</span></span>
-<span><span class="co">#&gt; Data: example_1536_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 1536 well plate</span></span>
-<span><span class="co">#&gt; Data: example_24_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 24 well plate</span></span>
-<span><span class="co">#&gt; Data: example_384_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 384 well plate</span></span>
-<span><span class="co">#&gt; Data: example_48_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 48 well plate</span></span>
-<span><span class="co">#&gt; Data: example_6_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 6 well plate</span></span>
-<span><span class="co">#&gt; Data: example_96_NA.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 96 well plate</span></span>
-<span><span class="co">#&gt; Data: example_96_well.xlsx</span></span>
-<span><span class="co">#&gt; Plate type: 96 well plate</span></span></code></pre></div>
+<span><span class="co">#&gt; Data: example_12_well.xlsx; Plate type: 12 well plate</span></span>
+<span><span class="co">#&gt; Data: example_1536_well.xlsx; Plate type: 1536 well plate</span></span>
+<span><span class="co">#&gt; Data: example_24_well.xlsx; Plate type: 24 well plate</span></span>
+<span><span class="co">#&gt; Data: example_384_well.xlsx; Plate type: 384 well plate</span></span>
+<span><span class="co">#&gt; Data: example_48_well.xlsx; Plate type: 48 well plate</span></span>
+<span><span class="co">#&gt; Data: example_6_well.xlsx; Plate type: 6 well plate</span></span>
+<span><span class="co">#&gt; Data: example_96_well.xlsx; Plate type: 96 well plate</span></span></code></pre></div>
 <p>If a file had an error during import their corresponding list object will be empty.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">imported_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>     <span class="co"># Empty since there was an error during import</span></span>
