@@ -88,7 +88,7 @@ head(data)
 ```
 
 If you want to import multiple files you can first check whether the
-formats for each file is good or not:
+formats for each file is good or not like so:
 
 ``` r
 file_list <- list.files(".", pattern='*.xlsx', recursive = T)
@@ -137,7 +137,7 @@ will be empty.
 ``` r
 imported_list[[1]]     # Empty since there was an error during import
 #> NULL
-imported_list[[3]] |>  # No errors;imported as a tibble
+imported_list[[3]] |>  # No errors; imported as a tibble
   head()
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
