@@ -5,18 +5,26 @@
 #' is described below.
 #' @param sheet If file type is xlsx this is the sheet name (character) or
 #' number (integer).
+#' @param well_id This is takes a character of length 1 and cannot be the
+#' same as individual plate names.
 #'
 #' @return A tidy dataframe
 #' @export
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 #'
-#' data_12 <- tidy_plate(
-#'    file = file_path
-#'    )
+#' data_12 <- tidy_plate(file = file_path)
 #'
 #' head(data_12)
-tidy_plate <- function(file, sheet=1) {
+tidy_plate <- function(file, sheet=1, well_id = "well") {
+
+  # Check whether `well_id` is a character and has length == 1
+  if (typeof(well_id) != "character") {
+    stop("well_id should be a character vector of length 1", call. = F)
+  }
+  else if (length(well_id) > 1L) {
+    stop("well_id should be a character vector of length 1", call. = F)
+  }
 
   # Extract file name
   file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
@@ -143,7 +151,7 @@ following: 6, 12, 24, 48, 96, 384, and 1536. Please review an example dataset.")
   list_of_plates <- vector(mode = "list", length = no_of_plates)
 
   # This is a vector which will be used to name each plate
-  name_of_plates <- paste0("plate", 1:no_of_plates)
+  # name_of_plates <- paste0("plate", 1:no_of_plates)
 
   # Initialize counter for indexing each plate from raw_data
   counter = 0
@@ -155,11 +163,16 @@ following: 6, 12, 24, 48, 96, 384, and 1536. Please review an example dataset.")
   }
 
   # Make the list a named list
-  names(list_of_plates) <- name_of_plates
+  # names(list_of_plates) <- name_of_plates
 
   # Extract names for each plate
   each_plate_name <- purrr::map(list_of_plates, function(x) x |> dplyr::slice(1) |> dplyr::select(1)) |>
     unlist(use.names = F)
+
+  # Check if the plate name matches the user input `well_id`
+  if (well_id %in% each_plate_name) {
+    stop("Plate names cannot be the same as variable 'well_id'", call. = F)
+  }
 
   # Check if plate name exists and unique
   if (sum(is.na(each_plate_name)) != 0L) {
@@ -200,21 +213,41 @@ following: 6, 12, 24, 48, 96, 384, and 1536. Please review an example dataset.")
   }
 
   # Run a loop to extract each plate and store it in list_of_plates
+  # Randomizes column names during pivot_longer such that there are no duplicates
+  # values_to_variable = paste0(sample(LETTERS[1:26], 6), sample(letters[1:26], 6), sample(1:100, 6), collapse = "")
+  # Generated random names for names_to and values_to
   final_data_list <-list_of_plates |>
-    purrr::map(function(x) janitor::row_to_names(x, row_number = 1) |>
-                 tidyr::pivot_longer(-1, names_to = "name", values_to = "value",
-                                     values_transform = list(value = as.character))
-    )
+    purrr::map(function(x) janitor::row_to_names(x, row_number = 1)) |>
+    purrr::map(function(x) dplyr::mutate_all(x, as.character)) |>
+    purrr::map(function(x) tidyr::pivot_longer(x, cols = -1,
+                                               names_to = "Hq26Wl22Qo19Lz10Ed13",
+                                               values_to = "Rt26Yz13Nu14Sq81Pb51Ff38",
+                                               # names_repair = "unique",
+                                               # values_transform = list(Rt26Yz13Nu14Sq81Pb51Ff38 = as.character)
+                                               ))
+
+  # This function names each column the right way in the final dataset
+  naming_cols <- function(df) {
+
+    nm <- colnames(df)[1]
+    nm2 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")
+    nm3 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")
+
+    dplyr::mutate(df, !!nm3 := paste0(df[[1]], df[[2]])) |>
+      dplyr::rename(!!nm2 := 1, !!nm := 3) |>
+      dplyr::select(4, 3) |>
+      dplyr::rename(!!well_id := nm3)
+  }
 
   # Prep final_data as a dataframe/tibble
   # Remove NAs in all rows (except well/ first column)
   final_data <- final_data_list |>
     purrr::map(naming_cols) |>
-    purrr::reduce(dplyr::full_join, by = "well") |>
-    dplyr::filter(!dplyr::if_all(-"well", is.na)) |>
+    purrr::reduce(dplyr::full_join, by = well_id) |>
+    dplyr::filter(!dplyr::if_all(-well_id, is.na)) |>
     utils::type.convert(as.is = TRUE)
 
   # Return data with plate type
-  message(paste("Data: ", file_full_name, "\nPlate type: ", plate_type, " well plate", sep = ""))
+  message(paste("Data: ", file_full_name, "; Plate type: ", plate_type, " well plate", sep = ""))
   return(final_data)
 }

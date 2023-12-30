@@ -5,7 +5,7 @@
 \title{Checks whether the input file can be used to transform to a tidy plate using
 the \code{tidy_plate()} function}
 \usage{
-check_plate(file, sheet = 1)
+check_plate(file, sheet = 1, well_id = "well")
 }
 \arguments{
 \item{file}{This is the path to a xlsx or csv file containing data for the
@@ -14,6 +14,9 @@ is described below.}
 
 \item{sheet}{If file type is xlsx this is the sheet name (character) or
 number (integer).}
+
+\item{well_id}{This is takes a character of length 1 and cannot be the
+same as individual plate names.}
 }
 \value{
 An error or a message saying that input file can be used with the
@@ -26,7 +29,5 @@ the \code{tidy_plate()} function
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 
-data_12 <- check_plate(
-   file = file_path
-   )
+check_plate(file = file_path)
 }

@@ -51,8 +51,8 @@ Colors are for visualization purposes only.
 The input xlsx or csv should be formatted in a specific way:
 
 - Top left corner must hold the name for that plate.
-- Column names should be: 1, 2, 3,…
-- Row names should be: A, B, C, …
+- Column names should be: 1, 2, 3, and so on and so forth.
+- Row names should be: A, B, C, and so on and so forth.
 - There must be an empty row between each plate.
 
 ## Example
@@ -60,21 +60,24 @@ The input xlsx or csv should be formatted in a specific way:
 This is an example which shows you how to use the `tidyplate` package.
 If the input file is an xlsx file it reads the first sheet by default.
 Users can specify sheet using the `sheet` argument for an xlsx file.
+Users can also specify the variable name of column where well ids will
+be stored (defaults to “well”). Please make sure that `well_id` argument
+does not match individual plate names in the input file.
 
 First check if the input file is valid or not:
 
 ``` r
 library(tidyplate)
-check_plate("inst/extdata/example_12_well.xlsx")
+file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+check_plate(file_path)
 #> example_12_well.xlsx: OK; Plate type: 12 well
 ```
 
 Import the file as a tidy dataframe:
 
 ``` r
-data <- tidy_plate("inst/extdata/example_12_well.xlsx")
-#> Data: example_12_well.xlsx
-#> Plate type: 12 well plate
+data <- tidy_plate(file_path)
+#> Data: example_12_well.xlsx; Plate type: 12 well plate
 head(data)
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
@@ -101,7 +104,6 @@ purrr::walk(file_list, purrr::possibly(tidyplate::check_plate, quiet = F))
 #> example_384_well.xlsx: OK; Plate type: 384 well
 #> example_48_well.xlsx: OK; Plate type: 48 well
 #> example_6_well.xlsx: OK; Plate type: 6 well
-#> example_96_NA.xlsx: OK; Plate type: 96 well
 #> example_96_well.xlsx: OK; Plate type: 96 well
 ```
 
@@ -113,22 +115,13 @@ be removed before importing. Now you can import them using the
 imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))
 #> Error: bad_empty.xlsx is empty. Please verify input file.
 #> Error: Verify row names and column names in bad_example_12_well.xlsx.
-#> Data: example_12_well.xlsx
-#> Plate type: 12 well plate
-#> Data: example_1536_well.xlsx
-#> Plate type: 1536 well plate
-#> Data: example_24_well.xlsx
-#> Plate type: 24 well plate
-#> Data: example_384_well.xlsx
-#> Plate type: 384 well plate
-#> Data: example_48_well.xlsx
-#> Plate type: 48 well plate
-#> Data: example_6_well.xlsx
-#> Plate type: 6 well plate
-#> Data: example_96_NA.xlsx
-#> Plate type: 96 well plate
-#> Data: example_96_well.xlsx
-#> Plate type: 96 well plate
+#> Data: example_12_well.xlsx; Plate type: 12 well plate
+#> Data: example_1536_well.xlsx; Plate type: 1536 well plate
+#> Data: example_24_well.xlsx; Plate type: 24 well plate
+#> Data: example_384_well.xlsx; Plate type: 384 well plate
+#> Data: example_48_well.xlsx; Plate type: 48 well plate
+#> Data: example_6_well.xlsx; Plate type: 6 well plate
+#> Data: example_96_well.xlsx; Plate type: 96 well plate
 ```
 
 If a file had an error during import their corresponding list object

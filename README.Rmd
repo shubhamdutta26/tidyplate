@@ -43,23 +43,24 @@ knitr::include_graphics("man/figures/README_tidy_plate.png")
 The input xlsx or csv should be formatted in a specific way:
 
   * Top left corner must hold the name for that plate.
-  * Column names should be: 1, 2, 3,...
-  * Row names should be: A, B, C, ...
+  * Column names should be: 1, 2, 3, and so on and so forth.
+  * Row names should be: A, B, C, and so on and so forth.
   * There must be an empty row between each plate.
 
 ## Example
 
-This is an example which shows you how to use the `tidyplate` package. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument for an xlsx file.
+This is an example which shows you how to use the `tidyplate` package. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument for an xlsx file. Users can also specify the variable name of column where well ids will be stored (defaults to "well"). Please make sure that `well_id` argument does not match individual plate names in the input file.
 
 First check if the input file is valid or not:
 ```{r check_plate-xlsx}
 library(tidyplate)
-check_plate("inst/extdata/example_12_well.xlsx")
+file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+check_plate(file_path)
 ```
 
 Import the file as a tidy dataframe:
 ```{r tidy_plate-xlsx}
-data <- tidy_plate("inst/extdata/example_12_well.xlsx")
+data <- tidy_plate(file_path)
 head(data)
 ```
 

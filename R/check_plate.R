@@ -6,6 +6,8 @@
 #' is described below.
 #' @param sheet If file type is xlsx this is the sheet name (character) or
 #' number (integer).
+#' @param well_id This is takes a character of length 1 and cannot be the
+#' same as individual plate names.
 #'
 #' @return An error or a message saying that input file can be used with the
 #' `tidy_plate()` function
@@ -14,10 +16,16 @@
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 #'
-#' data_12 <- check_plate(
-#'    file = file_path
-#'    )
-check_plate <- function (file, sheet = 1) {
+#' check_plate(file = file_path)
+check_plate <- function (file, sheet = 1, well_id = "well") {
+
+  # Check whether `well_id` is a character and has length == 1
+  if (typeof(well_id) != "character") {
+    stop("well_id should be a character vector of length 1", call. = F)
+  }
+  else if (length(well_id) > 1L) {
+    stop("well_id should be a character vector of length 1", call. = F)
+  }
 
   # Extract file name
   file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
@@ -141,7 +149,7 @@ check_plate <- function (file, sheet = 1) {
   list_of_plates <- vector(mode = "list", length = no_of_plates)
 
   # This is a vector which will be used to name each plate
-  name_of_plates <- paste0("plate", 1:no_of_plates)
+  # name_of_plates <- paste0("plate", 1:no_of_plates)
 
   # Initialize counter for indexing each plate from raw_data
   counter = 0
@@ -153,11 +161,17 @@ check_plate <- function (file, sheet = 1) {
   }
 
   # Make the list a named list
-  names(list_of_plates) <- name_of_plates
+  # names(list_of_plates) <- name_of_plates
 
   # Extract names for each plate
   each_plate_name <- purrr::map(list_of_plates, function(x) x |> dplyr::slice(1) |> dplyr::select(1)) |>
     unlist(use.names = F)
+
+  # Check if the plate name matches the user input `well_id`
+  if (well_id %in% each_plate_name) {
+    stop(paste0(file_full_name, ": Not OK; Plate names cannot be the same as variable 'well_id'"),
+         call. = F)
+  }
 
   # Check if plate name exists and unique
   if (sum(is.na(each_plate_name)) != 0L) {
