@@ -10,12 +10,12 @@
     csv files formatted in a specific way as input. This package supports all types of 
     standard microplate formats such as 6-well, 12-well, 24-well, 48-well, 96-well, 384-well,
     and, 1536-well plates.">
-<title>This package helps researchers transform microplate data into a tidy dataframe • tidyplate</title>
+<title>Transform microplate data into a tidy dataframe • tidyplate</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="This package helps researchers transform microplate data into a tidy dataframe">
+<!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Transform microplate data into a tidy dataframe">
 <meta property="og:description" content="The goal of tidyplate package is to help researchers convert different types of
     microplates into tidy dataframes which can be used in data analysis. It accepts xlsx and
     csv files formatted in a specific way as input. This package supports all types of 
@@ -128,44 +128,25 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="co">#&gt; 6 B2    Puromycin HEK293                  23</span></span></code></pre></div>
 <p>If you want to import multiple files you can first check whether the formats for each file is good or not like so:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">file_list</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"."</span>, pattern<span class="op">=</span><span class="st">'*.xlsx'</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
-<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">file_list</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/check_plate.html">check_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: bad_empty.xlsx: Not OK; File is empty.</span></span>
-<span><span class="co">#&gt; Error: bad_example_12_well.xlsx: Not OK; Verify row &amp; column names.</span></span>
-<span><span class="co">#&gt; example_12_well.xlsx: OK; Plate type: 12 well</span></span>
-<span><span class="co">#&gt; example_1536_well.xlsx: OK; Plate type: 1536 well</span></span>
-<span><span class="co">#&gt; example_24_well.xlsx: OK; Plate type: 24 well</span></span>
-<span><span class="co">#&gt; example_384_well.xlsx: OK; Plate type: 384 well</span></span>
-<span><span class="co">#&gt; example_48_well.xlsx: OK; Plate type: 48 well</span></span>
-<span><span class="co">#&gt; example_6_well.xlsx: OK; Plate type: 6 well</span></span>
-<span><span class="co">#&gt; example_96_well.xlsx: OK; Plate type: 96 well</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">files</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.files.html" class="external-link">list.files</a></span><span class="op">(</span><span class="st">"./inst/extdata/"</span>, pattern <span class="op">=</span> <span class="st">"*.csv"</span>, recursive <span class="op">=</span> <span class="cn">T</span><span class="op">)</span></span>
+<span><span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">walk</a></span><span class="op">(</span><span class="va">files</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/check_plate.html">check_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Error: bad_empty.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: bad_example_12_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_12_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_1536_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_24_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_384_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_48_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_6_well.csv.csv: Not OK; File does not exist.</span></span>
+<span><span class="co">#&gt; Error: example_96_well.csv.csv: Not OK; File does not exist.</span></span></code></pre></div>
 <p>As you can see that the first two files threw error messages. They can be removed before importing. Now you can import them using the <code><a href="reference/tidy_plate.html">tidy_plate()</a></code> function.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imported_list</span> <span class="op">&lt;-</span> <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/map.html" class="external-link">map</a></span><span class="op">(</span><span class="va">file_list</span>, <span class="fu">purrr</span><span class="fu">::</span><span class="fu"><a href="https://purrr.tidyverse.org/reference/possibly.html" class="external-link">possibly</a></span><span class="op">(</span><span class="fu">tidyplate</span><span class="fu">::</span><span class="va"><a href="reference/tidy_plate.html">tidy_plate</a></span>, quiet <span class="op">=</span> <span class="cn">F</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: bad_empty.xlsx is empty. Please verify input file.</span></span>
-<span><span class="co">#&gt; Error: Verify row names and column names in bad_example_12_well.xlsx.</span></span>
-<span><span class="co">#&gt; Data: example_12_well.xlsx; Plate type: 12 well plate</span></span>
-<span><span class="co">#&gt; Data: example_1536_well.xlsx; Plate type: 1536 well plate</span></span>
-<span><span class="co">#&gt; Data: example_24_well.xlsx; Plate type: 24 well plate</span></span>
-<span><span class="co">#&gt; Data: example_384_well.xlsx; Plate type: 384 well plate</span></span>
-<span><span class="co">#&gt; Data: example_48_well.xlsx; Plate type: 48 well plate</span></span>
-<span><span class="co">#&gt; Data: example_6_well.xlsx; Plate type: 6 well plate</span></span>
-<span><span class="co">#&gt; Data: example_96_well.xlsx; Plate type: 96 well plate</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co">#imported_list &lt;- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))</span></span></code></pre></div>
 <p>If a file had an error during import their corresponding list object will be empty.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">imported_list</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>     <span class="co"># Empty since there was an error during import</span></span>
-<span><span class="co">#&gt; NULL</span></span>
-<span><span class="va">imported_list</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span> <span class="op">|&gt;</span>  <span class="co"># No errors; imported as a tibble</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 6 × 4</span></span>
-<span><span class="co">#&gt;   well  drug      cell_line percent_survived</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;                &lt;int&gt;</span></span>
-<span><span class="co">#&gt; 1 A1    Neomycin  HEK293                  60</span></span>
-<span><span class="co">#&gt; 2 A2    Puromycin HEK293                  22</span></span>
-<span><span class="co">#&gt; 3 A3    Neomycin  Hela                    52</span></span>
-<span><span class="co">#&gt; 4 A4    Puromycin Hela                    18</span></span>
-<span><span class="co">#&gt; 5 B1    Neomycin  HEK293                  62</span></span>
-<span><span class="co">#&gt; 6 B2    Puromycin HEK293                  23</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># imported_list[[1]]     # Empty since there was an error during import</span></span>
+<span><span class="co"># imported_list[[3]] |&gt;  # No errors; imported as a tibble</span></span>
+<span><span class="co">#   head()</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
