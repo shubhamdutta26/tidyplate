@@ -4,18 +4,18 @@
 \alias{tidy_plate}
 \title{Transforms a plate to a tidy dataframe}
 \usage{
-tidy_plate(file, sheet = 1, well_id = "well")
+tidy_plate(file, well_id = "well", sheet = 1)
 }
 \arguments{
 \item{file}{This is the path to a xlsx or csv file containing data for the
 following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
 is described below.}
 
-\item{sheet}{If file type is xlsx this is the sheet name (character) or
-number (integer).}
-
 \item{well_id}{This is takes a character of length 1 and cannot be the
 same as individual plate names.}
+
+\item{sheet}{If file type is xlsx this is the sheet name (character) or
+number (integer).}
 }
 \value{
 A tidy dataframe

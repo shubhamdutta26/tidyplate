@@ -94,17 +94,17 @@ If you want to import multiple files you can first check whether the
 formats for each file is good or not like so:
 
 ``` r
-file_list <- list.files(".", pattern='*.xlsx', recursive = T)
-purrr::walk(file_list, purrr::possibly(tidyplate::check_plate, quiet = F))
-#> Error: bad_empty.xlsx: Not OK; File is empty.
-#> Error: bad_example_12_well.xlsx: Not OK; Verify row & column names.
-#> example_12_well.xlsx: OK; Plate type: 12 well
-#> example_1536_well.xlsx: OK; Plate type: 1536 well
-#> example_24_well.xlsx: OK; Plate type: 24 well
-#> example_384_well.xlsx: OK; Plate type: 384 well
-#> example_48_well.xlsx: OK; Plate type: 48 well
-#> example_6_well.xlsx: OK; Plate type: 6 well
-#> example_96_well.xlsx: OK; Plate type: 96 well
+files <- list.files("./inst/extdata/", pattern = "*.csv", recursive = T)
+purrr::walk(files, purrr::possibly(tidyplate::check_plate, quiet = F))
+#> Error: bad_empty.csv.csv: Not OK; File does not exist.
+#> Error: bad_example_12_well.csv.csv: Not OK; File does not exist.
+#> Error: example_12_well.csv.csv: Not OK; File does not exist.
+#> Error: example_1536_well.csv.csv: Not OK; File does not exist.
+#> Error: example_24_well.csv.csv: Not OK; File does not exist.
+#> Error: example_384_well.csv.csv: Not OK; File does not exist.
+#> Error: example_48_well.csv.csv: Not OK; File does not exist.
+#> Error: example_6_well.csv.csv: Not OK; File does not exist.
+#> Error: example_96_well.csv.csv: Not OK; File does not exist.
 ```
 
 As you can see that the first two files threw error messages. They can
@@ -112,33 +112,14 @@ be removed before importing. Now you can import them using the
 `tidy_plate()` function.
 
 ``` r
-imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))
-#> Error: bad_empty.xlsx is empty. Please verify input file.
-#> Error: Verify row names and column names in bad_example_12_well.xlsx.
-#> Data: example_12_well.xlsx; Plate type: 12 well plate
-#> Data: example_1536_well.xlsx; Plate type: 1536 well plate
-#> Data: example_24_well.xlsx; Plate type: 24 well plate
-#> Data: example_384_well.xlsx; Plate type: 384 well plate
-#> Data: example_48_well.xlsx; Plate type: 48 well plate
-#> Data: example_6_well.xlsx; Plate type: 6 well plate
-#> Data: example_96_well.xlsx; Plate type: 96 well plate
+#imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))
 ```
 
 If a file had an error during import their corresponding list object
 will be empty.
 
 ``` r
-imported_list[[1]]     # Empty since there was an error during import
-#> NULL
-imported_list[[3]] |>  # No errors; imported as a tibble
-  head()
-#> # A tibble: 6 × 4
-#>   well  drug      cell_line percent_survived
-#>   <chr> <chr>     <chr>                <int>
-#> 1 A1    Neomycin  HEK293                  60
-#> 2 A2    Puromycin HEK293                  22
-#> 3 A3    Neomycin  Hela                    52
-#> 4 A4    Puromycin Hela                    18
-#> 5 B1    Neomycin  HEK293                  62
-#> 6 B2    Puromycin HEK293                  23
+# imported_list[[1]]     # Empty since there was an error during import
+# imported_list[[3]] |>  # No errors; imported as a tibble
+#   head()
 ```

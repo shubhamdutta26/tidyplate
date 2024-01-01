@@ -1,6 +1,6 @@
 Package: tidyplate
 Type: Package
-Title: This package helps researchers transform microplate data into a tidy dataframe
+Title: Transform microplate data into a tidy dataframe
 Version: 0.1.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre"),
@@ -13,11 +13,12 @@ Description: The goal of tidyplate package is to help researchers convert differ
 Imports: 
   janitor, 
   readr, 
-  readxl, 
+  readxl,
+  tibble,
   tidyr,
+  dplyr,
   purrr,
-  rlang,
-  dplyr
+  rlang
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
