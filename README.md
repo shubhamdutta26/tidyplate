@@ -89,37 +89,3 @@ head(data)
 #> 5 B1    Neomycin  HEK293                  62
 #> 6 B2    Puromycin HEK293                  23
 ```
-
-If you want to import multiple files you can first check whether the
-formats for each file is good or not like so:
-
-``` r
-files <- list.files("./inst/extdata/", pattern = "*.csv", recursive = T)
-purrr::walk(files, purrr::possibly(tidyplate::check_plate, quiet = F))
-#> Error: bad_empty.csv.csv: Not OK; File does not exist.
-#> Error: bad_example_12_well.csv.csv: Not OK; File does not exist.
-#> Error: example_12_well.csv.csv: Not OK; File does not exist.
-#> Error: example_1536_well.csv.csv: Not OK; File does not exist.
-#> Error: example_24_well.csv.csv: Not OK; File does not exist.
-#> Error: example_384_well.csv.csv: Not OK; File does not exist.
-#> Error: example_48_well.csv.csv: Not OK; File does not exist.
-#> Error: example_6_well.csv.csv: Not OK; File does not exist.
-#> Error: example_96_well.csv.csv: Not OK; File does not exist.
-```
-
-As you can see that the first two files threw error messages. They can
-be removed before importing. Now you can import them using the
-`tidy_plate()` function.
-
-``` r
-#imported_list <- purrr::map(file_list, purrr::possibly(tidyplate::tidy_plate, quiet = F))
-```
-
-If a file had an error during import their corresponding list object
-will be empty.
-
-``` r
-# imported_list[[1]]     # Empty since there was an error during import
-# imported_list[[3]] |>  # No errors; imported as a tibble
-#   head()
-```
