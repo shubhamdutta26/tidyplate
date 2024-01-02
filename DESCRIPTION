@@ -1,6 +1,6 @@
 Package: tidyplate
 Type: Package
-Title: Transform microplate data into a tidy dataframe
+Title: Transform Microplates into a Tidy Dataframe
 Version: 0.9.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre"),
