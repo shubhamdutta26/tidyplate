@@ -19,7 +19,7 @@ files formatted in a specific way as input. `tidyplate` supports all
 types of standard microplate formats namely: 6-well, 12-well, 24-well,
 48-well, 96-well, 384-well, and 1536-well plates.
 
-`tidyplate` package has two functions:
+`tidyplate` has two functions:
 
 - `tidy_plate`: This function takes the input file (xlsx or csv) and
   transforms into a tidy dataframe.
@@ -57,12 +57,12 @@ The input xlsx or csv should be formatted in a specific way:
 
 ## Example
 
-This is an example which shows you how to use the `tidyplate` package.
-If the input file is an xlsx file it reads the first sheet by default.
-Users can specify sheet using the `sheet` argument for an xlsx file.
-Users can also specify the variable name of column where well ids will
-be stored (defaults to “well”). Please make sure that `well_id` argument
-does not match individual plate names in the input file.
+This is an example which shows you how to use the `tidyplate`. If the
+input file is an xlsx file it reads the first sheet by default. Users
+can specify sheet using the `sheet` argument for an xlsx file. Users can
+also specify the variable name of column where well ids will be stored
+(defaults to “well”). Please make sure that `well_id` argument does not
+match individual plate names in the input file.
 
 First check if the input file is valid or not:
 
