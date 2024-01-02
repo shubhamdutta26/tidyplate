@@ -1,24 +1,21 @@
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
+  path <- paste0("test_data/", i, "/")
 
-   path <- paste0("test_data/", i, "/")
+  test_that("plate_params can return a list of those parameters", {
+    csv_file <- paste0(path, "allWellIds.csv")
+    xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-   test_that("plate_params can return a list of those parameters", {
-     csv_file <- paste0(path, "allWellIds.csv")
-     xlsx_file <- paste0(path, "allWellIds.xlsx")
+    imported_csv <- readr::read_csv(csv_file, col_names = F)
+    imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = F)
+    n_cols_csv <- ncol(imported_csv)
+    n_cols_xlsx <- ncol(imported_csv)
 
-     imported_csv <- readr::read_csv(csv_file, col_names = F)
-     imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = F)
-     n_cols_csv <- ncol(imported_csv)
-     n_cols_xlsx <- ncol(imported_csv)
+    result_csv <- plate_params(imported_csv, n_cols_csv)
+    result_xlsx <- plate_params(imported_xlsx, n_cols_xlsx)
 
-     result_csv <- plate_params(imported_csv, n_cols_csv)
-     result_xlsx <- plate_params(imported_xlsx, n_cols_xlsx)
-
-     expect_type(result_csv, "list")
-     expect_type(result_xlsx, "list")
-
+    expect_type(result_csv, "list")
+    expect_type(result_xlsx, "list")
   })
-
 }
 
 test_that("6 well params are identical to 6 well plate", {
@@ -38,7 +35,6 @@ test_that("6 well params are identical to 6 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("12 well params are identical to 12 well plate", {
@@ -58,7 +54,6 @@ test_that("12 well params are identical to 12 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("24 well params are identical to 24 well plate", {
@@ -78,7 +73,6 @@ test_that("24 well params are identical to 24 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("48 well params are identical to 48 well plate", {
@@ -98,7 +92,6 @@ test_that("48 well params are identical to 48 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("96 well params are identical to 96 well plate", {
@@ -118,7 +111,6 @@ test_that("96 well params are identical to 96 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("384 well params are identical to 384 well plate", {
@@ -138,7 +130,6 @@ test_that("384 well params are identical to 384 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("1536 well params are identical to 1536 well plate", {
@@ -158,7 +149,6 @@ test_that("1536 well params are identical to 1536 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-
 })
 
 test_that("naming_cols correctly formats the names of the input dataframe", {

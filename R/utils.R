@@ -1,6 +1,6 @@
 # This function generates different plate parameters if the data is formatted
 # correctly
-plate_params <- function (data, n_cols) {
+plate_params <- function(data, n_cols) {
   if (n_cols == 4L) {
     no_of_plates <- sum(rowSums(is.na(data)) == 4L) + 1L
     count_rows_theoretical <- (no_of_plates * 4L) - 1L
@@ -71,7 +71,6 @@ plate_params <- function (data, n_cols) {
 
 # This function names each column the right way in the final dataset
 naming_cols <- function(df, well_id) {
-
   nm <- colnames(df)[1]
   nm2 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")
   nm3 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")

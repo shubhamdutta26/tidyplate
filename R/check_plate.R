@@ -17,31 +17,31 @@
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 #'
 #' check_plate(file = file_path)
-check_plate <- function (file, well_id = "well", sheet = 1) {
-
+check_plate <- function(file, well_id = "well", sheet = 1) {
   # check if one file is provided by the user
   if (typeof(file) %in% c("double", "integer", "logical")) {
     stop(
       paste0("file argument cannot be of type: ", typeof(file)),
-      call. = FALSE)
+      call. = FALSE
+    )
   } else if (length(file) > 1) {
     stop(
       paste0("More than one file provided. Only one file should be provided"),
-      call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # Check whether `well_id` is a character and has length == 1
   if (typeof(well_id) != "character") {
     stop("well_id should be a character vector of length 1", call. = F)
-  }
-  else if (length(well_id) > 1L) {
+  } else if (length(well_id) > 1L) {
     stop("well_id should be a character vector of length 1", call. = F)
   }
 
   # Extract file name
   file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
   file_ext <- tools::file_ext(file)
-  file_full_name <- paste(file_name, file_ext, sep=".")
+  file_full_name <- paste(file_name, file_ext, sep = ".")
 
   # Check if file exists
   if (!(file.exists(file))) {
@@ -59,13 +59,13 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
 
   # Check if file is empty
   # xlsx files cannot be empty
-  if(nrow(raw_data) == 0){
+  if (nrow(raw_data) == 0) {
     stop(paste0(file_full_name, ": Not OK; File is empty."), call. = FALSE)
   }
 
   # Count number of columns and rows in raw_data
-  count_columns = ncol(raw_data)
-  count_rows_actual = nrow(raw_data)
+  count_columns <- ncol(raw_data)
+  count_rows_actual <- nrow(raw_data)
 
   # Check if there are a exact number of columns
   if (!(count_columns %in% c(4L, 5L, 7L, 9L, 13L, 25L, 49L))) {
@@ -83,8 +83,9 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
   # This checks whether the input formating is correct or not.
   # There must be one empty row between each data.
   if (plate_parameters[[2]] != count_rows_actual) {
-    stop(paste0(file_full_name, ": Not OK; Verify input data format.")
-      , call. = F)
+    stop(paste0(file_full_name, ": Not OK; Verify input data format."),
+      call. = F
+    )
   }
 
   # Initialize empty list to store the raw_data.
@@ -96,25 +97,30 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
   # name_of_plates <- paste0("plate", 1:plate_parameters[[1]])
 
   # Initialize counter for indexing each plate from raw_data
-  counter = 0
+  counter <- 0
 
   # Store each plate as an obect in a list
   for (i in 1:plate_parameters[[1]]) {
-    list_of_plates[[i]] <- raw_data[(row_start+counter):(plate_parameters[[5]]+counter), ]
-    counter = counter + plate_parameters[[6]]
+    list_of_plates[[i]] <- raw_data[(row_start + counter):(plate_parameters[[5]] + counter), ]
+    counter <- counter + plate_parameters[[6]]
   }
 
   # Make the list a named list
   # names(list_of_plates) <- name_of_plates
 
   # Extract names for each plate
-  each_plate_name <- purrr::map(list_of_plates, function(x) x |> dplyr::slice(1) |> dplyr::select(1)) |>
+  each_plate_name <- purrr::map(list_of_plates, function(x) {
+    x |>
+      dplyr::slice(1) |>
+      dplyr::select(1)
+  }) |>
     unlist(use.names = F)
 
   # Check if the plate name matches the user input `well_id`
   if (well_id %in% each_plate_name) {
     stop(paste0(file_full_name, ": Not OK; Plate names cannot be the same as variable 'well_id'"),
-         call. = F)
+      call. = F
+    )
   }
 
   # Check if plate name exists and unique
@@ -123,20 +129,29 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
   }
 
   # Check if plates have 1:x as column names after plate name
-  first_row <- purrr::map(list_of_plates, function(x) x |> dplyr::slice(1) |> dplyr::select(-1)) |>
+  first_row <- purrr::map(list_of_plates, function(x) {
+    x |>
+      dplyr::slice(1) |>
+      dplyr::select(-1)
+  }) |>
     purrr::map(function(x) sum(x == plate_parameters[[8]])) |>
-    purrr::map(function(x) x != (count_columns-1)) |>
+    purrr::map(function(x) x != (count_columns - 1)) |>
     unlist(use.names = F)
   first_row_sum <- replace(first_row, is.na(first_row), TRUE) |>
     sum() # has to be 0; otherwise there is at least one plate that has bad column names
 
   # Check if plates have A:x as row names after plate name
   first_col <- purrr::map(list_of_plates, function(x) x |> dplyr::select(1)) |>
-    purrr::map(function(x) x |> dplyr::filter(dplyr::row_number() != 1) |> t() |> toupper()) |>
+    purrr::map(function(x) {
+      x |>
+        dplyr::filter(dplyr::row_number() != 1) |>
+        t() |>
+        toupper()
+    }) |>
     purrr::map(function(x) sum(x != plate_parameters[[7]])) |>
     unlist(use.names = F)
   first_col_sum <- replace(first_col, is.na(first_col), TRUE) |>
-    sum()  # has to be 0; otherwise there is at least one plate that has bad row names
+    sum() # has to be 0; otherwise there is at least one plate that has bad row names
 
   if (first_row_sum != 0L & first_col_sum != 0L) {
     stop(paste0(file_full_name, ": Not OK; Verify row and column names."), call. = FALSE)
@@ -147,5 +162,4 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
   }
 
   message(paste0(file_full_name, ": OK; Plate type: ", plate_parameters[[3]], " well"))
-
 }
