@@ -108,6 +108,46 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     expect_error(tidy_plate(xlsx_file_2, well_id = "wells"),
                  "Verify that each plate in noName.xlsx has a unique name.")
   })
+
+  test_that("tidy_plate throws error when row and column ids are empty or bad", {
+    csv_file_1 <- paste0(path, "badColRowName.csv")
+    xlsx_file_1 <- paste0(path, "badColRowName.xlsx")
+    csv_file_2 <- paste0(path, "emptyColRowName.csv")
+    xlsx_file_2 <- paste0(path, "emptyColRowName.xlsx")
+
+    expect_error(tidy_plate(csv_file_1, well_id = "wells"),
+                 "Verify row names and column names in badColRowName.csv.")
+    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"),
+                 "Verify row names and column names in badColRowName.xlsx.")
+    expect_error(tidy_plate(csv_file_2, well_id = "wells"),
+                 "Verify row names and column names in emptyColRowName.csv.")
+    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"),
+                 "Verify row names and column names in emptyColRowName.xlsx.")
+  })
+
+  test_that("tidy_plate throws error when row id(s) are empty or bad", {
+    csv_file_1 <- paste0(path, "badRowName.csv")
+    xlsx_file_1 <- paste0(path, "badRowName.xlsx")
+    csv_file_2 <- paste0(path, "emptyRowName.csv")
+    xlsx_file_2 <- paste0(path, "emptyRowName.xlsx")
+
+    expect_error(tidy_plate(csv_file_1, well_id = "wells"), "Verify row names in badRowName.csv.")
+    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"), "Verify row names in badRowName.xlsx.")
+    expect_error(tidy_plate(csv_file_2, well_id = "wells"), "Verify row names in emptyRowName.csv.")
+    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"), "Verify row names in emptyRowName.xlsx.")
+  })
+
+  test_that("tidy_plate throws error when column id(s) are empty or bad", {
+    csv_file_1 <- paste0(path, "badColName.csv")
+    xlsx_file_1 <- paste0(path, "badColName.xlsx")
+    csv_file_2 <- paste0(path, "emptyColName.csv")
+    xlsx_file_2 <- paste0(path, "emptyColName.xlsx")
+
+    expect_error(tidy_plate(csv_file_1, well_id = "wells"), "Verify column names in badColName.csv.")
+    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"), "Verify column names in badColName.xlsx.")
+    expect_error(tidy_plate(csv_file_2, well_id = "wells"), "Verify column names in emptyColName.csv.")
+    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"), "Verify column names in emptyColName.xlsx.")
+  })
 }
 
 test_that("tidy_plate throws an error when user inputs bad file type", {

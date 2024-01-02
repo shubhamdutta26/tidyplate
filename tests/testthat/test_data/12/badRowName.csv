@@ -1,0 +1,9 @@
+full,1,2,3,4
+A,A1,A2,A3,A4
+B,B1,B2,B3,B4
+C,C1,C2,C3,C4
+,,,,
+partial,1,2,3,4
+x,A1,,A3,A4
+B,B1,B2,B3,B4
+C,C1,C2,,C4
