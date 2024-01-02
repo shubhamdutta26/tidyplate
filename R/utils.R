@@ -6,7 +6,7 @@
 #' `plate_type`: Guesses the type of microtiter plate type
 #' `cols`: Columns vector for each plate type from raw data
 #'
-#' @param data This takes the raw data after imported by `tidy_plate` or `check_plate`
+#' @param data This takes the raw data after imported by `read_csv` or `read_xslx`
 #' functions
 #' @param n_cols This takes the number of columns in the data as integer
 #'
@@ -82,7 +82,22 @@ plate_params <- function (data, n_cols) {
   return(list(no_of_plates, count_rows_theoretical, plate_type, cols, row_end, increment, first_col_vec, first_row_vec))
 }
 
-# This function names each column the right way in the final dataset
+
+#' This function names each column the right way in the final dataset
+#'
+#' @param df This a dataframe/ tibble
+#' @param well_id This is a character vector of length 1 which will be used to
+#' name well in the final tibble
+#'
+#' @return A list/ tibble
+#' @export
+#'
+#' @examples
+#' df <- tibble::tibble(values = LETTERS[1:10], b = 1:10, c = 21:30)
+#'
+#' new_df <- naming_cols(df, "Wells")
+#'
+#' head(new_df)
 naming_cols <- function(df, well_id) {
 
   nm <- colnames(df)[1]

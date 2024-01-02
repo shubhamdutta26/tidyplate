@@ -13,7 +13,7 @@ for a given the no_of_plates
 plate_params(data, n_cols)
 }
 \arguments{
-\item{data}{This takes the raw data after imported by \code{tidy_plate} or \code{check_plate}
+\item{data}{This takes the raw data after imported by \code{read_csv} or \code{read_xslx}
 functions}
 
 \item{n_cols}{This takes the number of columns in the data as integer}
