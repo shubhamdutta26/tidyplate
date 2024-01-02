@@ -5,9 +5,9 @@ Version: 0.9.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8484-0717"))
-Description: The goal of tidyplate package is to help researchers convert different types of
+Description: The goal of tidyplate is to help researchers convert different types of
     microplates into tidy dataframes which can be used in data analysis. It accepts xlsx and
-    csv files formatted in a specific way as input. This package supports all types of 
+    csv files formatted in a specific way as input. It supports all types of 
     standard microplate formats such as 6-well, 12-well, 24-well, 48-well, 96-well, 384-well,
     and, 1536-well plates.
 Imports: 
