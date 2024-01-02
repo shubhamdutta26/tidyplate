@@ -27,7 +27,11 @@ Checks whether the input file can be used to transform to a tidy plate using
 the \code{tidy_plate()} function
 }
 \examples{
-file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+file_path <- system.file(
+  "extdata",
+  "example_12_well.xlsx",
+  package = "tidyplate"
+)
 
 check_plate(file = file_path)
 }

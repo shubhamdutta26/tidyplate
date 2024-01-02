@@ -14,7 +14,11 @@
 #' @export
 #'
 #' @examples
-#' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+#' file_path <- system.file(
+#'   "extdata",
+#'   "example_12_well.xlsx",
+#'   package = "tidyplate"
+#' )
 #'
 #' check_plate(file = file_path)
 check_plate <- function(file, well_id = "well", sheet = 1) {
@@ -33,9 +37,9 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
 
   # Check whether `well_id` is a character and has length == 1
   if (typeof(well_id) != "character") {
-    stop("well_id should be a character vector of length 1", call. = F)
+    stop("well_id should be a character vector of length 1", call. = FALSE)
   } else if (length(well_id) > 1L) {
-    stop("well_id should be a character vector of length 1", call. = F)
+    stop("well_id should be a character vector of length 1", call. = FALSE)
   }
 
   # Extract file name
@@ -50,11 +54,11 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
 
   # Determine file ext and call appropriate function to import as raw_data
   if (!(file_ext %in% c("xlsx", "csv"))) {
-    stop(paste0(file_full_name, ": Not OK; Must be either xlsx or csv file."), call. = F)
+    stop(paste0(file_full_name, ": Not OK; Must be either xlsx or csv file."), call. = FALSE)
   } else if (tools::file_ext(file) == "xlsx") {
-    suppressMessages(raw_data <- readxl::read_excel(file, col_names = F, sheet = sheet))
+    suppressMessages(raw_data <- readxl::read_excel(file, col_names = FALSE, sheet = sheet))
   } else {
-    suppressMessages(raw_data <- readr::read_csv(file, col_names = F))
+    suppressMessages(raw_data <- readr::read_csv(file, col_names = FALSE))
   }
 
   # Check if file is empty
@@ -84,7 +88,7 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
   # There must be one empty row between each data.
   if (plate_parameters[[2]] != count_rows_actual) {
     stop(paste0(file_full_name, ": Not OK; Verify input data format."),
-      call. = F
+      call. = FALSE
     )
   }
 
@@ -114,18 +118,18 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
       dplyr::slice(1) |>
       dplyr::select(1)
   }) |>
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
 
   # Check if the plate name matches the user input `well_id`
   if (well_id %in% each_plate_name) {
     stop(paste0(file_full_name, ": Not OK; Plate names cannot be the same as variable 'well_id'"),
-      call. = F
+      call. = FALSE
     )
   }
 
   # Check if plate name exists and unique
   if (sum(is.na(each_plate_name)) != 0L || length(each_plate_name) != length(unique(each_plate_name))) {
-    stop(paste0(file_full_name, ": Not OK; Verify each plate has a unique name."), call. = F)
+    stop(paste0(file_full_name, ": Not OK; Verify each plate has a unique name."), call. = FALSE)
   }
 
   # Check if plates have 1:x as column names after plate name
@@ -136,7 +140,7 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
   }) |>
     purrr::map(function(x) sum(x == plate_parameters[[8]])) |>
     purrr::map(function(x) x != (count_columns - 1)) |>
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
   first_row_sum <- replace(first_row, is.na(first_row), TRUE) |>
     sum() # has to be 0; otherwise there is at least one plate that has bad column names
 
@@ -149,7 +153,7 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
         toupper()
     }) |>
     purrr::map(function(x) sum(x != plate_parameters[[7]])) |>
-    unlist(use.names = F)
+    unlist(use.names = FALSE)
   first_col_sum <- replace(first_col, is.na(first_col), TRUE) |>
     sum() # has to be 0; otherwise there is at least one plate that has bad row names
 
