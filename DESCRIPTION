@@ -26,5 +26,8 @@ RoxygenNote: 7.2.3
 URL: https://github.com/shubhamdutta26/tidyplate, http://www.shubhamdutta.com/tidyplate/
 BugReports: https://github.com/shubhamdutta26/tidyplate/issues
 Suggests: 
+    knitr,
+    rmarkdown,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
+VignetteBuilder: knitr
