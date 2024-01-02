@@ -69,7 +69,7 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
 
   # Check if there are a exact number of columns
   if (!(count_columns %in% c(4L, 5L, 7L, 9L, 13L, 25L, 49L))) {
-    stop(paste0(file_full_name, ": Not OK;  Verify input data format."), call. = FALSE)
+    stop(paste0(file_full_name, ": Not OK; Verify input data format."), call. = FALSE)
   }
 
   # This counts the number of plates in the dataset
@@ -119,7 +119,7 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
 
   # Check if plate name exists and unique
   if (sum(is.na(each_plate_name)) != 0L || length(each_plate_name) != length(unique(each_plate_name))) {
-    stop(paste0("Verify that each plate in ",file_full_name, " has a unique name."), call. = F)
+    stop(paste0(file_full_name, ": Not OK; Verify each plate has a unique name."), call. = F)
   }
 
   # Check if plates have 1:x as column names after plate name
@@ -139,11 +139,11 @@ check_plate <- function (file, well_id = "well", sheet = 1) {
     sum()  # has to be 0; otherwise there is at least one plate that has bad row names
 
   if (first_row_sum != 0L & first_col_sum != 0L) {
-    stop(paste0("Verify row names and column names in ", file_full_name, "."), call. = FALSE)
+    stop(paste0(file_full_name, ": Not OK; Verify row and column names."), call. = FALSE)
   } else if (first_row_sum != 0L) {
-    stop(paste0("Verify column names in ", file_full_name, "."), call. = FALSE)
+    stop(paste0(file_full_name, ": Not OK; Verify column names."), call. = FALSE)
   } else if (first_col_sum != 0L) {
-    stop(paste0("Verify row names in ", file_full_name, "."), call. = FALSE)
+    stop(paste0(file_full_name, ": Not OK; Verify row names."), call. = FALSE)
   }
 
   message(paste0(file_full_name, ": OK; Plate type: ", plate_parameters[[3]], " well"))
