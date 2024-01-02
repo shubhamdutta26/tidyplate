@@ -4,7 +4,7 @@
 \name{tidyplate-package}
 \alias{tidyplate}
 \alias{tidyplate-package}
-\title{tidyplate: Transform microplate data into a tidy dataframe}
+\title{tidyplate: Transform Microplates into a Tidy Dataframe}
 \description{
 The goal of tidyplate is to help researchers convert different types of microplates into tidy dataframes which can be used in data analysis. It accepts xlsx and csv files formatted in a specific way as input. It supports all types of standard microplate formats such as 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and, 1536-well plates.
 }
@@ -18,7 +18,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Shubham Dutta \email{shubhamdutta26@gmail.com} (\href{https://orcid.org/0000-0001-8484-0717}{ORCID})
+\strong{Maintainer}: Shubham Dutta \email{shubhamdutta26@gmail.com} (\href{https://orcid.org/0000-0001-8484-0717}{ORCID}) [copyright holder]
 
 }
 \keyword{internal}
