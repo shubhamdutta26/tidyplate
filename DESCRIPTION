@@ -1,7 +1,7 @@
 Package: tidyplate
 Type: Package
 Title: Transform Microplate Data into Tidy Dataframes
-Version: 2.0.0
+Version: 1.0.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8484-0717"))
