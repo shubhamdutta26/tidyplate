@@ -1,11 +1,10 @@
 Package: tidyplate
 Type: Package
-Title: Transform Microplates into a Tidy Dataframe
+Title: Transform Microplate Data into Tidy Dataframes
 Version: 1.0.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8484-0717"))
-Author: Shubham Dutta [aut, cre, cph]
 Maintainer: Shubham Dutta <shubhamdutta26@gmail.com>
 Description: The goal of 'tidyplate' is to help researchers convert different types of
     microplates into tidy dataframes which can be used in data analysis. It accepts xlsx and
