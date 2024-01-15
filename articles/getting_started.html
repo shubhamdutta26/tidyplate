@@ -80,9 +80,94 @@
 
     
     
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+<div class="section level2">
+<h2 id="tidyplate">tidyplate<a class="anchor" aria-label="anchor" href="#tidyplate"></a>
+</h2>
+<p>Microtiter plates or microplates have become a standard tool in
+analytical research and clinical diagnostic testing laboratories. They
+are convenient, high-throughput tools for organizing tissue culture, PCR
+tests (such as HIV/ COVID screening), or immunological assays such as
+ELISA, RIA and FIA. They offer many advantages over traditional assay
+formats including reduced sample and reagent volumes, increased
+throughput, and ease of automation. The goal of <code>tidyplate</code>
+is to help researchers convert different types of microplates into tidy
+dataframes which can be used in data analysis. <code>tidyplate</code>
+accepts xlsx and csv files formatted in a specific way as input.
+<code>tidyplate</code> supports all types of standard microplate formats
+namely: 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and
+1536-well plates.</p>
+<p><code>tidyplate</code> has two functions:</p>
+<ul>
+<li>
+<code>tidy_plate</code>: This function takes the input file (xlsx or
+csv) and transforms into a tidy dataframe.</li>
+<li>
+<code>check_plate</code>: This function checks whether the input
+file is valid for use with <code><a href="../reference/tidy_plate.html">tidy_plate()</a></code> function.</li>
+</ul>
+<div class="section level3">
+<h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h3>
+<p>To install tidyplate from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shubhamdutta26/tidyplate" class="external-link">tidyplate</a></span><span class="op">)</span></span></code></pre></div>
-  </main>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"tidyplate"</span><span class="op">)</span></span></code></pre></div>
+<p>You can install the development version of tidyplate from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"shubhamdutta26/tidyplate"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level3">
+<h3 id="formating-the-input-data-file">Formating the input data file<a class="anchor" aria-label="anchor" href="#formating-the-input-data-file"></a>
+</h3>
+<div class="figure">
+<img src="../reference/figures/README_tidy_plate.png" alt="This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only." width="100%"><p class="caption">
+This figure demonstrates how to format the 12-well plate input file.
+Colors are for visualization purposes only.
+</p>
+</div>
+<p>The input xlsx or csv should be formatted in a specific way:</p>
+<ul>
+<li>Top left corner must hold the name for that plate.</li>
+<li>Column names should be: 1, 2, 3, and so on and so forth.</li>
+<li>Row names should be: A, B, C, and so on and so forth.</li>
+<li>There must be an empty row between each plate.</li>
+</ul>
+</div>
+<div class="section level3">
+<h3 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h3>
+<p>This is an example which shows you how to use the
+<code>tidyplate</code>. If the input file is an xlsx file it reads the
+first sheet by default. Users can specify sheet using the
+<code>sheet</code> argument for an xlsx file. Users can also specify the
+variable name of column where well ids will be stored (defaults to
+“well”). Please make sure that <code>well_id</code> argument does not
+match individual plate names in the input file.</p>
+<p>First check if the input file is valid or not:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/shubhamdutta26/tidyplate" class="external-link">tidyplate</a></span><span class="op">)</span></span>
+<span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_12_well.xlsx"</span>, package <span class="op">=</span> <span class="st">"tidyplate"</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/check_plate.html">check_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
+<span><span class="co">#&gt; example_12_well.xlsx: OK; Plate type: 12 well</span></span></code></pre></div>
+<p>Import the file as a tidy dataframe:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/tidy_plate.html">tidy_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Data: example_12_well.xlsx; Plate type: 12 well plate</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 6 × 4</span></span></span>
+<span><span class="co">#&gt;   well  drug      cell_line percent_survived</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> A1    Neomycin  HEK293                  60</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> A2    Puromycin HEK293                  22</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> A3    Neomycin  Hela                    52</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span> A4    Puromycin Hela                    18</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">5</span> B1    Neomycin  HEK293                  62</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">6</span> B2    Puromycin HEK293                  23</span></span></code></pre></div>
+</div>
+</div>
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
