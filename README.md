@@ -4,6 +4,10 @@
 # tidyplate
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/shubhamdutta26/tidyplate/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/shubhamdutta26/tidyplate/actions/workflows/R-CMD-check.yaml)
+[![CRAN
+status](https://www.r-pkg.org/badges/version/tidyplate)](https://CRAN.R-project.org/package=tidyplate)
 <!-- badges: end -->
 
 Microtiter plates or microplates have become a standard tool in
@@ -27,6 +31,12 @@ types of standard microplate formats namely: 6-well, 12-well, 24-well,
   for use with `tidy_plate()` function.
 
 ## Installation
+
+To install tidyplate from CRAN:
+
+``` r
+install.packages("tidyplate")
+```
 
 You can install the development version of tidyplate from
 [GitHub](https://github.com/) with:
