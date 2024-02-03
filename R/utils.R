@@ -75,8 +75,10 @@ naming_cols <- function(df, well_id) {
   nm2 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")
   nm3 <- paste0(sample(LETTERS[1:26], 5), sample(letters[1:26], 5), sample(1:26, 5), collapse = "")
 
-  dplyr::mutate(df, !!nm3 := paste0(df[[1]], df[[2]])) |>
+  df_new <- dplyr::mutate(df, !!nm3 := paste0(df[[1]], df[[2]])) |>
     dplyr::rename(!!nm2 := 1, !!nm := 3) |>
-    dplyr::select(4, 3) |>
-    dplyr::rename(!!well_id := nm3)
+    dplyr::select(4, 3)
+
+  names(df_new)[1] <- well_id
+  return(df_new)
 }
