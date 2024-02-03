@@ -43,9 +43,9 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
   }
 
   # Extract file name
-  file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
+  # file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
   file_ext <- tools::file_ext(file)
-  file_full_name <- paste(file_name, file_ext, sep = ".")
+  file_full_name <- basename(file)
 
   # Check if file exists
   if (!(file.exists(file))) {
@@ -58,7 +58,7 @@ check_plate <- function(file, well_id = "well", sheet = 1) {
   } else if (tools::file_ext(file) == "xlsx") {
     suppressMessages(raw_data <- readxl::read_excel(file, col_names = FALSE, sheet = sheet))
   } else {
-    suppressMessages(raw_data <- readr::read_csv(file, col_names = FALSE))
+    suppressMessages(raw_data <- readr::read_csv(file, col_names = FALSE, show_col_types = FALSE))
   }
 
   # Check if file is empty
