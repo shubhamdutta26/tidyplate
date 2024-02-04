@@ -94,10 +94,10 @@ head(data)
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
 #>   <chr> <chr>     <chr>                <int>
-#> 1 A1    Neomycin  HEK293                  60
-#> 2 A2    Puromycin HEK293                  22
-#> 3 A3    Neomycin  Hela                    52
-#> 4 A4    Puromycin Hela                    18
-#> 5 B1    Neomycin  HEK293                  62
-#> 6 B2    Puromycin HEK293                  23
+#> 1 A01   Neomycin  HEK293                  60
+#> 2 A02   Puromycin HEK293                  22
+#> 3 A03   Neomycin  Hela                    52
+#> 4 A04   Puromycin Hela                    18
+#> 5 B01   Neomycin  HEK293                  62
+#> 6 B02   Puromycin HEK293                  23
 ```
