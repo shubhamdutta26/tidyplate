@@ -158,7 +158,7 @@ test_that("naming_cols correctly formats the names of the input dataframe", {
     c = 21:30
   )
   result <- tibble::tibble(
-    wells = paste0(LETTERS[1:10], 1:10),
+    wells = c("A01","B02","C03","D04","E05","F06","G07","H08","I09","J10"),
     values = 21:30
   )
 
