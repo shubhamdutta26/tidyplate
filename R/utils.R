@@ -78,7 +78,7 @@ naming_cols <- function(df, well_id) {
   df_new <- dplyr::mutate(df, !!nm3 := paste0(df[[1]], df[[2]])) |>
     dplyr::rename(!!nm2 := 1, !!nm := 3) |>
     dplyr::select(4, 3)
-
+  df_new[[1]] <- sub("(\\D)(\\d)$", "\\10\\2", df_new[[1]])
   names(df_new)[1] <- well_id
   return(df_new)
 }
