@@ -12,7 +12,7 @@ The goal of 'tidyplate' is to help researchers convert different types of microp
 Useful links:
 \itemize{
   \item \url{https://github.com/shubhamdutta26/tidyplate}
-  \item \url{http://www.shubhamdutta.com/tidyplate/}
+  \item \url{https://www.shubhamdutta.com/tidyplate/}
   \item Report bugs at \url{https://github.com/shubhamdutta26/tidyplate/issues}
 }
 
