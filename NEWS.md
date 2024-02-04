@@ -8,7 +8,7 @@
 
 # tidyplate 1.0.0
 
-* Added quotes arond package name in DESCRIPTION.
+* Added quotes around package name in DESCRIPTION.
 
 * Removed unecessary files.
 
