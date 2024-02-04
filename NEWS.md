@@ -4,6 +4,8 @@
 
 * Fixed double extension printing in output message
 
+* `well_id` column will now have leading zeros
+
 # tidyplate 1.0.0
 
 * Added quotes arond package name in DESCRIPTION.
