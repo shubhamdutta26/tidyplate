@@ -1,7 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Added quotes arond package name in DESCRIPTION.
+* Added quotes around package name in DESCRIPTION.
 
 * Removed unecessary files.
 
