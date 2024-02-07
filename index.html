@@ -124,8 +124,13 @@ This figure demonstrates how to format the 12-well plate input file. Colors are 
 <span><span class="va">file_path</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"extdata"</span>, <span class="st">"example_12_well.xlsx"</span>, package <span class="op">=</span> <span class="st">"tidyplate"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="reference/check_plate.html">check_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; example_12_well.xlsx: OK; Plate type: 12 well</span></span></code></pre></div>
-<p>Import the file as a tidy dataframe:</p>
+<p>If you want to view names of individual plates:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/view_plate_names.html">view_plate_names</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
+<span><span class="co">#&gt; example_12_well.xlsx: OK; Plate type: 12 well</span></span>
+<span><span class="co">#&gt; [1] "drug"             "cell_line"        "percent_survived"</span></span></code></pre></div>
+<p>Import the file as a tidy dataframe:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/tidy_plate.html">tidy_plate</a></span><span class="op">(</span><span class="va">file_path</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Data: example_12_well.xlsx; Plate type: 12 well plate</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span></span>
