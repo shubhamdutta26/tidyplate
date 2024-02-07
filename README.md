@@ -85,6 +85,14 @@ check_plate(file_path)
 #> example_12_well.xlsx: OK; Plate type: 12 well
 ```
 
+If you want to view names of individual plates:
+
+``` r
+view_plate_names(file_path)
+#> example_12_well.xlsx: OK; Plate type: 12 well
+#> [1] "drug"             "cell_line"        "percent_survived"
+```
+
 Import the file as a tidy dataframe:
 
 ``` r

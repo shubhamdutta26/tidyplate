@@ -2,5 +2,5 @@
 
 export(check_plate)
 export(tidy_plate)
-export(view_plates)
+export(view_plate_names)
 importFrom(rlang,":=")

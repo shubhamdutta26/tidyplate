@@ -11,10 +11,10 @@
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 #'
-#' data_12 <- view_plates(file = file_path)
+#' data_12 <- view_plate_names(file = file_path)
 #'
 #' data_12
-view_plates <- function(file, sheet = 1){
+view_plate_names <- function(file, sheet = 1){
   # check if one file is provided by the user
   if (typeof(file) %in% c("double", "integer", "logical")) {
     stop(

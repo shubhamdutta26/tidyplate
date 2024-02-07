@@ -68,6 +68,12 @@ file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate
 check_plate(file_path)
 ```
 
+If you want to view names of individual plates:
+
+```{r view-plate-names-xlsx}
+view_plate_names(file_path)
+```
+
 Import the file as a tidy dataframe:
 ```{r tidy_plate-xlsx}
 data <- tidy_plate(file_path)
