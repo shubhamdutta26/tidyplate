@@ -38,9 +38,9 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     expect_true(all(r_xlsx))
   })
 
-  test_that("tidy_plate returns a data.frame", {
-    expect_s3_class(tidy_plate(paste0(path, "allWellIds.csv")), "data.frame")
-    expect_s3_class(tidy_plate(paste0(path, "allWellIds.xlsx")), "data.frame")
+  test_that("tidy_plate returns a tbl_df", {
+    expect_s3_class(tidy_plate(paste0(path, "allWellIds.csv")), "tbl_df")
+    expect_s3_class(tidy_plate(paste0(path, "allWellIds.xlsx")), "tbl_df")
   })
 
   test_that("tidy_plate allows weird characters", {

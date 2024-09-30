@@ -142,5 +142,5 @@ tidy_plate <- function(file,
   message(paste("Data: ", file_full_name,
                 "; Plate type: ", plate_parameters[[3]],
                 "-well plate", sep = ""))
-  return(final_data_no_na)
+  return(tibble::tibble(final_data_no_na))
 }
