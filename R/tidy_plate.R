@@ -11,183 +11,136 @@
 #' @return A tidy dataframe
 #' @export
 #' @examples
-#' file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+#' file_path <- system.file("extdata", "example_12_well.xlsx",
+#'   package = "tidyplatenew"
+#' )
 #'
 #' data_12 <- tidy_plate(file = file_path)
 #'
 #' head(data_12)
-tidy_plate <- function(file, well_id = "well", sheet = 1) {
-  # check if one file is provided by the user
-  if (typeof(file) %in% c("double", "integer", "logical")) {
+tidy_plate <- function(file,
+                       well_id = "well",
+                       sheet = 1) {
+
+  # Check whether function arguments are valid----
+  ## One file should be provided----
+  if (length(file) != 1) {
     stop(
-      paste0("file argument cannot be of type: ", typeof(file)),
-      call. = FALSE
-    )
-  } else if (length(file) > 1) {
-    stop(
-      paste0("More than one file provided. Only one file should be provided"),
+      paste0(
+        "Invalid input: ",
+        ifelse(length(file) > 1,
+               "More than one file provided."
+        )
+      ),
       call. = FALSE
     )
   }
 
-  # Check whether `well_id` is a character and has length == 1
-  if (typeof(well_id) != "character") {
-    stop("well_id should be a character vector of length 1", call. = FALSE)
-  } else if (length(well_id) > 1L) {
-    stop("well_id should be a character vector of length 1", call. = FALSE)
+  ## `well_id` should be a character vector of length 1----
+  if (!is.character(well_id) || length(well_id) != 1L) {
+    stop("`well_id` should be a character vector of length 1", call. = FALSE)
   }
 
-  # Extract file name
-  # file_name <- sub("(.*\\/)([^.]+)(\\.[[:alnum:]]+$)", "\\2", file)
-  file_ext <- tools::file_ext(file)
+  ## Read file ext and basename----
+  file_ext <- tolower(tools::file_ext(file))
   file_full_name <- basename(file)
 
-  # Check if file exists
+  ## Check if file exists----
   if (!(file.exists(file))) {
     stop(paste0(file_full_name, " does not exist!"), call. = FALSE)
   }
 
-  # Determine file ext and call appropriate function to import as raw_data
-  if (!(file_ext %in% c("xlsx", "csv"))) {
-    stop(paste0("Input file must be either xlsx or csv file!"), call. = FALSE)
-  } else if (tools::file_ext(file) == "xlsx") {
-    suppressMessages(raw_data <- readxl::read_excel(file, col_names = FALSE, sheet = sheet))
-  } else {
-    suppressMessages(raw_data <- readr::read_csv(file, col_names = FALSE, show_col_types = FALSE))
-  }
+  # Read data----
+  raw_data <- read_data(file = file, file_ext = file_ext, sheet = sheet)
 
-  # Check if file is empty
-  # xlsx files cannot be empty
-  if (nrow(raw_data) == 0) {
-    stop(paste0(file_full_name, " is empty. Please verify input file."), call. = FALSE)
-  }
-
-  # Count number of columns and rows in raw_data
+  # Check if input file has the correct format----
+  ## Count number of columns and rows in raw_data----
   count_columns <- ncol(raw_data)
   count_rows_actual <- nrow(raw_data)
 
-  # Check if there are a exact number of columns
-  if (!(count_columns %in% c(4L, 5L, 7L, 9L, 13L, 25L, 49L))) {
-    stop(paste0(file_full_name, " is not a valid input file. Please review an example dataset."), call. = FALSE)
+  # Check if plate format is valid----
+  plate_parameters <- valid_plate(raw_data,
+                                  count_columns ,
+                                  count_rows_actual,
+                                  well_id,
+                                  file_full_name)[[1]]
+
+  # Final transformation----
+
+  ## Converting to data.frame----
+  raw_data <- as.data.frame(raw_data)
+  ## Remove any completely empty rows----
+  plate_data <-
+    raw_data[rowSums(!is.na(raw_data) & raw_data != "", na.rm = TRUE) > 0, ]
+  ## Find the rows that contain the plate identifiers----
+  plate_rows <- which(
+    plate_data[, 1] != "" & !grepl("^[A-Z]{1,2}$", plate_data[, 1])
+  )
+  ## Initialize an empty list to store the reformatted data----
+  reformatted_data <- vector("list", plate_parameters[[1]])  # Pre-allocate based on the number of plates
+
+  # Process each plate----
+  for (i in seq_along(plate_rows)) {
+    start_row <- plate_rows[i]
+    end_row <- if (i < length(plate_rows)) plate_rows[i + 1] - 1 else nrow(plate_data)
+
+    ## Extract the current plate----
+    plate <- plate_data[start_row:end_row, ]
+
+    ## Get the plate identifier----
+    plate_id <- as.character(plate[1, 1])
+
+    ## Remove the first row and set column names----
+    plate <- plate[-1, ]
+    colnames(plate) <- c("row", as.character(1:(ncol(plate) - 1)))
+
+    ## Check if we have valid data----
+    if (nrow(plate) > 0) {
+      # Create well identifiers and values in one go
+      num_cols <- ncol(plate) - 1
+      zwellsx <- paste0(rep(plate$row, each = num_cols), sprintf("%02d", rep(1:num_cols, times = nrow(plate))))
+
+      # Flatten the plate values and replace empty strings with NA
+      values <- as.vector(t(plate[, -1]))
+      values[values == ""] <- NA
+
+      # Create long format data frame directly
+      long_plate <- data.frame(zwellx = zwellsx, value = values)
+
+      # Add to the pre-allocated list at the correct index
+      reformatted_data[[i]] <- long_plate
+    }
   }
 
-  # This counts the number of plates in the dataset
-  # This counts the theoretical number of rows the raw_data should have for each plate type
-  # This determines the plate type
-  # Initialize indexing for each plate size
-  # Sets increment value for counter for each well type
-  row_start <- 1L
-  plate_parameters <- plate_params(raw_data, count_columns)
+  # Set names for the list based on plate identifiers
+  names(reformatted_data) <- sapply(plate_rows, function(i) as.character(plate_data[i, 1]))
 
-  # This checks whether the input formating is correct or not.
-  # There must be one empty row between each data.
-  if (plate_parameters[[2]] != count_rows_actual) {
-    stop(paste0(file_full_name, " is not a valid input file. Please review an example dataset."),
-      call. = FALSE
-    )
+
+  # Merge all
+  final_data <- reformatted_data[[1]]
+  colnames(final_data)[2] <- names(reformatted_data)[1]
+
+  if (length(reformatted_data) > 1) {
+    for (i in seq_along(reformatted_data)[-1]) {
+      new_data <- reformatted_data[[i]]
+      colnames(new_data)[2] <- names(reformatted_data)[i]
+      final_data <- merge(final_data, new_data, by = "zwellx", all = TRUE)
+    }
   }
 
-  # Initialize empty list to store the raw_data.
-  # Each element in the list will store one plate from the raw_data
-  # no_of_plates <- as.integer(plate_parameters[[1]])
-  list_of_plates <- vector(mode = "list", length = plate_parameters[[1]])
+  # Sort the dataframe by well
+  final_data <- final_data[order(final_data$zwellx), ]
+  # Rename the first column
+  colnames(final_data)[1] <- well_id
 
-  # This is a vector which will be used to name each plate
-  # name_of_plates <- paste0("plate", 1:plate_parameters[[1]])
+  final_data_no_na <- utils::type.convert(
+    final_data[!apply(final_data[-1], 1, \(x) all(is.na(x))), ],
+    as.is = TRUE
+  )
 
-  # Initialize counter for indexing each plate from raw_data
-  counter <- 0
 
-  # Store each plate as an obect in a list
-  for (i in 1:plate_parameters[[1]]) {
-    list_of_plates[[i]] <- raw_data[(row_start + counter):(plate_parameters[[5]] + counter), ]
-    counter <- counter + plate_parameters[[6]]
-  }
-
-  # Make the list a named list
-  # names(list_of_plates) <- name_of_plates
-
-  # Extract names for each plate
-  each_plate_name <- purrr::map(list_of_plates, function(x) {
-    x |>
-      dplyr::slice(1) |>
-      dplyr::select(1)
-  }) |>
-    unlist(use.names = FALSE)
-
-  # Check if the plate name matches the user input `well_id`
-  if (well_id %in% each_plate_name) {
-    stop("Plate names cannot be the same as variable 'well_id'", call. = FALSE)
-  }
-
-  # Check if plate name exists and unique
-  if (sum(is.na(each_plate_name)) != 0L || length(each_plate_name) != length(unique(each_plate_name))) {
-    stop(paste0("Verify that each plate in ", file_full_name, " has a unique name."), call. = FALSE)
-  }
-
-  # Check if plates have 1:x as column names after plate name
-  first_row <- purrr::map(list_of_plates, function(x) {
-    x |>
-      dplyr::slice(1) |>
-      dplyr::select(-1)
-  }) |>
-    purrr::map(function(x) sum(x == plate_parameters[[8]])) |>
-    purrr::map(function(x) x != (count_columns - 1)) |>
-    unlist(use.names = FALSE)
-  first_row_sum <- replace(first_row, is.na(first_row), TRUE) |>
-    sum() # has to be 0; otherwise there is at least one plate that has bad column names
-
-  # Check if plates have A:x as row names after plate name
-  first_col <- purrr::map(list_of_plates, function(x) x |> dplyr::select(1)) |>
-    purrr::map(function(x) {
-      x |>
-        dplyr::filter(dplyr::row_number() != 1) |>
-        t() |>
-        toupper()
-    }) |>
-    purrr::map(function(x) sum(x != plate_parameters[[7]])) |>
-    unlist(use.names = FALSE)
-  first_col_sum <- replace(first_col, is.na(first_col), TRUE) |>
-    sum() # has to be 0; otherwise there is at least one plate that has bad row names
-
-  if (first_row_sum != 0L & first_col_sum != 0L) {
-    stop(paste0("Verify row names and column names in ", file_full_name, "."), call. = FALSE)
-  } else if (first_row_sum != 0L) {
-    stop(paste0("Verify column names in ", file_full_name, "."), call. = FALSE)
-  } else if (first_col_sum != 0L) {
-    stop(paste0("Verify row names in ", file_full_name, "."), call. = FALSE)
-  }
-
-  # Run a loop to extract each plate and store it in list_of_plates
-  # Randomizes column names during pivot_longer such that there are no duplicates
-  # values_to_variable = paste0(sample(LETTERS[1:26], 6), sample(letters[1:26], 6), sample(1:100, 6), collapse = "")
-  # Generated random names for names_to and values_to
-  final_data_list <- list_of_plates |>
-    purrr::map(function(x) janitor::row_to_names(x, row_number = 1)) |>
-    purrr::map(function(x) dplyr::mutate_all(x, as.character)) |>
-    purrr::map(function(x) {
-      tidyr::pivot_longer(x,
-        cols = -1,
-        names_to = "Hq26Wl22Qo19Lz10Ed13",
-        values_to = "Rt26Yz13Nu14Sq81Pb51Ff38",
-        # names_repair = "unique",
-        # values_transform = list(Rt26Yz13Nu14Sq81Pb51Ff38 = as.character)
-      )
-    })
-
-  # Prep final_data as a dataframe/tibble
-  # Remove NAs in all rows (except well/ first column)
-  final_data <- final_data_list |>
-    purrr::map(naming_cols, well_id) |>
-    purrr::reduce(dplyr::full_join, by = well_id)
-
-  final_data_no_na <- final_data[!apply(final_data[-1], 1, \(x) all(is.na(x))),] |>
-    utils::type.convert(as.is = TRUE)
-
-   # dplyr::filter(!dplyr::if_all(-well_id, is.na)) |>
-   # utils::type.convert(as.is = TRUE)
-
-  # Return data with plate type
-  message(paste("Data: ", file_full_name, "; Plate type: ", plate_parameters[[3]], " well plate", sep = ""))
-  return(tibble::tibble(final_data_no_na))
+  message(paste("Data: ", file_full_name,
+                "; Plate type: ", plate_parameters[[3]],
+                "-well plate", sep = ""))
+  return(final_data_no_na)
 }
