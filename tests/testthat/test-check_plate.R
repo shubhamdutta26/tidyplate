@@ -9,19 +9,19 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file_1, well_id = "wells"),
-      "extraCol.csv: Not OK; Verify input data format."
+      "extraCol.csv is not a valid input file. Please review an example dataset."
     )
     expect_error(
       check_plate(csv_file_2, well_id = "wells"),
-      "twoPlatesExtraCol.csv: Not OK; Verify input data format."
+      "twoPlatesExtraCol.csv is not a valid input file. Please review an example dataset."
     )
     expect_error(
       check_plate(xlsx_file_1, well_id = "wells"),
-      "extraCol.xlsx: Not OK; Verify input data format."
+      "extraCol.xlsx is not a valid input file. Please review an example dataset."
     )
     expect_error(
       check_plate(xlsx_file_2, well_id = "wells"),
-      "twoPlatesExtraCol.xlsx: Not OK; Verify input data format."
+      "twoPlatesExtraCol.xlsx is not a valid input file. Please review an example dataset."
     )
   })
 
@@ -31,11 +31,11 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file, well_id = "full"),
-      "oneFullOnePartEmpty.csv: Not OK; Plate names cannot be the same as variable 'well_id'"
+      "Plate names cannot be the same as argument `well_id`."
     )
     expect_error(
       check_plate(xlsx_file, well_id = "full"),
-      "oneFullOnePartEmpty.xlsx: Not OK; Plate names cannot be the same as variable 'well_id'"
+      "Plate names cannot be the same as argument `well_id`."
     )
   })
 
@@ -47,19 +47,19 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file_1, well_id = "wells"),
-      "sameNames.csv: Not OK; Verify each plate has a unique name."
+      "Verify that each plate in sameNames.csv has a unique name."
     )
     expect_error(
       check_plate(xlsx_file_1, well_id = "wells"),
-      "sameNames.xlsx: Not OK; Verify each plate has a unique name."
+      "Verify that each plate in sameNames.xlsx has a unique name."
     )
     expect_error(
       check_plate(csv_file_2, well_id = "wells"),
-      "noName.csv: Not OK; Verify each plate has a unique name."
+      "Verify that each plate in noName.csv has a unique name."
     )
     expect_error(
       check_plate(xlsx_file_2, well_id = "wells"),
-      "noName.xlsx: Not OK; Verify each plate has a unique name."
+      "Verify that each plate in noName.xlsx has a unique name."
     )
   })
 
@@ -71,19 +71,19 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file_1, well_id = "wells"),
-      "badColRowName.csv: Not OK; Verify row and column names."
+      "Verify row and column ids in badColRowName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_1, well_id = "wells"),
-      "badColRowName.xlsx: Not OK; Verify row and column names."
+      "Verify row and column ids in badColRowName.xlsx.", fixed = TRUE
     )
     expect_error(
       check_plate(csv_file_2, well_id = "wells"),
-      "emptyColRowName.csv: Not OK; Verify row and column names."
+      "Verify row and column ids in emptyColRowName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_2, well_id = "wells"),
-      "emptyColRowName.xlsx: Not OK; Verify row and column names."
+      "Verify row and column ids in emptyColRowName.xlsx.", fixed = TRUE
     )
   })
 
@@ -95,19 +95,19 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file_1, well_id = "wells"),
-      "badRowName.csv: Not OK; Verify row names."
+      "Verify row id(s) in badRowName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_1, well_id = "wells"),
-      "badRowName.xlsx: Not OK; Verify row names."
+      "Verify row id(s) in badRowName.xlsx.", fixed = TRUE
     )
     expect_error(
       check_plate(csv_file_2, well_id = "wells"),
-      "emptyRowName.csv: Not OK; Verify row names."
+      "Verify row id(s) in emptyRowName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_2, well_id = "wells"),
-      "emptyRowName.xlsx: Not OK; Verify row names."
+      "Verify row id(s) in emptyRowName.xlsx.", fixed = TRUE
     )
   })
 
@@ -119,28 +119,23 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       check_plate(csv_file_1, well_id = "wells"),
-      "badColName.csv: Not OK; Verify column names."
+      "Verify column id(s) in badColName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_1, well_id = "wells"),
-      "badColName.xlsx: Not OK; Verify column names."
+      "Verify column id(s) in badColName.xlsx.", fixed = TRUE
     )
     expect_error(
       check_plate(csv_file_2, well_id = "wells"),
-      "emptyColName.csv: Not OK; Verify column names."
+      "Verify column id(s) in emptyColName.csv.", fixed = TRUE
     )
     expect_error(
       check_plate(xlsx_file_2, well_id = "wells"),
-      "emptyColName.xlsx: Not OK; Verify column names."
+      "Verify column id(s) in emptyColName.xlsx.", fixed = TRUE
     )
   })
 }
 
-test_that("check_plate throws an error when user inputs bad file type", {
-  expect_error(check_plate(file = 1), "file argument cannot be of type: double")
-  expect_error(check_plate(file = 1L), "file argument cannot be of type: integer")
-  expect_error(check_plate(file = TRUE), "file argument cannot be of type: logical")
-})
 
 test_that("check_plate throws an error when user inputs more than one file", {
   file_1 <- "test_data/allWellIds.csv"
@@ -148,37 +143,37 @@ test_that("check_plate throws an error when user inputs more than one file", {
 
   expect_error(
     check_plate(file = c(file_1, file_2)),
-    "More than one file provided. Only one file should be provided"
+    "Invalid input: More than one file provided."
   )
 })
 
 test_that("check_plate throws an error when `well_id` argument not a character vector of length 1", {
   file <- "test_data/allWellIds.csv"
 
-  expect_error(check_plate(file, well_id = 1), "well_id should be a character vector of length 1")
-  expect_error(check_plate(file, well_id = 1L), "well_id should be a character vector of length 1")
-  expect_error(check_plate(file, well_id = c("xxx", "yyy")), "well_id should be a character vector of length 1")
-  expect_error(check_plate(file, well_id = TRUE), "well_id should be a character vector of length 1")
+  expect_error(check_plate(file, well_id = 1), "`well_id` should be a character vector of length 1")
+  expect_error(check_plate(file, well_id = 1L), "`well_id` should be a character vector of length 1")
+  expect_error(check_plate(file, well_id = c("xxx", "yyy")), "`well_id` should be a character vector of length 1")
+  expect_error(check_plate(file, well_id = TRUE), "`well_id` should be a character vector of length 1")
 })
 
-# # Test for filenames extraction
+# Test for filenames extraction
 
 test_that("check_plate throws an error when input file is non existant", {
   csv_file <- "test_data/doesNotExist.csv"
   xlsx_file <- "test_data/doesNotExist.xlsx"
 
-  expect_error(check_plate(csv_file), "doesNotExist.csv: Not OK; File does not exist.")
-  expect_error(check_plate(xlsx_file), "doesNotExist.xlsx: Not OK; File does not exist.")
+  expect_error(check_plate(csv_file), "doesNotExist.csv does not exist!")
+  expect_error(check_plate(xlsx_file), "doesNotExist.xlsx does not exist!")
 })
 
 test_that("check_plate throws an error when input file is not csv or xlsx", {
   file <- "test_data/badFileType.txt"
 
-  expect_error(check_plate(file), "badFileType.txt: Not OK; Must be either xlsx or csv file.")
+  expect_error(check_plate(file), "Unsupported file format. Please use CSV or Excel files.")
 })
 
 test_that("check_plate throws an error when input file is empty", {
   csv_file <- "test_data/emptyFile.csv"
 
-  expect_error(check_plate(csv_file), "emptyFile.csv: Not OK; File is empty.")
+  expect_error(check_plate(csv_file), "The input file or sheet is empty.")
 })

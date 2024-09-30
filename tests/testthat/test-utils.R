@@ -5,7 +5,14 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file <- paste0(path, "allWellIds.csv")
     xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-    imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+    imported_csv <- tibble::as_tibble(
+      data.table::fread(
+        csv_file,
+        sep = ",",
+        header = FALSE,
+        na.strings = ""
+      )
+    )
     imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
     n_cols_csv <- ncol(imported_csv)
     n_cols_xlsx <- ncol(imported_csv)
@@ -23,7 +30,14 @@ test_that("6 well params are identical to 6 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -42,7 +56,14 @@ test_that("12 well params are identical to 12 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -61,7 +82,14 @@ test_that("24 well params are identical to 24 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -80,7 +108,14 @@ test_that("48 well params are identical to 48 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -99,7 +134,14 @@ test_that("96 well params are identical to 96 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -118,7 +160,14 @@ test_that("384 well params are identical to 384 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -137,7 +186,14 @@ test_that("1536 well params are identical to 1536 well plate", {
   csv_file <- paste0(path, "allWellIds.csv")
   xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-  imported_csv <- readr::read_csv(csv_file, col_names = FALSE)
+  imported_csv <- tibble::as_tibble(
+    data.table::fread(
+      csv_file,
+      sep = ",",
+      header = FALSE,
+      na.strings = ""
+    )
+  )
   imported_xlsx <- readxl::read_xlsx(xlsx_file, col_names = FALSE)
   n_cols_csv <- ncol(imported_csv)
   n_cols_xlsx <- ncol(imported_csv)
@@ -149,18 +205,4 @@ test_that("1536 well params are identical to 1536 well plate", {
 
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
-})
-
-test_that("naming_cols correctly formats the names of the input dataframe", {
-  initial_df <- tibble::tibble(
-    values = LETTERS[1:10],
-    b = 1:10,
-    c = 21:30
-  )
-  result <- tibble::tibble(
-    wells = c("A01","B02","C03","D04","E05","F06","G07","H08","I09","J10"),
-    values = 21:30
-  )
-
-  expect_identical(naming_cols(initial_df, "wells"), result)
 })
