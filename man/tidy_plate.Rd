@@ -25,7 +25,7 @@ Transforms a plate to a tidy dataframe
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx",
-  package = "tidyplatenew"
+  package = "tidyplate"
 )
 
 data_12 <- tidy_plate(file = file_path)
