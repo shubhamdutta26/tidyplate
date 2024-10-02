@@ -3,7 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   getting_started: getting_started.html
-last_built: 2024-10-02T19:06Z
+last_built: 2024-10-02T21:57Z
 urls:
   reference: http://www.shubhamdutta.com/tidyplate/reference
   article: http://www.shubhamdutta.com/tidyplate/articles
