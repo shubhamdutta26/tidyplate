@@ -39,9 +39,9 @@ pull_plate <- function(file, sheet = 1, plate_id) {
     )
   }
 
-  ## `well_id` should be a character vector of length 1----
-  if (!is.character(well_id) || length(well_id) != 1L) {
-    stop("`well_id` should be a character vector of length 1", call. = FALSE)
+  # Check if `plate_id` is either a character vector or an integer vector
+  if (!(is.character(plate_id) || (is.numeric(plate_id) && all(plate_id == as.integer(plate_id))))) {
+    stop("`plate_id` must be either a character or an integer vector.", call. = FALSE)
   }
 
   ## Read file ext and basename----
@@ -70,24 +70,21 @@ pull_plate <- function(file, sheet = 1, plate_id) {
   plate_names <- unlist(lapply(plate_parameters, function(x) x[1,1]),
                         use.names = FALSE)
 
+  # Check if `plate_id` is a character vector or integer vector
+  if (is.character(plate_id)) {
+    # Check if `plate_id` matches plate names
+    if (!all(plate_id %in% plate_names)) {
+      warning(paste0("`plate_id` does not match any plate names in ", file_full_name, "."),
+              call. = FALSE)
+    }
+  }
+
   list_of_plates <- lapply(plate_parameters, convert_first_row_to_header)
 
+  # Assign names to plates
+  names(list_of_plates) <- plate_names
 
-  selected_plates <- extract_plates(list = list_of_plates, indices = plate_id)
+  selected_plate <- list_of_plates[plate_id]
 
-  return(plate_names)
-
-  # if (typeof(plate_id) %in% c("numeric", "double") & max(plate_id) > length(list_of_plates)) {
-  #   stop("`plate_id` value(s) are greater than the total number of plates in the input file.", call. = FALSE)
-  # } else if (typeof(plate_id) == "character") {
-  #   index <- sort(match(plate_id, each_plate_name))
-  #   return(list_of_plates[index] |>
-  #            purrr::map(function(x) janitor::row_to_names(x,row_number = 1)) |>
-  #            purrr::map(function(x) utils::type.convert(x, as.is = TRUE)))
-  # } else if (typeof(plate_id) %in% c("numeric", "double")) {
-  #   return(list_of_plates[plate_id] |>
-  #            purrr::map(function(x) janitor::row_to_names(x,row_number = 1)) |>
-  #            purrr::map(function(x) utils::type.convert(x, as.is = TRUE)))
-  # }
-
+  return(selected_plate)
 }
