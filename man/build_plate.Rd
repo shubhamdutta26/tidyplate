@@ -8,7 +8,8 @@ build_plate(
   plate_type = 6,
   n_plates = 1,
   file_type = c("csv", "xlsx"),
-  plate_names = NULL
+  plate_names = NULL,
+  file = NULL
 )
 }
 \arguments{
@@ -16,9 +17,11 @@ build_plate(
 
 \item{n_plates}{The total number of plates (double)}
 
-\item{file_type}{Type of file; either a "csv" (DEFAULT) or "xlsx"}
+\item{file_type}{Type of file; either a "csv" (default) or "xlsx"}
 
 \item{plate_names}{A character vector that will be assigned to each plate}
+
+\item{file}{The path where the file will be saved (defaults to current directory)}
 }
 \value{
 A csv or xlsx file

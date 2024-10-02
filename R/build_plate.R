@@ -2,8 +2,9 @@
 #'
 #' @param plate_type Type of microwell plate (double)
 #' @param n_plates The total number of plates (double)
-#' @param file_type Type of file; either a "csv" (DEFAULT) or "xlsx"
+#' @param file_type Type of file; either a "csv" (default) or "xlsx"
 #' @param plate_names A character vector that will be assigned to each plate
+#' @param file The path where the file will be saved (defaults to current directory)
 #'
 #' @return A csv or xlsx file
 #' @importFrom utils write.table
@@ -11,24 +12,41 @@
 build_plate <- function(plate_type = 6,
                         n_plates = 1,
                         file_type = c("csv", "xlsx"),
-                        plate_names = NULL) {
+                        plate_names = NULL,
+                        file = NULL) {
 
   # Validate inputs
   file_type <- match.arg(file_type)
 
   if (!(plate_type %in% c(6, 12, 24, 48, 96, 384, 1536))) {
-    stop("Invalid `plate_type` provided. `plate_type` must be one of 6, 12, 24, 48, 96, 384, or 1536.", call. = FALSE)
+    stop("Invalid `plate_type` provided. `plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536.", call. = FALSE)
   }
 
+  # Validate n_plates (check if it's a positive integer)
+  if (!is.numeric(n_plates) || n_plates != as.integer(n_plates) || n_plates < 1) {
+    stop("Invalid `n_plates` value provided. `n_plates` must be a positive integer.", call. = FALSE)
+  }
+
+  # Validate plate_names
   if (is.null(plate_names)) {
     plate_names <- paste0("plate_", 1:n_plates)
-  } else if (length(plate_names) != n_plates) {
-    stop("The length of `plate_names` must match `n_plates`.", call. = FALSE)
   } else {
+    # Check if plate_names is a character vector
+    if (!is.character(plate_names)) {
+      stop("`plate_names` must be a character vector.", call. = FALSE)
+    }
+    if (length(plate_names) != n_plates) {
+      stop("The length of `plate_names` must match `n_plates`.", call. = FALSE)
+    }
     if (anyDuplicated(plate_names)) {
       duplicates <- plate_names[duplicated(plate_names)]
       stop(paste0("`plate_names` cannot have duplicates.\nDuplicated names: ", paste(unique(duplicates), collapse = ", ")), call. = FALSE)
     }
+  }
+
+  # Validate file (if provided)
+  if (!is.null(file) && !is.character(file)) {
+    stop("`file` must be a character string.", call. = FALSE)
   }
 
   dims <- plate_dims[[as.character(plate_type)]]
@@ -63,13 +81,16 @@ build_plate <- function(plate_type = 6,
   # Combine plates
   final_plate <- do.call(rbind, plate_list)
 
-  final_filename <- paste0("tidyplate_", plate_type, "_well")
+  # Define default file path and name if not provided
+  if (is.null(file)) {
+    file <- paste0("empty_", plate_type, "-well.", file_type)
+  }
 
   # Export as file
   if (file_type == "xlsx") {
-    openxlsx::write.xlsx(final_plate, paste0(final_filename, ".xlsx"), colNames = FALSE)
+    openxlsx::write.xlsx(final_plate, file = file, colNames = FALSE)
   } else if (file_type == "csv") {
-    write.table(final_plate, paste0(final_filename, ".csv"), sep = ",",
+    write.table(final_plate, file = file, sep = ",",
                 row.names = FALSE, col.names = FALSE, na = "")
   }
 }

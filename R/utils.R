@@ -29,6 +29,56 @@ read_data <- function(file, file_ext, sheet = NULL) {
   return(raw_data)
 }
 
+plate_params <- function(data, n_cols) {
+  # Define a list of parameters for each n_cols value
+  plate_info <- list(
+    `4` = list(plate_type = 6L, row_end = 3L, increment = 4L, first_col_vec = LETTERS[1:2], first_row_vec = 1:3),
+    `5` = list(plate_type = 12L, row_end = 4L, increment = 5L, first_col_vec = LETTERS[1:3], first_row_vec = 1:4),
+    `7` = list(plate_type = 24L, row_end = 5L, increment = 6L, first_col_vec = LETTERS[1:4], first_row_vec = 1:6),
+    `9` = list(plate_type = 48L, row_end = 7L, increment = 8L, first_col_vec = LETTERS[1:6], first_row_vec = 1:8),
+    `13` = list(plate_type = 96L, row_end = 9L, increment = 10L, first_col_vec = LETTERS[1:8], first_row_vec = 1:12),
+    `25` = list(plate_type = 384L, row_end = 17L, increment = 18L, first_col_vec = LETTERS[1:16], first_row_vec = 1:24),
+    `49` = list(plate_type = 1536L, row_end = 33L, increment = 34L,
+                first_col_vec = c(LETTERS[1:26], paste0("A", LETTERS[1:6])),
+                first_row_vec = 1:48)
+  )
+
+  # Get the relevant parameters
+  params <- plate_info[[as.character(n_cols)]]
+
+  # Calculate no_of_plates and count_rows_theoretical
+  no_of_plates <- sum(rowSums(is.na(data)) == n_cols) + 1L
+  count_rows_theoretical <- (no_of_plates * params$increment) - 1L
+
+  # Create a vector of columns
+  cols <- seq_len(n_cols)
+
+  return(list(
+    no_of_plates,
+    count_rows_theoretical,
+    params$plate_type,
+    cols,
+    params$row_end,
+    params$increment,
+    params$first_col_vec,
+    params$first_row_vec
+  ))
+}
+
+# Check if plate(s) are empty
+is_list_of_dfs_empty <- function(df_list) {
+  sapply(df_list, function(df) {
+    if (nrow(df) > 1 && ncol(df) > 1) {
+      # Subset the dataframe from second row and second column to the last
+      df_subset <- df[2:nrow(df), 2:ncol(df)]
+      all(is.na(df_subset) | df_subset == "")
+    } else {
+      # If the dataframe doesn't have at least 2 rows and 2 columns, return FALSE
+      FALSE
+    }
+  })
+}
+
 valid_plate <- function(raw_data,
                         count_columns,
                         count_rows_actual,
@@ -70,6 +120,10 @@ valid_plate <- function(raw_data,
   ## Check if all plate names are unique and non-missing
   if (anyNA(each_plate_name) || length(each_plate_name) != length(unique(each_plate_name))) {
     stop(paste0("Verify that each plate in ", file_full_name, " has a unique name."), call. = FALSE)
+  }
+
+  if (sum(is_list_of_dfs_empty(list_of_plates)) == plate_parameters[[1]]) {
+    stop("Plate(s) are empty.", call. = FALSE)
   }
 
   ## Check if plates have 1:x as column names after plate name
@@ -118,43 +172,6 @@ plate_dims <- list(
   `384` = c(16, 24),
   `1536` = c(32, 48)
 )
-
-
-plate_params <- function(data, n_cols) {
-  # Define a list of parameters for each n_cols value
-  plate_info <- list(
-    `4` = list(plate_type = 6L, row_end = 3L, increment = 4L, first_col_vec = LETTERS[1:2], first_row_vec = 1:3),
-    `5` = list(plate_type = 12L, row_end = 4L, increment = 5L, first_col_vec = LETTERS[1:3], first_row_vec = 1:4),
-    `7` = list(plate_type = 24L, row_end = 5L, increment = 6L, first_col_vec = LETTERS[1:4], first_row_vec = 1:6),
-    `9` = list(plate_type = 48L, row_end = 7L, increment = 8L, first_col_vec = LETTERS[1:6], first_row_vec = 1:8),
-    `13` = list(plate_type = 96L, row_end = 9L, increment = 10L, first_col_vec = LETTERS[1:8], first_row_vec = 1:12),
-    `25` = list(plate_type = 384L, row_end = 17L, increment = 18L, first_col_vec = LETTERS[1:16], first_row_vec = 1:24),
-    `49` = list(plate_type = 1536L, row_end = 33L, increment = 34L,
-                first_col_vec = c(LETTERS[1:26], paste0("A", LETTERS[1:6])),
-                first_row_vec = 1:48)
-  )
-
-  # Get the relevant parameters
-  params <- plate_info[[as.character(n_cols)]]
-
-  # Calculate no_of_plates and count_rows_theoretical
-  no_of_plates <- sum(rowSums(is.na(data)) == n_cols) + 1L
-  count_rows_theoretical <- (no_of_plates * params$increment) - 1L
-
-  # Create a vector of columns
-  cols <- seq_len(n_cols)
-
-  return(list(
-    no_of_plates,
-    count_rows_theoretical,
-    params$plate_type,
-    cols,
-    params$row_end,
-    params$increment,
-    params$first_col_vec,
-    params$first_row_vec
-  ))
-}
 
 # Function to convert the first row into header
 convert_first_row_to_header <- function(df) {
