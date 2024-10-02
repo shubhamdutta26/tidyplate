@@ -12,13 +12,14 @@ Description: The goal of 'tidyplate' is to help researchers convert different ty
     standard microplate formats such as 6-well, 12-well, 24-well, 48-well, 96-well, 384-well,
     and, 1536-well plates.
 Imports: 
-  data.table,
-  readr, 
-  readxl,
-  tibble,
-  dplyr,
-  purrr,
-  rlang
+    data.table,
+    readr,
+    readxl,
+    tibble,
+    dplyr,
+    purrr,
+    rlang,
+    openxlsx
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
