@@ -1,6 +1,12 @@
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   path <- paste0("test_data/", i, "/")
 
+  test_that("check_plate guesses the correct plate type", {
+    csv_file <- paste0(path, "allWellIds.csv")
+
+    expect_message(check_plate(csv_file), paste0("allWellIds.csv: OK; Plate type: ", i, "-well"))
+  })
+
   test_that("check_plate throws error when plate format is not correct", {
     csv_file_1 <- paste0(path, "extraCol.csv")
     csv_file_2 <- paste0(path, "twoPlatesExtraCol.csv")
