@@ -1,5 +1,9 @@
 # Function to read data based on file extension
-read_data <- function(file, file_ext, sheet = NULL) {
+read_data <- function(file, sheet = NULL) {
+
+  # Get file ext
+  file_ext <- tolower(tools::file_ext(file))
+
   # Check for supported file extensions
   if (file_ext == "csv") {
     raw_data <- tryCatch({
