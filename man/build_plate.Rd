@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_plate.R
 \name{build_plate}
 \alias{build_plate}
-\title{Returns a skeleton csv or xlsx file}
+\title{Generates a csv or xlsx template for each plate type}
 \usage{
 build_plate(
   plate_type = 6,
@@ -13,19 +13,25 @@ build_plate(
 )
 }
 \arguments{
-\item{plate_type}{Type of microwell plate (double)}
+\item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, 1536) indicating the type of microwell plate.}
 
-\item{n_plates}{The total number of plates (double)}
+\item{n_plates}{A positive integer indicating the number of plates.}
 
-\item{file_type}{Type of file; either a "csv" (default) or "xlsx"}
+\item{file_type}{A character string ("csv" (the default) or "xlsx") indicating the filetype.}
 
-\item{plate_names}{A character vector that will be assigned to each plate}
+\item{plate_names}{A character vector of unique values that will be assigned to each plate. Its length should be equal to the value of \code{n_plates}.}
 
-\item{file}{The path where the file will be saved (defaults to current directory)}
+\item{file}{A character string naming the file.}
 }
 \value{
-A csv or xlsx file
+A csv or xlsx template file.
 }
 \description{
-Returns a skeleton csv or xlsx file
+Generates a csv or xlsx template for each plate type
+}
+\examples{
+\dontrun{
+build_plate(plate_type = 6, n_plates = 2)
+build_plate(plate_type = 6, n_plates = 2, file_type = "xlsx")
+}
 }
