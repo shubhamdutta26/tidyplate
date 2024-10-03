@@ -1,5 +1,9 @@
 # tidyplate (development version)
 
+* Major updates to each function increasing speed and efficiency.
+
+* Added a new function `build_plate`
+
 # tidyplate 1.1.0
 
 * Removed tidyplate warnings
