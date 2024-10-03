@@ -1,12 +1,12 @@
-#' Returns a skeleton csv or xlsx file
+#' Generates a csv or xlsx template for each plate type
 #'
-#' @param plate_type Type of microwell plate (double)
-#' @param n_plates The total number of plates (double)
-#' @param file_type Type of file; either a "csv" (default) or "xlsx"
-#' @param plate_names A character vector that will be assigned to each plate
-#' @param file The path where the file will be saved (defaults to current directory)
+#' @param plate_type A,integer (6, 12, 24, 48, 96, 384, 1536) indicating the type of microwell plate.
+#' @param n_plates An positive integer indicating the number of plates.
+#' @param file_type A character string ("csv" (the default) or "xlsx") indicating the filetype.
+#' @param plate_names A character vector of unique values that will be assigned to each plate. Its length should be equal to the value of `n_plates`.
+#' @param file A character string naming the file.
 #'
-#' @return A csv or xlsx file
+#' @return A csv or xlsx template file.
 #' @importFrom utils write.table
 #'
 build_plate <- function(plate_type = 6,
