@@ -15,9 +15,6 @@ coverage](https://codecov.io/gh/shubhamdutta26/tidyplate/graph/badge.svg)](https
 
 <!-- badges: end -->
 
-<img src="man/figures/tidyplate_hex_trans.png" width="112"
-height="131" />
-
 Microtiter plates or microplates have become a standard tool in
 analytical research and clinical diagnostic testing laboratories. They
 are convenient, high-throughput tools for organizing tissue culture, PCR
