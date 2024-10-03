@@ -5,8 +5,8 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file <- paste0(path, "allWellIds.csv")
     xlsx_file <- paste0(path, "allWellIds.xlsx")
 
-    result_csv <- tidy_plate(csv_file, well_id = "wells")
-    result_xlsx <- tidy_plate(xlsx_file, well_id = "wells")
+    result_csv <- suppressMessages(tidy_plate(csv_file, well_id = "wells"))
+    result_xlsx <- suppressMessages(tidy_plate(xlsx_file, well_id = "wells"))
 
     expect_identical(result_csv$values, result_csv$wells)
     expect_identical(result_xlsx$values, result_xlsx$wells)
@@ -16,8 +16,8 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file <- paste0(path, "wellIdsAndEmptyWells.csv")
     xlsx_file <- paste0(path, "wellIdsAndEmptyWells.xlsx")
 
-    result_csv <- tidy_plate(csv_file, well_id = "wells")
-    result_xlsx <- tidy_plate(xlsx_file, well_id = "wells")
+    result_csv <- suppressMessages(tidy_plate(csv_file, well_id = "wells"))
+    result_xlsx <- suppressMessages(tidy_plate(xlsx_file, well_id = "wells"))
 
     expect_identical(result_csv$values, result_csv$wells)
     expect_identical(result_xlsx$values, result_xlsx$wells)
@@ -27,8 +27,8 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file <- paste0(path, "oneFullOnePartEmpty.csv")
     xlsx_file <- paste0(path, "oneFullOnePartEmpty.xlsx")
 
-    result_csv <- tidy_plate(csv_file, well_id = "wells")
-    result_xlsx <- tidy_plate(xlsx_file, well_id = "wells")
+    result_csv <- suppressMessages(tidy_plate(csv_file, well_id = "wells"))
+    result_xlsx <- suppressMessages(tidy_plate(xlsx_file, well_id = "wells"))
 
     expect_identical(result_csv$full, result_csv$wells)
     expect_identical(result_xlsx$full, result_xlsx$wells)
@@ -39,16 +39,16 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   })
 
   test_that("tidy_plate returns a tbl_df", {
-    expect_s3_class(tidy_plate(paste0(path, "allWellIds.csv")), "tbl_df")
-    expect_s3_class(tidy_plate(paste0(path, "allWellIds.xlsx")), "tbl_df")
+    expect_s3_class(suppressMessages(tidy_plate(paste0(path, "allWellIds.csv"))), "tbl_df")
+    expect_s3_class(suppressMessages(tidy_plate(paste0(path, "allWellIds.xlsx"))), "tbl_df")
   })
 
   test_that("tidy_plate allows weird characters", {
     csv_file <- paste0(path, "weirdCharacters.csv")
     xlsx_file <- paste0(path, "weirdCharacters.xlsx")
 
-    result_csv <- tidy_plate(csv_file, well_id = "wells")
-    result_xlsx <- tidy_plate(xlsx_file, well_id = "wells")
+    result_csv <- suppressMessages(tidy_plate(csv_file, well_id = "wells"))
+    result_xlsx <- suppressMessages(tidy_plate(xlsx_file, well_id = "wells"))
 
     expect_identical(result_csv$values[1:3], c("#a", "`abc", "~"))
     expect_identical(result_xlsx$values[1:3], c("#a", "`abc", "~"))
@@ -58,8 +58,8 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file <- paste0(path, "oneWell.csv")
     xlsx_file <- paste0(path, "oneWell.xlsx")
 
-    result_csv <- tidy_plate(csv_file, well_id = "wells")
-    result_xlsx <- tidy_plate(xlsx_file, well_id = "wells")
+    result_csv <- suppressMessages(tidy_plate(csv_file, well_id = "wells"))
+    result_xlsx <- suppressMessages(tidy_plate(xlsx_file, well_id = "wells"))
 
     expect_identical(result_csv$values, "singleton")
     expect_identical(result_xlsx$values, "singleton")
