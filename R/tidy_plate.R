@@ -2,7 +2,8 @@
 #'
 #' @param file A character string containing the path to a csv or excel file.
 #' The format is described below.
-#' @param well_id A character string that will be the name for the well ids.
+#' @param well_id A character string that will be the name for the well id
+#' column.
 #' @param sheet A character or integer indicating the excel sheet to be
 #' read.
 #'

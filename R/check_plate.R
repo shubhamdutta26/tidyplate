@@ -1,15 +1,13 @@
-#' Checks whether the input file can be used to transform to a tidy plate using
-#' the `tidy_plate()` function
+#' Checks whether the input file is valid for use with the `tidy_plate()`
+#' function
 #'
-#' @param file This is the path to a xlsx or csv file containing data for the
-#' following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
-#' is described below.
-#' @param well_id This is takes a character of length 1 and cannot be the
-#' same as individual plate names.
+#' @param file A character string containing the path to a csv or excel file.
+#' @param well_id A character string that will be the name for the well id
+#' column.
 #' @param sheet If file type is xlsx this is the sheet name (character) or
 #' number (integer).
 #'
-#' @return An error or a message saying that input file can be used with the
+#' @return An message indicating whether the input file is compatible with the
 #' `tidy_plate()` function
 #' @export
 #'
