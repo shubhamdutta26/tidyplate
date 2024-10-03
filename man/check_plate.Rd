@@ -17,7 +17,7 @@ column.}
 number (integer).}
 }
 \value{
-An error or a message saying that input file can be used with the
+An message indicating whether the input file is compatible with the
 \code{tidy_plate()} function
 }
 \description{
