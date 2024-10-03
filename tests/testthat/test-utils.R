@@ -1,3 +1,21 @@
+# read_data tests
+test_that("read_data throws error when not csv or excel file or file/ sheet is empty", {
+  file_txt <- "test_data/badFileType.txt"
+  file_csv <- "test_data/allWellIds.csv"
+  file_xlsx <- "test_data/allWellIds.xlsx"
+  file_csv_empty <- "test_data/emptyFile.csv"
+  file_xlsx_empty <- "test_data/emptySheet2.xlsx"
+
+  expect_no_error(read_data(file_csv))
+  expect_no_error(read_data(file_xlsx))
+  expect_error(read_data(file_txt),
+               "Unsupported file format. Please use CSV or Excel files.")
+  expect_error(read_data(file_csv_empty),
+               "The input file or sheet is empty.")
+  expect_error(read_data(file_xlsx_empty, sheet = 2),
+               "The input file or sheet is empty.")
+})
+# plate_params tests
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   path <- paste0("test_data/", i, "/")
 
@@ -206,3 +224,4 @@ test_that("1536 well params are identical to 1536 well plate", {
   expect_identical(result_csv, expected)
   expect_identical(result_xlsx, expected)
 })
+
