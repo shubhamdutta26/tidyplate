@@ -12,7 +12,11 @@ status](https://www.r-pkg.org/badges/version/tidyplate)](https://CRAN.R-project.
 [![](http://cranlogs.r-pkg.org/badges/grand-total/tidyplate)](https://cran.r-project.org/package=tidyplate)
 [![Codecov test
 coverage](https://codecov.io/gh/shubhamdutta26/tidyplate/graph/badge.svg)](https://app.codecov.io/gh/shubhamdutta26/tidyplate)
+
 <!-- badges: end -->
+
+<img src="man/figures/tidyplate_hex_trans.png" width="112"
+height="131" />
 
 Microtiter plates or microplates have become a standard tool in
 analytical research and clinical diagnostic testing laboratories. They
