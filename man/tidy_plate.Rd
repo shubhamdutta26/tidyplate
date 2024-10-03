@@ -2,26 +2,25 @@
 % Please edit documentation in R/tidy_plate.R
 \name{tidy_plate}
 \alias{tidy_plate}
-\title{Transforms a plate to a tidy dataframe}
+\title{Reads and transforms microwell plate to a tibble}
 \usage{
 tidy_plate(file, well_id = "well", sheet = 1)
 }
 \arguments{
-\item{file}{This is the path to a xlsx or csv file containing data for the
-following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
-is described below.}
+\item{file}{A character string containing the path to a csv or excel file.
+The format is described below.}
 
-\item{well_id}{This is takes a character of length 1 and cannot be the
-same as individual plate names.}
+\item{well_id}{A character string that will be the name for the well id
+column.}
 
-\item{sheet}{If file type is xlsx this is the sheet name (character) or
-number (integer).}
+\item{sheet}{A character or integer indicating the excel sheet to be
+read.}
 }
 \value{
-A tidy dataframe
+A tibble.
 }
 \description{
-Transforms a plate to a tidy dataframe
+Reads and transforms microwell plate to a tibble
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx",

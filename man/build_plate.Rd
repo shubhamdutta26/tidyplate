@@ -13,13 +13,16 @@ build_plate(
 )
 }
 \arguments{
-\item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, 1536) indicating the type of microwell plate.}
+\item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, 1536)
+indicating the type of microwell plate.}
 
 \item{n_plates}{A positive integer indicating the number of plates.}
 
-\item{file_type}{A character string ("csv" (the default) or "xlsx") indicating the filetype.}
+\item{file_type}{A character string ("csv" (the default) or "xlsx")
+indicating the filetype.}
 
-\item{plate_names}{A character vector of unique values that will be assigned to each plate. Its length should be equal to the value of \code{n_plates}.}
+\item{plate_names}{A character vector of unique values that will be assigned
+to each plate. Its length should be equal to the value of \code{n_plates}.}
 
 \item{file}{A character string naming the file.}
 }
