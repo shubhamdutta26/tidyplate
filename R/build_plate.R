@@ -1,9 +1,12 @@
 #' Generates a csv or xlsx template for each plate type
 #'
-#' @param plate_type A specific integer (6, 12, 24, 48, 96, 384, 1536) indicating the type of microwell plate.
+#' @param plate_type A specific integer (6, 12, 24, 48, 96, 384, 1536)
+#' indicating the type of microwell plate.
 #' @param n_plates A positive integer indicating the number of plates.
-#' @param file_type A character string ("csv" (the default) or "xlsx") indicating the filetype.
-#' @param plate_names A character vector of unique values that will be assigned to each plate. Its length should be equal to the value of `n_plates`.
+#' @param file_type A character string ("csv" (the default) or "xlsx")
+#' indicating the filetype.
+#' @param plate_names A character vector of unique values that will be assigned
+#' to each plate. Its length should be equal to the value of `n_plates`.
 #' @param file A character string naming the file.
 #'
 #' @return A csv or xlsx template file.
