@@ -10,6 +10,8 @@
 status](https://www.r-pkg.org/badges/version/tidyplate)](https://CRAN.R-project.org/package=tidyplate)
 [![](http://cranlogs.r-pkg.org/badges/last-month/tidyplate)](https://cran.r-project.org/package=tidyplate)
 [![](http://cranlogs.r-pkg.org/badges/grand-total/tidyplate)](https://cran.r-project.org/package=tidyplate)
+[![Codecov test
+coverage](https://codecov.io/gh/shubhamdutta26/tidyplate/graph/badge.svg)](https://app.codecov.io/gh/shubhamdutta26/tidyplate)
 <!-- badges: end -->
 
 Microtiter plates or microplates have become a standard tool in
@@ -84,14 +86,13 @@ First check if the input file is valid or not:
 library(tidyplate)
 file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
 check_plate(file_path)
-#> example_12_well.xlsx: OK; Plate type: 12 well
+#> example_12_well.xlsx: OK; Plate type: 12-well
 ```
 
 If you want to view names of individual plates:
 
 ``` r
 view_plate_names(file_path)
-#> example_12_well.xlsx: OK; Plate type: 12 well
 #> [1] "drug"             "cell_line"        "percent_survived"
 ```
 
@@ -99,13 +100,13 @@ Import the file as a tidy dataframe:
 
 ``` r
 data <- tidy_plate(file_path)
-#> Data: example_12_well.xlsx; Plate type: 12 well plate
+#> Data: example_12_well.xlsx; Plate type: 12-well plate
 head(data)
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
 #>   <chr> <chr>     <chr>                <int>
 #> 1 A01   Neomycin  HEK293                  60
-#> 2 A02   Puromycin HEK293                  22
+#> 2 A02   Puromycin HEK293                  NA
 #> 3 A03   Neomycin  Hela                    52
 #> 4 A04   Puromycin Hela                    18
 #> 5 B01   Neomycin  HEK293                  62
