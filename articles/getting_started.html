@@ -87,14 +87,20 @@ accepts xlsx and csv files formatted in a specific way as input.
 <code>tidyplate</code> supports all types of standard microplate formats
 namely: 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and
 1536-well plates.</p>
-<p><code>tidyplate</code> has two functions:</p>
+<p><code>tidyplate</code> has four functions:</p>
 <ul>
 <li>
-<code>tidy_plate</code>: This function takes the input file (xlsx or
-csv) and transforms into a tidy dataframe.</li>
+<code>tidy_plate</code>: Transforms the input file (xlsx or csv)
+into a tidy dataframe.</li>
 <li>
-<code>check_plate</code>: This function checks whether the input
-file is valid for use with <code><a href="../reference/tidy_plate.html">tidy_plate()</a></code> function.</li>
+<code>check_plate</code>: Checks whether the input file is valid for
+use with <code><a href="../reference/tidy_plate.html">tidy_plate()</a></code>.</li>
+<li>
+<code>view_plate_names</code>: Returns names/ id(s) of each plate in
+the input file.</li>
+<li>
+<code>build_plate</code>: Generates a csv or xlsx template for each
+plate type.</li>
 </ul>
 <div class="section level3">
 <h3 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
