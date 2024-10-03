@@ -45,7 +45,7 @@ pull_plate <- function(file, sheet = 1, plate_id) {
   }
 
   ## Read file ext and basename----
-  file_ext <- tolower(tools::file_ext(file))
+  # file_ext <- tolower(tools::file_ext(file))
   file_full_name <- basename(file)
 
   ## Check if file exists----
@@ -54,7 +54,7 @@ pull_plate <- function(file, sheet = 1, plate_id) {
   }
 
   # Read data----
-  raw_data <- read_data(file = file, file_ext = file_ext, sheet = sheet)
+  raw_data <- read_data(file = file, sheet = sheet)
 
   # Check if input file has the correct format----
   ## Count number of columns and rows in raw_data----
