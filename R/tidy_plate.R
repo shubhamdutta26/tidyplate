@@ -1,14 +1,12 @@
-#' Transforms a plate to a tidy dataframe
+#' Reads and transforms microwell plate to a tibble
 #'
-#' @param file This is the path to a xlsx or csv file containing data for the
-#' following types of plates: 6, 12, 24, 48, 96, 384, and 1536. The plate format
-#' is described below.
-#' @param well_id This is takes a character of length 1 and cannot be the
-#' same as individual plate names.
-#' @param sheet If file type is xlsx this is the sheet name (character) or
-#' number (integer).
+#' @param file A character string containing the path to a csv or excel file.
+#' The format is described below.
+#' @param well_id A character string that will be the name for the well ids.
+#' @param sheet A character or integer indicating the excel sheet to be
+#' read.
 #'
-#' @return A tidy dataframe
+#' @return A tibble.
 #' @export
 #' @examples
 #' file_path <- system.file("extdata", "example_12_well.xlsx",
