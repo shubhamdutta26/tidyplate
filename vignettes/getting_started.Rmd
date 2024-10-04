@@ -62,14 +62,90 @@ The input xlsx or csv should be formatted in a specific way:
 This is an example which shows you how to use the `tidyplate`. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument for an xlsx file. Users can also specify the variable name of column where well ids will be stored (defaults to "well"). Please make sure that `well_id` argument does not match individual plate names in the input file.
 
 First check if the input file is valid or not:
-```{r check_plate-xlsx}
+
+```{r check_plate-xlsx, error=TRUE}
 library(tidyplate)
-file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
-check_plate(file_path)
+file <- system.file("extdata", 
+                    "example_12_well.xlsx", 
+                    package = "tidyplate")
+check_plate(file) # No error for valid file
+
+incorrect_file <- system.file("extdata",
+                              "incorrect_format.csv",
+                              package = "tidyplate")
+check_plate(incorrect_file) # Error type displayed
 ```
 
-Import the file as a tidy dataframe:
+As mentioned above, the formatting of the input file is very important. A csv or 
+excel template for each plate type can be created using the `build_plate` function:
+
+```{r build-plate-demo, echo=TRUE, eval=FALSE}
+build_plate(plate_type = 96, 
+            n_plates = 2, 
+            file_type = "xlsx") # default is csv
+```
+
+If you want to retrieve the names of individual plates:
+
+```{r view-plate-names-xlsx}
+view_plate_names(file)
+```
+
+Import the file as a tibble:
+
 ```{r tidy_plate-xlsx}
-data <- tidy_plate(file_path)
+data <- tidy_plate(file)
 head(data)
+```
+
+Import multiple csv files into separate tibbles:
+
+```{r csv_multiple_tb}
+csv_files <- list.files(path = file, 
+                        pattern = "*.csv",
+                        full.names = TRUE)
+
+names <- tools::file_path_sans_ext(basename(csv_files))
+
+# Loop through the filenames and assign data
+for(i in seq_along(csv_files)) {
+  assign(names[i], tidy_plate(csv_files[i]))
+}
+```
+
+Import multiple csv files as a **list** of tibbles:
+
+```{r csv_list}
+# Initialize an empty list to store tibbles for each file
+tb_csv_list <- list()
+
+# Loop through the filenames and assign data
+for(i in seq_along(csv_files)) {
+  tb_csv_list[[i]] <- tidy_plate(csv_files[i])
+}
+```
+
+For multiple excel sheets in the same excel file:
+
+```{r multi-sheet-demo}
+# as individual tibbles
+xl_file <- system.file("extdata", 
+                       "multisheet_example.xlsx", 
+                       package = "tidyplate")
+
+sheets <- readxl::excel_sheets(xl_file)
+
+for (sheet in sheets) {
+  tb <- tidy_plate(xl_file, sheet = sheet)
+  name <- paste0("tb_", sheet)
+  assign(name, tb)
+}
+
+# as elements of a list
+# Initialize an empty list to store tibbles for each sheet
+tb_xl_list <- list()
+
+for (sheet in sheets) {
+  tb_xl_list[[sheet]] <- tidy_plate(xl_file, sheet = sheet)
+}
 ```
