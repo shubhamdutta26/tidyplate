@@ -172,7 +172,7 @@ sheets <- readxl::excel_sheets(xl_file)
 
 for (sheet in sheets) {
   tb <- tidy_plate(xl_file, sheet = sheet)
-  name <- paste0("df_", sheet)
+  name <- paste0("tb_", sheet)
   assign(name, tb)
 }
 #> Data: multisheet_example.xlsx; Plate type: 6-well plate
