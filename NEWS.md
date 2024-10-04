@@ -1,4 +1,4 @@
-# tidyplate (development version)
+# tidyplate 3.0.0
 
 * Major updates to each function increasing speed and efficiency.
 
