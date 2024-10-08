@@ -10,6 +10,7 @@
 #' @param file A character string naming the file.
 #'
 #' @return A csv or xlsx template file.
+#' @export
 #' @importFrom utils write.table
 #'
 #' @examples
