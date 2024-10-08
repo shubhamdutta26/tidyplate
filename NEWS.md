@@ -1,4 +1,4 @@
-# tidyplate (development version)
+# tidyplate 2.0.1
 
 # tidyplate 2.0.0
 
