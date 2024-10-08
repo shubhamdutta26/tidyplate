@@ -91,7 +91,7 @@ If you want to retrieve the names of individual plates:
 view_plate_names(file)
 ```
 
-Import the file as a tibble:
+Read and import the file as a tibble:
 
 ```{r tidy_plate-xlsx}
 data <- tidy_plate(file)

@@ -116,7 +116,7 @@ view_plate_names(file)
 #> [1] "drug"             "cell_line"        "percent_survived"
 ```
 
-Import the file as a tibble:
+Read and import the file as a tibble:
 
 ``` r
 data <- tidy_plate(file)

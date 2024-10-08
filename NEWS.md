@@ -1,5 +1,7 @@
 # tidyplate 2.0.1
 
+* Added export(build_plate) to NAMESPACE.
+
 # tidyplate 2.0.0
 
 * Major updates to each function increasing speed and efficiency.

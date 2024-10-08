@@ -1,9 +1,7 @@
 ## Resubmission
 This is a resubmission. In this version I have:
 
-* Major updates to each function increasing speed and efficiency.
-
-* Added a new function `build_plate`
+* Added export(build_plate) to NAMESPACE.
 
 ## R CMD check results
 
