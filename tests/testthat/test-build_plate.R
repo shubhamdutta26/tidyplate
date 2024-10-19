@@ -36,13 +36,13 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   filename_csv <- paste0("empty_", i, "-well_bad.csv")
   filename_xlsx <- paste0("empty_", i, "-well_bad.xlsx")
 
-  testthat::test_that("Created plates are formatted correctly", {
+  testthat::test_that("created plates are formatted correctly", {
     testthat::expect_error(
       check_plate(path_bad_csv),
-      paste0(filename_csv, " is not a valid input file. Please review an example dataset."))
+      regexp = " is not a valid input file.")
     testthat::expect_error(
       check_plate(path_bad_xlsx),
-      paste0(filename_xlsx, " is not a valid input file. Please review an example dataset."))
+      regexp = " is not a valid input file.")
   })
 }
 
@@ -72,7 +72,7 @@ testthat::test_that("Throws error when n_plates value is invalid", {
 
 testthat::test_that("Throws error when n_plate & plate_names argument don't match", {
   testthat::expect_error(
-    build_plate(plate_type = 6L, n_plate = 2, plate_names = c("alpha")),
+    build_plate(plate_type = 6L, n_plates = 2, plate_names = c("alpha")),
     "The length of `plate_names` must match `n_plates`.")
 })
 

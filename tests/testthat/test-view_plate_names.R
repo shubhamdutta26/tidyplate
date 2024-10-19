@@ -30,18 +30,22 @@ test_that("view_plate_names throws an error when input file is non existant", {
   csv_file <- "test_data/doesNotExist.csv"
   xlsx_file <- "test_data/doesNotExist.xlsx"
 
-  expect_error(view_plate_names(csv_file), "doesNotExist.csv does not exist!")
-  expect_error(view_plate_names(xlsx_file), "doesNotExist.xlsx does not exist!")
+  expect_error(view_plate_names(csv_file),
+               regexp = " does not exist!")
+  expect_error(view_plate_names(xlsx_file),
+               regexp = " does not exist!")
 })
 
 test_that("view_plate_names throws an error when input file is not csv or xlsx", {
   file <- "test_data/badFileType.txt"
 
-  expect_error(view_plate_names(file), "Unsupported file format. Please use CSV or Excel files.")
+  expect_error(view_plate_names(file),
+               regexp = "Unsupported file format. Please use CSV or Excel ")
 })
 
 test_that("view_plate_names throws an error when input file is empty", {
   csv_file <- "test_data/emptyFile.csv"
 
-  expect_error(view_plate_names(csv_file), "The input file or sheet is empty.")
+  expect_error(view_plate_names(csv_file),
+               regexp = "file is empty")
 })

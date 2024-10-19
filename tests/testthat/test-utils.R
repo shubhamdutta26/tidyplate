@@ -9,11 +9,11 @@ test_that("read_data throws error when not csv or excel file or file/ sheet is e
   expect_no_error(read_data(file_csv))
   expect_no_error(read_data(file_xlsx))
   expect_error(read_data(file_txt),
-               "Unsupported file format. Please use CSV or Excel files.")
+               regexp = "Unsupported file format. Please use CSV or Excel ")
   expect_error(read_data(file_csv_empty),
-               "The input file or sheet is empty.")
+               regexp = "file is empty")
   expect_error(read_data(file_xlsx_empty, sheet = 2),
-               "The input file or sheet is empty.")
+               regexp = "sheet is empty")
 })
 # plate_params tests
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {

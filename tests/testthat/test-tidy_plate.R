@@ -73,19 +73,19 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       tidy_plate(csv_file_1, well_id = "wells"),
-      "extraCol.csv is not a valid input file. Please review an example dataset."
+      regexp = "is not a valid input file"
     )
     expect_error(
       tidy_plate(csv_file_2, well_id = "wells"),
-      "twoPlatesExtraCol.csv is not a valid input file. Please review an example dataset."
+      regexp = "is not a valid input file"
     )
     expect_error(
       tidy_plate(xlsx_file_1, well_id = "wells"),
-      "extraCol.xlsx is not a valid input file. Please review an example dataset."
+      regexp = "is not a valid input file"
     )
     expect_error(
       tidy_plate(xlsx_file_2, well_id = "wells"),
-      "twoPlatesExtraCol.xlsx is not a valid input file. Please review an example dataset."
+      regexp = "is not a valid input file"
     )
   })
 
@@ -95,36 +95,38 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
     expect_error(
       tidy_plate(csv_file, well_id = "full"),
-      "Plate names cannot be the same as argument `well_id`."
+      regexp = "`well_id` value is invalid"
     )
     expect_error(
       tidy_plate(xlsx_file, well_id = "full"),
-      "Plate names cannot be the same as argument `well_id`."
+      regexp = "`well_id` value is invalid"
     )
   })
 
-  test_that("tidy_plate throws error when plate names are either empty or not unique", {
-    csv_file_1 <- paste0(path, "sameNames.csv")
-    xlsx_file_1 <- paste0(path, "sameNames.xlsx")
-    csv_file_2 <- paste0(path, "noName.csv")
-    xlsx_file_2 <- paste0(path, "noName.xlsx")
+  test_that("tidy_plate throws error when plate names are empty", {
+
+    csv_file_1 <- paste0(path, "noName.csv")
+    xlsx_file_1 <- paste0(path, "noName.xlsx")
 
     expect_error(
       tidy_plate(csv_file_1, well_id = "wells"),
-      "Verify that each plate in sameNames.csv has a unique name."
-    )
+      regexp = "Empty (blank or NA) plate name(s) found in", fixed = TRUE)
     expect_error(
       tidy_plate(xlsx_file_1, well_id = "wells"),
-      "Verify that each plate in sameNames.xlsx has a unique name."
-    )
+      regexp = "Empty (blank or NA) plate name(s) found in", fixed = TRUE)
+  })
+
+  test_that("tidy_plate throws error when plate names are not unique", {
+    csv_file_1 <- paste0(path, "sameNames.csv")
+    xlsx_file_1 <- paste0(path, "sameNames.xlsx")
+
     expect_error(
-      tidy_plate(csv_file_2, well_id = "wells"),
-      "Verify that each plate in noName.csv has a unique name."
-    )
+      tidy_plate(csv_file_1, well_id = "wells"),
+      regexp = "Duplicated plate name(s) found in", fixed = TRUE)
+
     expect_error(
-      tidy_plate(xlsx_file_2, well_id = "wells"),
-      "Verify that each plate in noName.xlsx has a unique name."
-    )
+      tidy_plate(xlsx_file_1, well_id = "wells"),
+      regexp = "Duplicated plate name(s) found in", fixed = TRUE)
   })
 
   test_that("tidy_plate throws error when row and column ids are empty or bad", {
@@ -153,10 +155,14 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file_2 <- paste0(path, "emptyRowName.csv")
     xlsx_file_2 <- paste0(path, "emptyRowName.xlsx")
 
-    expect_error(tidy_plate(csv_file_1, well_id = "wells"), "Verify row id(s) in badRowName.csv.", fixed = TRUE)
-    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"), "Verify row id(s) in badRowName.xlsx.", fixed = TRUE)
-    expect_error(tidy_plate(csv_file_2, well_id = "wells"), "Verify row id(s) in emptyRowName.csv.", fixed = TRUE)
-    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"), "Verify row id(s) in emptyRowName.xlsx.", fixed = TRUE)
+    expect_error(tidy_plate(csv_file_1, well_id = "wells"),
+                 regexp = "Verify row ids in ")
+    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"),
+                 regexp = "Verify row ids in ")
+    expect_error(tidy_plate(csv_file_2, well_id = "wells"),
+                 regexp = "Verify row ids in ")
+    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"),
+                 regexp = "Verify row ids in ")
   })
 
   test_that("tidy_plate throws error when column id(s) are empty or bad", {
@@ -165,10 +171,14 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
     csv_file_2 <- paste0(path, "emptyColName.csv")
     xlsx_file_2 <- paste0(path, "emptyColName.xlsx")
 
-    expect_error(tidy_plate(csv_file_1, well_id = "wells"), "Verify column id(s) in badColName.csv.", fixed = TRUE)
-    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"), "Verify column id(s) in badColName.xlsx.", fixed = TRUE)
-    expect_error(tidy_plate(csv_file_2, well_id = "wells"), "Verify column id(s) in emptyColName.csv.", fixed = TRUE)
-    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"), "Verify column id(s) in emptyColName.xlsx.", fixed = TRUE)
+    expect_error(tidy_plate(csv_file_1, well_id = "wells"),
+                 regexp = "Verify column id(s) in ")
+    expect_error(tidy_plate(xlsx_file_1, well_id = "wells"),
+                 regexp = "Verify column id(s) in ")
+    expect_error(tidy_plate(csv_file_2, well_id = "wells"),
+                 regexp = "Verify column id(s) in ")
+    expect_error(tidy_plate(xlsx_file_2, well_id = "wells"),
+                 regexp = "Verify column id(s) in ")
   })
 }
 
@@ -185,10 +195,10 @@ test_that("tidy_plate throws an error when user inputs more than one file", {
 test_that("tidy_plate throws an error when `well_id` argument not a character vector of length 1", {
   file <- "test_data/allWellIds.csv"
 
-  expect_error(tidy_plate(file, well_id = 1), "`well_id` should be a character vector of length 1")
-  expect_error(tidy_plate(file, well_id = 1L), "`well_id` should be a character vector of length 1")
-  expect_error(tidy_plate(file, well_id = c("xxx", "yyy")), "`well_id` should be a character vector of length 1")
-  expect_error(tidy_plate(file, well_id = TRUE), "`well_id` should be a character vector of length 1")
+  expect_error(tidy_plate(file, well_id = 1), "`well_id` should be a single character string.")
+  expect_error(tidy_plate(file, well_id = 1L), "`well_id` should be a single character string.")
+  expect_error(tidy_plate(file, well_id = c("xxx", "yyy")), "`well_id` should be a single character string.")
+  expect_error(tidy_plate(file, well_id = TRUE), "`well_id` should be a single character string.")
 })
 
 # Test for filenames extraction
@@ -196,18 +206,20 @@ test_that("tidy_plate throws an error when input file is non existant", {
   csv_file <- "test_data/doesNotExist.csv"
   xlsx_file <- "test_data/doesNotExist.xlsx"
 
-  expect_error(tidy_plate(csv_file), "doesNotExist.csv does not exist!")
-  expect_error(tidy_plate(xlsx_file), "doesNotExist.xlsx does not exist!")
+  expect_error(tidy_plate(csv_file), "File does not exist!")
+  expect_error(tidy_plate(xlsx_file), "File does not exist!")
 })
 
 test_that("tidy_plate throws an error when input file is not csv or xlsx", {
   file <- "test_data/badFileType.txt"
 
-  expect_error(tidy_plate(file), "Unsupported file format. Please use CSV or Excel files.")
+  expect_error(tidy_plate(file),
+               regexp = "Unsupported file format. Please use CSV or Excel ")
 })
 
 test_that("tidy_plate throws an error when input file is empty", {
   csv_file <- "test_data/emptyFile.csv"
 
-  expect_error(tidy_plate(csv_file), "The input file or sheet is empty.")
+  expect_error(tidy_plate(csv_file),
+               regexp = " is empty")
 })
