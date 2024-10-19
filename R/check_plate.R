@@ -63,7 +63,7 @@ check_plate <- function(file,
                                   count_columns ,
                                   count_rows_actual,
                                   well_id,
-                                  file_full_name)[[1]]
+                                  file_full_name)
 
   message(paste0(file_full_name, ": OK; Plate type: ", plate_parameters[[3]], "-well"))
 }

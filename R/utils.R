@@ -3,6 +3,7 @@ read_data <- function(file, sheet = NULL) {
 
   # Get file ext
   file_ext <- tolower(tools::file_ext(file))
+  full_name <- basename(file)
 
   # Check for supported file extensions
   if (file_ext == "csv") {
@@ -22,12 +23,19 @@ read_data <- function(file, sheet = NULL) {
       stop("Error reading Excel file: ", e$message, call. = FALSE)
     })
   } else {
-    stop("Unsupported file format. Please use CSV or Excel files.", call. = FALSE)
+    rlang::abort(c(
+      "Unsupported file format. Please use CSV or Excel files.",
+      "i" = "Expected: csv, xls, xlsx",
+      "x" = paste0("Found: ", ifelse(file_ext=="", NA, file_ext))), call = NULL)
   }
 
   # Validate that the data is not empty
   if (nrow(raw_data) == 0 || ncol(raw_data) == 0) {
-    stop("The input file or sheet is empty.", call. = FALSE)
+    rlang::abort(c(
+      paste0("Cannot read ", full_name, ":"),
+      "i" = paste0("The input ", ifelse(file_ext == "csv", "file", "sheet"), " is empty.")
+      ),
+      call = NULL)
   }
 
   return(raw_data)
@@ -91,7 +99,12 @@ valid_plate <- function(raw_data,
 
   ## Check if there are an exact number of columns----
   if (!(count_columns %in% c(4L, 5L, 7L, 9L, 13L, 25L, 49L))) {
-    stop(paste0(file_full_name, " is not a valid input file. Please review an example dataset."), call. = FALSE)
+    rlang::abort(
+      c(
+        paste0(file_full_name, " is not a valid input file."),
+        "i" = "Only 6, 12, 24, 48, 96, 384, and 1536-well plate formats are accepted.",
+        "i" = "Use the `build_plate()` function to build an empty template."
+      ), call = NULL)
   }
 
   ## Count the number of plates in the dataset----
@@ -100,7 +113,12 @@ valid_plate <- function(raw_data,
 
   ## Check whether the input formatting is correct or not----
   if (plate_parameters[[2]] != count_rows_actual) {
-    stop(paste0(file_full_name, " is not a valid input file. Please review an example dataset."), call. = FALSE)
+    rlang::abort(
+      c(
+        paste0(file_full_name, " is not a valid input file."),
+        "i" = "Only 6, 12, 24, 48, 96, 384, and 1536-well plate formats are accepted.",
+        "i" = "Use the `build_plate()` function to build an empty template."
+      ), call = NULL)
   }
 
   ## Store each plate in a list
@@ -118,16 +136,44 @@ valid_plate <- function(raw_data,
 
   ## Check if the plate name matches the user input `well_id`
   if (well_id %in% each_plate_name) {
-    stop("Plate names cannot be the same as argument `well_id`.", call. = FALSE)
+    rlang::abort(
+      c("`well_id` value is invalid.",
+        "x" = "`well_id` value cannot be the same as the plate names."), call = NULL)
   }
 
-  ## Check if all plate names are unique and non-missing
-  if (anyNA(each_plate_name) || length(each_plate_name) != length(unique(each_plate_name))) {
-    stop(paste0("Verify that each plate in ", file_full_name, " has a unique name."), call. = FALSE)
+  # Treat empty strings ("") or spaces (" ") as missing values
+  is_empty <- function(x) {
+    is.na(x) || x == "" || x == " "
   }
+
+  # Check for empty plate names (NA, "", or " ")
+  empty_plates <- which(sapply(each_plate_name, is_empty))
+  if (length(empty_plates) > 0) {
+    rlang::abort(c(
+      paste0("Empty (blank or NA) plate name(s) found in ", file_full_name, ":"),
+      "i" = paste0("Position(s): ", paste(empty_plates, collapse = ", ")),
+      "x" = "Plate name(s) cannot be empty or duplicated."
+    ), call = NULL)
+  }
+
+  # Check for duplicate plate names, excluding empty ones
+  non_empty_names <- each_plate_name[!sapply(each_plate_name, is_empty)]
+  dup_plates_names <- which(duplicated(non_empty_names) | duplicated(non_empty_names, fromLast = TRUE))
+
+  if (length(dup_plates_names) > 0) {
+    dup_names <- unique(non_empty_names[dup_plates_names])
+
+    rlang::abort(c(
+      paste0("Duplicated plate name(s) found in ", file_full_name, ":"),
+      "i" = paste0("Duplicated name(s): ", paste(dup_names, collapse = ", ")),
+      "i" = paste0("Position(s): ", paste(dup_plates_names, collapse = ", ")),
+      "x" = "Plate name(s) cannot be empty or duplicated."
+    ), call = NULL)
+  }
+
 
   if (sum(is_list_of_dfs_empty(list_of_plates)) == plate_parameters[[1]]) {
-    stop("Plate(s) are empty.", call. = FALSE)
+    rlang::abort("Plate(s) are empty.")
   }
 
   ## Check if plates have 1:x as column names after plate name
@@ -152,18 +198,34 @@ valid_plate <- function(raw_data,
 
   ## Check for both errors
   if (!row_check && !col_check) {
-    stop(paste0("Verify row and column ids in ", file_full_name, "."), call. = FALSE)
+    rlang::abort(
+      c(
+        paste0("Verify row and column ids in ", file_full_name, "."),
+        "i" = "Expected column ids: 1, 2, 3, and so on.",
+        "i" = "Expected row ids: A, B, C, and so on.",
+        "i" = "Use the `build_plate()` function to build an empty template."
+      ), call = NULL)
   }
 
   if (!row_check) {
-    stop(paste0("Verify column id(s) in ", file_full_name, "."), call. = FALSE)
+    rlang::abort(
+      c(
+        paste0("Verify column ids in ", file_full_name, "."),
+        "i" = "Expected column ids: 1, 2, 3, and so on.",
+        "i" = "Use the `build_plate()` function to build an empty template."
+      ), call = NULL)
   }
 
   if (!col_check) {
-    stop(paste0("Verify row id(s) in ", file_full_name, "."), call. = FALSE)
+    rlang::abort(
+      c(
+        paste0("Verify row ids in ", file_full_name, "."),
+        "i" = "Expected row ids: A, B, C, and so on.",
+        "i" = "Use the `build_plate()` function to build an empty template."
+      ), call = NULL)
   }
 
-  return(list(plate_parameters, list_of_plates))  # Return the processed plates
+  return(plate_parameters)  # Return the processed plates
 }
 
 # Define the number of rows and columns for each plate type
@@ -177,15 +239,15 @@ plate_dims <- list(
   `1536` = c(32, 48)
 )
 
-# Function to convert the first row into header
-convert_first_row_to_header <- function(df) {
-  new_header <- as.character(df[1,])  # Extract first row
-  df <- df[-1,]                        # Remove first row
-  colnames(df) <- new_header           # Assign new header
-  return(df)                           # Return modified dataframe
-}
-
-# Function to extract specific dataframes by indices
-extract_plates <- function(list, indices) {
-  return(list[indices])  # Subset the list using the provided indices
-}
+# # Function to convert the first row into header
+# convert_first_row_to_header <- function(df) {
+#   new_header <- as.character(df[1,])   # Extract first row
+#   df <- df[-1,]                        # Remove first row
+#   colnames(df) <- new_header           # Assign new header
+#   return(df)                           # Return modified dataframe
+# }
+#
+# # Function to extract specific dataframes by indices
+# extract_plates <- function(list, indices) {
+#   return(list[indices])  # Subset the list using the provided indices
+# }

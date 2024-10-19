@@ -24,30 +24,31 @@ tidy_plate <- function(file,
   # Check whether function arguments are valid----
   ## One file should be provided----
   if (length(file) != 1) {
-    stop(
+    rlang::abort(
       paste0(
         "Invalid input: ",
         ifelse(length(file) > 1,
                "More than one file provided."
         )
       ),
-      call. = FALSE
+      call = NULL
     )
   }
 
   ## `well_id` should be a character vector of length 1----
   if (!is.character(well_id) || length(well_id) != 1L) {
-    stop("`well_id` should be a character vector of length 1", call. = FALSE)
+    rlang::abort("`well_id` should be a single character string.",
+                 call = NULL)
+  }
+
+  ## Check if file exists----
+  if (!(file.exists(file))) {
+    rlang::abort("File does not exist!", call = NULL)
   }
 
   ## Read file ext and basename----
   # file_ext <- tolower(tools::file_ext(file))
   file_full_name <- basename(file)
-
-  ## Check if file exists----
-  if (!(file.exists(file))) {
-    stop(paste0(file_full_name, " does not exist!"), call. = FALSE)
-  }
 
   # Read data----
   raw_data <- read_data(file = file, sheet = sheet)
@@ -62,7 +63,7 @@ tidy_plate <- function(file,
                                   count_columns ,
                                   count_rows_actual,
                                   well_id,
-                                  file_full_name)[[1]]
+                                  file_full_name)
 
   # Final transformation----
 
@@ -138,8 +139,8 @@ tidy_plate <- function(file,
   )
 
 
-  message(paste("Data: ", file_full_name,
-                "; Plate type: ", plate_parameters[[3]],
-                "-well plate", sep = ""))
+  rlang::inform(
+      paste0("Plate type: ", plate_parameters[[3]], "-well")
+  )
   return(tibble::tibble(final_data_no_na))
 }
