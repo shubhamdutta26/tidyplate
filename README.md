@@ -12,7 +12,6 @@ status](https://www.r-pkg.org/badges/version/tidyplate)](https://CRAN.R-project.
 [![](http://cranlogs.r-pkg.org/badges/grand-total/tidyplate)](https://cran.r-project.org/package=tidyplate)
 [![Codecov test
 coverage](https://codecov.io/gh/shubhamdutta26/tidyplate/graph/badge.svg)](https://app.codecov.io/gh/shubhamdutta26/tidyplate)
-
 <!-- badges: end -->
 
 Microtiter plates or microplates have become a standard tool in
@@ -96,7 +95,11 @@ incorrect_file <- system.file("extdata",
                               "incorrect_format.csv",
                               package = "tidyplate")
 check_plate(incorrect_file) # Error type displayed
-#> Error: Verify row and column ids in incorrect_format.csv.
+#> Error:
+#> ! Verify row and column ids in incorrect_format.csv.
+#> ℹ Expected column ids: 1, 2, 3, and so on.
+#> ℹ Expected row ids: A, B, C, and so on.
+#> ℹ Use the `build_plate()` function to build an empty template.
 ```
 
 As mentioned above, the formatting of the input file is very important.
@@ -120,7 +123,7 @@ Read and import the file as a tibble:
 
 ``` r
 data <- tidy_plate(file)
-#> Data: example_12_well.xlsx; Plate type: 12-well plate
+#> Plate type: 12-well
 head(data)
 #> # A tibble: 6 × 4
 #>   well  drug      cell_line percent_survived
@@ -175,9 +178,9 @@ for (sheet in sheets) {
   name <- paste0("tb_", sheet)
   assign(name, tb)
 }
-#> Data: multisheet_example.xlsx; Plate type: 6-well plate
-#> Data: multisheet_example.xlsx; Plate type: 12-well plate
-#> Data: multisheet_example.xlsx; Plate type: 12-well plate
+#> Plate type: 6-well
+#> Plate type: 12-well
+#> Plate type: 12-well
 
 # as elements of a list
 # Initialize an empty list to store tibbles for each sheet
@@ -186,7 +189,7 @@ tb_xl_list <- list()
 for (sheet in sheets) {
   tb_xl_list[[sheet]] <- tidy_plate(xl_file, sheet = sheet)
 }
-#> Data: multisheet_example.xlsx; Plate type: 6-well plate
-#> Data: multisheet_example.xlsx; Plate type: 12-well plate
-#> Data: multisheet_example.xlsx; Plate type: 12-well plate
+#> Plate type: 6-well
+#> Plate type: 12-well
+#> Plate type: 12-well
 ```
