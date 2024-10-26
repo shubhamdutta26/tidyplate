@@ -98,14 +98,14 @@ tidy_plate <- function(file,
     if (nrow(plate) > 0) {
       # Create well identifiers and values in one go
       num_cols <- ncol(plate) - 1
-      zwellsx <- paste0(rep(plate$row, each = num_cols), sprintf("%02d", rep(1:num_cols, times = nrow(plate))))
+      XJvRpf03oP_59 <- paste0(rep(plate$row, each = num_cols), sprintf("%02d", rep(1:num_cols, times = nrow(plate))))
 
       # Flatten the plate values and replace empty strings with NA
       values <- as.vector(t(plate[, -1]))
       values[values == ""] <- NA
 
       # Create long format data frame directly
-      long_plate <- data.frame(zwellx = zwellsx, value = values)
+      long_plate <- data.frame(Z3Y2Bo1hyt_7 = XJvRpf03oP_59, value = values)
 
       # Add to the pre-allocated list at the correct index
       reformatted_data[[i]] <- long_plate
@@ -124,12 +124,12 @@ tidy_plate <- function(file,
     for (i in seq_along(reformatted_data)[-1]) {
       new_data <- reformatted_data[[i]]
       colnames(new_data)[2] <- names(reformatted_data)[i]
-      final_data <- merge(final_data, new_data, by = "zwellx", all = TRUE)
+      final_data <- merge(final_data, new_data, by = "Z3Y2Bo1hyt_7", all = TRUE)
     }
   }
 
   # Sort the dataframe by well
-  final_data <- final_data[order(final_data$zwellx), ]
+  final_data <- final_data[order(final_data$Z3Y2Bo1hyt_7), ]
   # Rename the first column
   colnames(final_data)[1] <- well_id
 
