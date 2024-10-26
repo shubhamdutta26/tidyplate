@@ -238,16 +238,3 @@ plate_dims <- list(
   `384` = c(16, 24),
   `1536` = c(32, 48)
 )
-
-# # Function to convert the first row into header
-# convert_first_row_to_header <- function(df) {
-#   new_header <- as.character(df[1,])   # Extract first row
-#   df <- df[-1,]                        # Remove first row
-#   colnames(df) <- new_header           # Assign new header
-#   return(df)                           # Return modified dataframe
-# }
-#
-# # Function to extract specific dataframes by indices
-# extract_plates <- function(list, indices) {
-#   return(list[indices])  # Subset the list using the provided indices
-# }
