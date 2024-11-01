@@ -1,5 +1,10 @@
 #' Returns the name of each plate in the file
 #'
+#' @description
+#' `view_plate_names` returns the names of all plates in the input file as a
+#' character vector. In case of empty or duplicates it diplays a warning and
+#' then returns the plate names.
+#'
 #' @param file This is the path to a xlsx or csv file containing data for the
 #' following types of plates: 6, 12, 24, 48, 96, 384, and 1536.
 #' @param sheet If file type is xlsx this is the sheet name (character) or
@@ -14,8 +19,7 @@
 #' data_12 <- view_plate_names(file = file_path)
 #'
 #' data_12
-view_plate_names <- function(file, sheet = 1){
-
+view_plate_names <- function(file, sheet = 1) {
   # Set default well_id value
   well_id = "well"
 
@@ -39,7 +43,6 @@ view_plate_names <- function(file, sheet = 1){
   }
 
   ## Read file ext and basename----
-  # file_ext <- tolower(tools::file_ext(file))
   file_full_name <- basename(file)
 
   # Read data----
@@ -93,17 +96,34 @@ view_plate_names <- function(file, sheet = 1){
 
   # Check for empty plate names (NA, "", or " ")
   empty_plates <- which(sapply(each_plate_name, is_empty))
-  if (length(empty_plates) > 0) {
-    rlang::inform(c(
-      paste0("Empty (blank or NA) plate name(s) found in ", file_full_name, ":"),
-      "i" = paste0("Position(s): ", paste(empty_plates, collapse = ", ")),
-      "x" = "Plate name(s) cannot be empty or duplicated."
-    ), call = NULL)
-  }
 
   # Check for duplicate plate names, excluding empty ones
   non_empty_names <- each_plate_name[!sapply(each_plate_name, is_empty)]
   dup_plates_names <- which(duplicated(non_empty_names) | duplicated(non_empty_names, fromLast = TRUE))
+
+  # Combined check: both empty and duplicate names
+  if (length(empty_plates) > 0 && length(dup_plates_names) > 0) {
+    dup_names <- unique(non_empty_names[dup_plates_names])
+    rlang::abort(
+      c(
+        paste0("Empty (blank or NA) & duplicate plate names found in ", file_full_name, ":"),
+        "i" = paste0("Empty position(s): ", paste(empty_plates, collapse = ", ")),
+        "i" = paste0("Duplicated name(s): ", paste(dup_names, collapse = ", ")),
+        "i" = paste0("Duplicated position(s): ", paste(dup_plates_names, collapse = ", ")),
+        "x" = "No empty or duplicate plate names are allowed."
+      ),
+      call = NULL
+    )
+  }
+
+  # Separate checks and messages for empty and duplicate names
+  if (length(empty_plates) > 0) {
+    rlang::inform(c(
+      paste0("Empty (blank or NA) plate name(s) found in ", file_full_name, ":"),
+      "i" = paste0("Position(s): ", paste(empty_plates, collapse = ", ")),
+      "x" = "Empty plate name(s) are not allowed."
+    ), call = NULL)
+  }
 
   if (length(dup_plates_names) > 0) {
     dup_names <- unique(non_empty_names[dup_plates_names])
@@ -112,7 +132,7 @@ view_plate_names <- function(file, sheet = 1){
       paste0("Duplicated plate name(s) found in ", file_full_name, ":"),
       "i" = paste0("Duplicated name(s): ", paste(dup_names, collapse = ", ")),
       "i" = paste0("Position(s): ", paste(dup_plates_names, collapse = ", ")),
-      "x" = "Plate name(s) cannot be empty or duplicated."
+      "x" = "No duplicate name(s) are allowed."
     ), call = NULL)
   }
 

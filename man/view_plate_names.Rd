@@ -17,7 +17,9 @@ number (integer).}
 A character vector
 }
 \description{
-Returns the name of each plate in the file
+\code{view_plate_names} returns the names of all plates in the input file as a
+character vector. In case of empty or duplicates it diplays a warning and
+then returns the plate names.
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
