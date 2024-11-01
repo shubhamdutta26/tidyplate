@@ -20,7 +20,9 @@ read.}
 A tibble.
 }
 \description{
-Reads and transforms microwell plate to a tibble
+\code{tidy_plate} reads a microwell plate shaped csv or excel file and returns
+a tibble for downstream data analysis. In order to create an template file
+use the \code{build_plate} function.
 }
 \examples{
 file_path <- system.file("extdata", "example_12_well.xlsx",
@@ -30,4 +32,7 @@ file_path <- system.file("extdata", "example_12_well.xlsx",
 data_12 <- tidy_plate(file = file_path)
 
 head(data_12)
+}
+\seealso{
+\code{\link[=build_plate]{build_plate()}}
 }
