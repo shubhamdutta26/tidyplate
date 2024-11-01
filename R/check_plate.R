@@ -26,20 +26,20 @@ check_plate <- function(file,
   # Check whether function arguments are valid----
   ## One file should be provided----
   if (length(file) != 1) {
-    stop(
+    rlang::abort(
       paste0(
         "Invalid input: ",
         ifelse(length(file) > 1,
                "More than one file provided."
         )
       ),
-      call. = FALSE
+      call = NULL
     )
   }
 
   ## `well_id` should be a character vector of length 1----
   if (!is.character(well_id) || length(well_id) != 1L) {
-    stop("`well_id` should be a character vector of length 1", call. = FALSE)
+    rlang::abort("`well_id` should be a character vector of length 1", call = NULL)
   }
 
   ## Read file ext and basename----
@@ -48,7 +48,7 @@ check_plate <- function(file,
 
   ## Check if file exists----
   if (!(file.exists(file))) {
-    stop(paste0(file_full_name, " does not exist!"), call. = FALSE)
+    rlang::abort(paste0(file_full_name, " does not exist!"), call = NULL)
   }
 
   # Read data----
@@ -65,5 +65,5 @@ check_plate <- function(file,
                                   well_id,
                                   file_full_name)
 
-  message(paste0(file_full_name, ": OK; Plate type: ", plate_parameters[[3]], "-well"))
+  rlang::inform(paste0(file_full_name, ": OK; Plate type: ", plate_parameters[[3]], "-well"))
 }

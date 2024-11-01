@@ -28,12 +28,16 @@ build_plate <- function(plate_type = 6,
   file_type <- match.arg(file_type)
 
   if (!(plate_type %in% c(6, 12, 24, 48, 96, 384, 1536))) {
-    stop("Invalid `plate_type` provided. `plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536.", call. = FALSE)
+    rlang::abort(c("Invalid `plate_type` provided.",
+                   "i" = "`plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536."),
+                 call = NULL)
   }
 
   # Validate n_plates (check if it's a positive integer)
   if (!is.numeric(n_plates) || n_plates != as.integer(n_plates) || n_plates < 1) {
-    stop("Invalid `n_plates` value provided. `n_plates` must be a positive integer.", call. = FALSE)
+    rlang::abort(c("Invalid `n_plates` value provided.",
+                   "i" = "`n_plates` must be a positive integer."),
+                 call = NULL)
   }
 
   # Validate plate_names
@@ -42,20 +46,22 @@ build_plate <- function(plate_type = 6,
   } else {
     # Check if plate_names is a character vector
     if (!is.character(plate_names)) {
-      stop("`plate_names` must be a character vector.", call. = FALSE)
+      rlang::abort("`plate_names` must be a character vector.", call = NULL)
     }
     if (length(plate_names) != n_plates) {
-      stop("The length of `plate_names` must match `n_plates`.", call. = FALSE)
+      rlang::abort("The length of `plate_names` must match `n_plates`.", call = NULL)
     }
     if (anyDuplicated(plate_names)) {
       duplicates <- plate_names[duplicated(plate_names)]
-      stop(paste0("`plate_names` cannot have duplicates.\nDuplicated names: ", paste(unique(duplicates), collapse = ", ")), call. = FALSE)
+      rlang::abort(c("`plate_names` cannot have duplicates.",
+                     "i" = "\nDuplicated names: ", paste(unique(duplicates), collapse = ", ")),
+                   call = NULL)
     }
   }
 
   # Validate file (if provided)
   if (!is.null(file) && !is.character(file)) {
-    stop("`file` must be a character string.", call. = FALSE)
+    rlang::abort("`file` must be a character string.", call = NULL)
   }
 
   dims <- plate_dims[[as.character(plate_type)]]
