@@ -12,7 +12,7 @@ read_data <- function(file, sheet = NULL) {
         tibble::as_tibble(data.table::fread(file, sep = ",", header = FALSE, na.strings = ""))
       )
     }, error = function(e) {
-      stop("Error reading CSV file: ", e$message, call. = FALSE)
+      rlang::abort("Error reading CSV file: ", e$message, call = NULL)
     })
   } else if (file_ext %in% c("xls", "xlsx")) {
     raw_data <- tryCatch({
@@ -20,7 +20,7 @@ read_data <- function(file, sheet = NULL) {
         readxl::read_excel(file, sheet = sheet, col_names = FALSE)
       )
     }, error = function(e) {
-      stop("Error reading Excel file: ", e$message, call. = FALSE)
+      rlang::abort("Error reading Excel file: ", e$message, call = NULL)
     })
   } else {
     rlang::abort(c(

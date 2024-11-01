@@ -21,26 +21,26 @@ generate_plate <- function(x,
 
   # Check that x is a tibble/data.frame
   if (!is.data.frame(x)) {
-    stop("`x` must be a tibble or data frame.")
+    rlang::abort("`x` must be a tibble or data frame.", call = NULL)
   }
 
   if (!is.character(well_id) || !is.integer(well_id)) {
-    stop("`well_id` must be a character string or an integer which points to the
-    column containing the well ids (A01, A02, ...).", call. = FALSE)
+    rlang::abort("`well_id` must be a character string or an integer which points to the
+    column containing the well ids (A01, A02, ...).", call = NULL)
   }
 
   x_colnames <- names(x)
 
   if (is.character(well_id) & !any(well_id %in% x_colnames)) {
-    stop("`well_id` must be a character string or an integer which points to the
-    column containing the well ids (A01, A02, ...).", call. = FALSE)
+    rlang::abort("`well_id` must be a character string or an integer which points to the
+    column containing the well ids (A01, A02, ...).", call = NULL)
   }
 
   if (!is.integer(plate_type) ||
       !any(plate_type %in% c(6, 12, 24, 48, 96, 384, 1536))) {
-    stop("`plate_type` must be an integer indicating one of the type of
+    rlang::abort("`plate_type` must be an integer indicating one of the type of
     the following microwell plates: 6, 12, 24, 48, 96, 384, 1536.",
-         call. = FALSE)
+         call = NULL)
   }
 
   file_type <- rlang::arg_match(file_type)
@@ -58,7 +58,7 @@ generate_plate <- function(x,
                        "96" = c(8, 12),
                        "384" = c(16, 24),
                        "1536" = c(32, 48),
-                       stop("Unsupported plate type"))
+                       rlang::abort("Unsupported plate type"), call = NULL)
 
   num_rows <- plate_dims[1]
   num_cols <- plate_dims[2]
@@ -119,6 +119,6 @@ generate_plate <- function(x,
                          colNames = FALSE,
                          rowNames = FALSE)
   } else {
-    stop("Unsupported file type. Use 'csv' or 'xlsx'.", call. = FALSE)
+    rlang::abort("Unsupported file type. Use 'csv' or 'xlsx'.", call = NULL)
   }
 }
