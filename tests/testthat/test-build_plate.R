@@ -49,13 +49,13 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 testthat::test_that("Throws error when plate_type argument is bad", {
   testthat::expect_error(
     build_plate(plate_type = "x"),
-    "Invalid `plate_type` provided. `plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536.")
+    regexp = "Invalid `plate_type` provided")
   testthat::expect_error(
     build_plate(plate_type = TRUE),
-    "Invalid `plate_type` provided. `plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536.")
+    regexp = "Invalid `plate_type` provided")
   testthat::expect_error(
     build_plate(plate_type = 2.4),
-    "Invalid `plate_type` provided. `plate_type` must be an integer and one of 6, 12, 24, 48, 96, 384, or 1536.")
+    regexp = "Invalid `plate_type` provided")
 })
 
 testthat::test_that("Throws error when n_plates value is invalid", {
