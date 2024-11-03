@@ -16,7 +16,8 @@ Imports:
     readxl,
     tibble,
     rlang,
-    openxlsx
+    openxlsx,
+    lifecycle
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -26,7 +27,8 @@ BugReports: https://github.com/shubhamdutta26/tidyplate/issues
 Suggests: 
     knitr,
     rmarkdown,
+    spelling,
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 VignetteBuilder: knitr
-Language: en-GB
+Language: en-US
