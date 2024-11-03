@@ -1,0 +1,13 @@
+"well","drug","cell_line","percent_survived"
+"A01","Neomycin","HEK293",60
+"A02","Puromycin","HEK293",22
+"A03","Neomycin","Hela",52
+"A04","Puromycin","Hela",18
+"B01","Neomycin","HEK293",62
+"B02","Puromycin","HEK293",23
+"B03","Neomycin","Hela",54
+"B04","Puromycin","Hela",16
+"C01","DMSO","HEK293",98
+"C02","DMSO","HEK293",97
+"C03","DMSO","Hela",99
+"C04","DMSO","Hela",98
