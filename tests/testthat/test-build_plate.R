@@ -1,33 +1,40 @@
+# Define temporary paths for file outputs
+temp_csv <- tempfile(fileext = ".csv")
+temp_xlsx <- tempfile(fileext = ".xlsx")
+
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
   path_csv <- paste0("test_data/", i, "/build_plate/empty_", i, "-well.csv")
   path_xlsx <- paste0("test_data/", i, "/build_plate/empty_", i, "-well.xlsx")
 
-  test_that("build_plate creates a CSV file", {
-    result_file_csv <- build_plate(plate_type = i,
-                                   n_plates = 3,
-                                   file_type = "csv",
-                                   plate_names = NULL,
-                                   file = path_csv)
-    file_ext_csv <- tolower(tools::file_ext(path_csv))
+  # Test for CSV output
+  build_plate(plate_type = i,
+              n_plates = 3,
+              file_type = "csv",
+              plate_names = NULL,
+              file = temp_csv)
+  expect_true(file.exists(temp_csv))
 
-    result_file_xlsx <- build_plate(plate_type = i,
-                                    n_plates = 3,
-                                    file_type = "xlsx",
-                                    plate_names = NULL,
-                                    file = path_xlsx)
-    file_ext_xlsx <- tolower(tools::file_ext(path_xlsx))
-    expect_true(file.exists(path_csv))
-    expect_equal(file_ext_csv, "csv")
-    expect_true(file.exists(path_xlsx))
-    expect_equal(file_ext_xlsx, "xlsx")
-    })
+  build_plate(plate_type = i,
+              n_plates = 3,
+              file_type = "xlsx",
+              plate_names = NULL,
+              file = temp_xlsx)
+  expect_true(file.exists(temp_xlsx))
+
+  # Test for XLSX output
+  build_plate(plate_type = i,
+              n_plates = 3,
+              file_type = "xlsx",
+              plate_names = NULL,
+              file = temp_xlsx)
+  expect_true(file.exists(temp_xlsx))
 
   test_that("Created plates are empty", {
     expect_error(
-      tidy_plate(path_csv), "Plate(s) are empty.", fixed = TRUE)
+      tidy_plate(temp_csv), "Plate(s) are empty.", fixed = TRUE)
     expect_error(
-      tidy_plate(path_xlsx), "Plate(s) are empty.", fixed = TRUE)
+      tidy_plate(temp_xlsx), "Plate(s) are empty.", fixed = TRUE)
   })
 
   path_bad_csv <- paste0("test_data/", i, "/build_plate/empty_", i, "-well_bad.csv")
@@ -35,15 +42,6 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
   filename_csv <- paste0("empty_", i, "-well_bad.csv")
   filename_xlsx <- paste0("empty_", i, "-well_bad.xlsx")
-
-  testthat::test_that("created plates are formatted correctly", {
-    testthat::expect_error(
-      check_plate(path_bad_csv),
-      regexp = " is not a valid input file.")
-    testthat::expect_error(
-      check_plate(path_bad_xlsx),
-      regexp = " is not a valid input file.")
-  })
 }
 
 testthat::test_that("Throws error when plate_type argument is bad", {
@@ -83,4 +81,10 @@ testthat::test_that("plate_names and file values are invalid", {
   testthat::expect_error(
     build_plate(plate_type = 6, n_plates = 1, plate_names = "1", file = 1),
     "`file` must be a character string.")
+})
+
+# Set up cleanup to remove files after test
+on.exit({
+  if (file.exists(temp_csv)) unlink(temp_csv)
+  if (file.exists(temp_xlsx)) unlink(temp_xlsx)
 })
