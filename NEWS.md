@@ -5,6 +5,20 @@
 ### Minor changes
 ### Bug fixes
 
+# tidyplate 2.1.1
+
+### New features
+-   `generate_plate()`: Exports a tibble into plate-shaped csv or xlsx file.
+
+### Major changes
+-   Soft deprecation of `file_type` argument in `build_plate()` and replaced
+with `file`.
+-   `view_plate_names()` returns plate names even when the plate names are not
+valid with a warning.
+
+### Minor changes
+-   Improved error and warning messages.
+
 # tidyplate 2.0.1
 
 ### Minor changes
