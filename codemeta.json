@@ -2,7 +2,7 @@
   "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
   "@type": "SoftwareSourceCode",
   "identifier": "tidyplate",
-  "description": "This package helps researchers transform plate data to a tidy dataframe/ tibble.",
+  "description": "This package helps researchers transform plate data to a tibble.",
   "name": "tidyplate: What the Package Does (Title Case)",
   "codeRepository": "https://github.com/shubhamdutta26/tidyplate",
   "issueTracker": "https://github.com/shubhamdutta26/tidyplate/issues",
