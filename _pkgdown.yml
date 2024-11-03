@@ -1,4 +1,4 @@
-url: http://www.shubhamdutta.com/tidyplate/
+url: https://www.shubhamdutta.com/tidyplate
 template:
   bootstrap: 5
   light-switch: true
@@ -7,4 +7,3 @@ template:
     base_font: {google: "Roboto"}
     heading_font: {google: "Roboto Slab"}
     code_font: {google: "JetBrains Mono"}
-

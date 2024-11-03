@@ -21,8 +21,9 @@ An message indicating whether the input file is compatible with the
 \code{tidy_plate()} function
 }
 \description{
-Checks whether the input file is valid for use with the \code{tidy_plate()}
-function
+\code{check_plate()} performs quality checks on the input microwell shaped data and
+warns the user if there is any discrepancy. The user can either fix the input
+file or use the \code{build_plate()} function to build a template csv or xlsx file.
 }
 \examples{
 file_path <- system.file(
@@ -32,4 +33,7 @@ file_path <- system.file(
 )
 
 check_plate(file = file_path)
+}
+\seealso{
+\code{\link[=build_plate]{build_plate()}}
 }

@@ -1,9 +1,9 @@
 #' Reads and transforms microwell plate to a tibble
 #'
 #' @description
-#' `tidy_plate` reads a microwell plate shaped csv or excel file and returns
+#' `tidy_plate()` reads a microwell plate shaped csv or excel file and returns
 #' a tibble for downstream data analysis. In order to create an template file
-#' use the `build_plate` function.
+#' use the `build_plate()` function.
 #'
 #' @param file A character string containing the path to a csv or excel file.
 #' The format is described below.
@@ -12,7 +12,7 @@
 #' @param sheet A character or integer indicating the excel sheet to be
 #' read.
 #'
-#' @seealso [build_plate()]
+#' @seealso [build_plate()], [generate_plate()]
 #'
 #' @return A tibble.
 #' @export

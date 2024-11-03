@@ -1,0 +1,82 @@
+---
+title: "Read data from several files using `tidyplate`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Read data from several files using `tidyplate`}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+Start by loading tidyplate:
+
+```{r}
+#| label: load
+library(tidyplate)
+```
+
+Import multiple csv files into separate tibbles:
+
+```{r}
+#| label: csv_multiple_tb
+file <- system.file("extdata", 
+                    "example_12_well.xlsx", 
+                    package = "tidyplate")
+csv_files <- list.files(path = file, 
+                        pattern = "*.csv",
+                        full.names = TRUE)
+
+names <- tools::file_path_sans_ext(basename(csv_files))
+
+# Loop through the filenames and assign data
+for(i in seq_along(csv_files)) {
+  assign(names[i], tidy_plate(csv_files[i]))
+}
+```
+
+Import multiple csv files as a **list** of tibbles:
+
+```{r}
+#| label: csv_list
+# Initialize an empty list to store tibbles for each file
+tb_csv_list <- list()
+
+# Loop through the filenames and assign data
+for(i in seq_along(csv_files)) {
+  tb_csv_list[[i]] <- tidy_plate(csv_files[i])
+}
+```
+
+For multiple excel sheets in the same excel file:
+
+```{r}
+#| label: multi-sheet-demo
+# as individual tibbles
+xl_file <- system.file("extdata", 
+                       "multisheet_example.xlsx", 
+                       package = "tidyplate")
+
+sheets <- readxl::excel_sheets(xl_file)
+
+for (sheet in sheets) {
+  tb <- tidy_plate(xl_file, sheet = sheet)
+  name <- paste0("tb_", sheet)
+  assign(name, tb)
+}
+
+# as elements of a list
+# Initialize an empty list to store tibbles for each sheet
+tb_xl_list <- list()
+
+for (sheet in sheets) {
+  tb_xl_list[[sheet]] <- tidy_plate(xl_file, sheet = sheet)
+}
+```

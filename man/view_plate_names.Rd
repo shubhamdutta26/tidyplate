@@ -17,7 +17,7 @@ number (integer).}
 A character vector
 }
 \description{
-\code{view_plate_names} returns the names of all plates in the input file as a
+\code{view_plate_names()} returns the names of all plates in the input file as a
 character vector. In case of empty or duplicates it diplays a warning and
 then returns the plate names.
 }

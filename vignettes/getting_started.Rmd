@@ -1,13 +1,11 @@
 ---
-title: "Getting started with `tidyplate`"
+title: "Transform microwell plates with `tidyplate`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Getting started with `tidyplate`}
+  %\VignetteIndexEntry{Transform microwell plates with `tidyplate`}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
 
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
@@ -18,52 +16,31 @@ knitr::opts_chunk$set(
 )
 ```
 
-# tidyplate
-
-Microtiter plates or microplates have become a standard tool in analytical research and clinical diagnostic testing laboratories. They are convenient, high-throughput tools for organizing tissue culture, PCR tests (such as HIV/ COVID screening), or immunological assays such as ELISA, RIA and FIA. They offer many advantages over traditional assay formats including reduced sample and reagent volumes, increased throughput, and ease of automation. The goal of `tidyplate` is to help researchers convert different types of microplates into tidy dataframes which can be used in data analysis. `tidyplate` accepts xlsx and csv files formatted in a specific way as input. `tidyplate` supports all types of standard microplate formats namely: 6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and 1536-well plates.
-
-`tidyplate` has four functions:
-
-  * `tidy_plate`: Transforms the input file (xlsx or csv) into a tidy dataframe.
-  * `check_plate`: Checks whether the input file is valid for use with `tidy_plate()`.
-  * `view_plate_names`: Returns names/ id(s) of each plate in the input file.
-  * `build_plate`: Generates a csv or xlsx template for each plate type.
-
-## Installation
-
-To install tidyplate from CRAN:
-
-``` r
-install.packages("tidyplate")
-```
-
-You can install the development version of tidyplate from [GitHub](https://github.com/) with:
-
-``` r
-# install.packages("devtools")
-devtools::install_github("shubhamdutta26/tidyplate")
-```
-
-## Formating the input data file
-
-```{r image, echo=FALSE, fig.cap = "This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only.", out.width = '100%'}
-knitr::include_graphics("../man/figures/README_tidy_plate.png")
-```
+## Formating the input data
 
 The input xlsx or csv should be formatted in a specific way:
 
-  * Top left corner must hold the name for that plate.
-  * Column names should be: 1, 2, 3, and so on and so forth.
-  * Row names should be: A, B, C, and so on and so forth.
-  * There must be an empty row between each plate.
+-   Top left corner must hold the name for that plate.
+-   Column names should be: 1, 2, 3, and so on and so forth.
+-   Row names should be: A, B, C, and so on and so forth.
+-   There must be an empty row between each plate.
 
-## Example
+## Usage
 
-This is an example which shows you how to use the `tidyplate`. If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument for an xlsx file. Users can also specify the variable name of column where well ids will be stored (defaults to "well"). Please make sure that `well_id` argument does not match individual plate names in the input file.
+If the input file is an xlsx file it reads the first sheet by default. Users can specify sheet using the `sheet` argument for an xlsx file. Users can also specify the variable name of column where well ids will be stored (defaults to "well"). Please make sure that `well_id` argument does not match individual plate names in the input file.
+
+Start by loading tidyplate:
+
+```{r}
+#| label: load
+library(tidyplate)
+```
 
 First check if the input file is valid or not:
 
-```{r check_plate-xlsx, error=TRUE}
+```{r}
+#| label: check_plate-xlsx
+#| error: true
 library(tidyplate)
 file <- system.file("extdata", 
                     "example_12_well.xlsx", 
@@ -79,7 +56,10 @@ check_plate(incorrect_file) # Error type displayed
 As mentioned above, the formatting of the input file is very important. A csv or 
 excel template for each plate type can be created using the `build_plate` function:
 
-```{r build-plate-demo, echo=TRUE, eval=FALSE}
+```{r}
+#| label: build-plate-demo
+#| echo: true
+#| eval: false
 build_plate(plate_type = 96, 
             n_plates = 2, 
             file_type = "xlsx") # default is csv
@@ -87,65 +67,28 @@ build_plate(plate_type = 96,
 
 If you want to retrieve the names of individual plates:
 
-```{r view-plate-names-xlsx}
+```{r}
+#| label: view-plate-names-xlsx
 view_plate_names(file)
 ```
 
 Read and import the file as a tibble:
 
-```{r tidy_plate-xlsx}
+```{r}
+#| label: tidy_plate-xlsx
 data <- tidy_plate(file)
 head(data)
 ```
 
-Import multiple csv files into separate tibbles:
+Conversely, a dataframe or tibble can be re-exported back to a plate shaped csv
+or xlsx file:
 
-```{r csv_multiple_tb}
-csv_files <- list.files(path = file, 
-                        pattern = "*.csv",
-                        full.names = TRUE)
-
-names <- tools::file_path_sans_ext(basename(csv_files))
-
-# Loop through the filenames and assign data
-for(i in seq_along(csv_files)) {
-  assign(names[i], tidy_plate(csv_files[i]))
-}
+```{r}
+#| label: generate-plate
+#| echo: true
+#| eval: false
+generate_plate(data, well_id = "well", plate_type = 12, file = "plate.csv")
 ```
 
-Import multiple csv files as a **list** of tibbles:
-
-```{r csv_list}
-# Initialize an empty list to store tibbles for each file
-tb_csv_list <- list()
-
-# Loop through the filenames and assign data
-for(i in seq_along(csv_files)) {
-  tb_csv_list[[i]] <- tidy_plate(csv_files[i])
-}
-```
-
-For multiple excel sheets in the same excel file:
-
-```{r multi-sheet-demo}
-# as individual tibbles
-xl_file <- system.file("extdata", 
-                       "multisheet_example.xlsx", 
-                       package = "tidyplate")
-
-sheets <- readxl::excel_sheets(xl_file)
-
-for (sheet in sheets) {
-  tb <- tidy_plate(xl_file, sheet = sheet)
-  name <- paste0("tb_", sheet)
-  assign(name, tb)
-}
-
-# as elements of a list
-# Initialize an empty list to store tibbles for each sheet
-tb_xl_list <- list()
-
-for (sheet in sheets) {
-  tb_xl_list[[sheet]] <- tidy_plate(xl_file, sheet = sheet)
-}
-```
+For more information on how to use functions on multiple files or multi-sheet excel
+files read the `vignette("advanced")`.

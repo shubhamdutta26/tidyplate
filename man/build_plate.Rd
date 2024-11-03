@@ -2,7 +2,7 @@
 % Please edit documentation in R/build_plate.R
 \name{build_plate}
 \alias{build_plate}
-\title{Generates a csv or xlsx template for each plate type}
+\title{Build a csv or xlsx template for each plate type}
 \usage{
 build_plate(
   plate_type = 6,
@@ -13,7 +13,7 @@ build_plate(
 )
 }
 \arguments{
-\item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, 1536)
+\item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, or 1536)
 indicating the type of microwell plate.}
 
 \item{n_plates}{A positive integer indicating the number of plates.}
@@ -23,17 +23,22 @@ to each plate. Its length should be equal to the value of \code{n_plates}.}
 
 \item{file}{A character string naming the file.}
 
-\item{file_type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{file_type} will be
-removed; use \code{file} instead.}
+\item{file_type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} A character string of the
+output file type. It can either be a csv or xlsx file. The default is csv.}
 }
 \value{
 A csv or xlsx template file.
 }
 \description{
-Generates a csv or xlsx template for each plate type
+\code{build_plate()} helps the user build an empty csv or xlsx file that can be
+used as a template for storing plate data. Ensure that plate names are unique.
+Once populated it can be used as an input for \code{tidy_plate()} function.
 }
 \examples{
 temp_file <- tempfile(fileext = ".csv")
 
 build_plate(plate_type = 6, n_plates = 2, file = temp_file)
+}
+\seealso{
+\code{\link[=tidy_plate]{tidy_plate()}}, \code{\link[=generate_plate]{generate_plate()}}
 }

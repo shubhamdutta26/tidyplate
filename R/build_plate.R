@@ -1,13 +1,20 @@
-#' Generates a csv or xlsx template for each plate type
+#' Build a csv or xlsx template for each plate type
 #'
-#' @param plate_type A specific integer (6, 12, 24, 48, 96, 384, 1536)
+#' @description
+#' `build_plate()` helps the user build an empty csv or xlsx file that can be
+#' used as a template for storing plate data. Ensure that plate names are unique.
+#' Once populated it can be used as an input for `tidy_plate()` function.
+#'
+#' @param plate_type A specific integer (6, 12, 24, 48, 96, 384, or 1536)
 #' indicating the type of microwell plate.
 #' @param n_plates A positive integer indicating the number of plates.
-#' @param file_type `r lifecycle::badge("deprecated")` `file_type` will be
-#' removed; use `file` instead.
 #' @param plate_names A character vector of unique values that will be assigned
 #' to each plate. Its length should be equal to the value of `n_plates`.
 #' @param file A character string naming the file.
+#' @param file_type `r lifecycle::badge("deprecated")` A character string of the
+#' output file type. It can either be a csv or xlsx file. The default is csv.
+#'
+#' @seealso [tidy_plate()], [generate_plate()]
 #'
 #' @return A csv or xlsx template file.
 #' @export

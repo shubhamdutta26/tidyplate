@@ -22,7 +22,10 @@ the path and type of exported file. Only csv or xlsx files are supported.}
 A csv or xlsx file.
 }
 \description{
-Generates a microwell plate shaped csv or excel file from tibble or dataframe
+Dataframes or tibbles are not good for visual inspection of microwell plate
+shaped data. \code{generate_plate()} helps the user by transforming dataframe or
+tibble into a microwell plate data. It does the opposite of what
+\code{tidy_plate()} does to a plate data.
 }
 \examples{
 file_path <- system.file("extdata", "tidy_12_well.csv", package = "tidyplate")
@@ -34,4 +37,7 @@ plate_12 <- generate_plate(tbl,
                            well_id = "well",
                            plate_type = 12,
                            file = temp_file)
+}
+\seealso{
+\code{\link[=tidy_plate]{tidy_plate()}},\code{\link[=build_plate]{build_plate()}}
 }

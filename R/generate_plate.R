@@ -1,5 +1,11 @@
 #' Generates a microwell plate shaped csv or excel file from tibble or dataframe
 #'
+#' @description
+#' Dataframes or tibbles are not good for visual inspection of microwell plate
+#' shaped data. `generate_plate()` helps the user by transforming dataframe or
+#' tibble into a microwell plate data. It does the opposite of what
+#' `tidy_plate()` does to a plate data.
+#'
 #' @param x A dataframe or tibble.
 #' @param well_id A character string or an integer which points to the column
 #' containing the well ids.
@@ -7,6 +13,8 @@
 #' indicating the type of microwell plate.
 #' @param file A character string with the filename of the output file with
 #' the path and type of exported file. Only csv or xlsx files are supported.
+#'
+#' @seealso [tidy_plate()],[build_plate()]
 #'
 #' @return A csv or xlsx file.
 #' @export

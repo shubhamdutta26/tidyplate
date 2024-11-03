@@ -1,10 +1,3 @@
-# tidyplate (development version)
-
-### New features
-### Major changes
-### Minor changes
-### Bug fixes
-
 # tidyplate 2.1.1
 
 ### New features
@@ -18,6 +11,8 @@ valid with a warning.
 
 ### Minor changes
 -   Improved error and warning messages.
+-   Polished README and vignettes.
+-   Added description field for each function.
 
 # tidyplate 2.0.1
 
