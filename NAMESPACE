@@ -2,6 +2,7 @@
 
 export(build_plate)
 export(check_plate)
+export(generate_plate)
 export(tidy_plate)
 export(view_plate_names)
 importFrom(rlang,":=")

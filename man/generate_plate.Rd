@@ -2,9 +2,9 @@
 % Please edit documentation in R/generate_plate.R
 \name{generate_plate}
 \alias{generate_plate}
-\title{Generates a microwell plate shaped csv or excel files from tibble or dataframe.}
+\title{Generates a microwell plate shaped csv or excel file from tibble or dataframe}
 \usage{
-generate_plate(x, well_id, plate_type, file_out, file_type = c("csv", "xlsx"))
+generate_plate(x, well_id, plate_type, file)
 }
 \arguments{
 \item{x}{A dataframe or tibble.}
@@ -15,15 +15,23 @@ containing the well ids.}
 \item{plate_type}{A specific integer (6, 12, 24, 48, 96, 384, 1536)
 indicating the type of microwell plate.}
 
-\item{file_out}{A character string with the name (with path) of the output
-file name.}
-
-\item{file_type}{A character string with the type of exported file ("csv",
-"xlsx"). The default is "csv".}
+\item{file}{A character string with the filename of the output file with
+the path and type of exported file. Only csv or xlsx files are supported.}
 }
 \value{
 A csv or xlsx file.
 }
 \description{
-Generates a microwell plate shaped csv or excel files from tibble or dataframe.
+Generates a microwell plate shaped csv or excel file from tibble or dataframe
+}
+\examples{
+file_path <- system.file("extdata", "tidy_12_well.csv", package = "tidyplate")
+
+tbl <- read.csv(file_path)
+temp_file <- tempfile(fileext = ".csv")
+
+plate_12 <- generate_plate(tbl,
+                           well_id = "well",
+                           plate_type = 12,
+                           file = temp_file)
 }
