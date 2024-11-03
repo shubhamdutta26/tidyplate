@@ -2,8 +2,9 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
+  advanced: advanced.html
   getting_started: getting_started.html
-last_built: 2024-11-03T14:39Z
+last_built: 2024-11-03T23:05Z
 urls:
-  reference: http://www.shubhamdutta.com/tidyplate/reference
-  article: http://www.shubhamdutta.com/tidyplate/articles
+  reference: https://www.shubhamdutta.com/tidyplate/reference
+  article: https://www.shubhamdutta.com/tidyplate/articles
