@@ -7,9 +7,9 @@
 build_plate(
   plate_type = 6,
   n_plates = 1,
-  file_type = c("csv", "xlsx"),
   plate_names = NULL,
-  file = NULL
+  file = NULL,
+  file_type = NULL
 )
 }
 \arguments{
@@ -18,13 +18,13 @@ indicating the type of microwell plate.}
 
 \item{n_plates}{A positive integer indicating the number of plates.}
 
-\item{file_type}{A character string ("csv" (the default) or "xlsx")
-indicating the filetype.}
-
 \item{plate_names}{A character vector of unique values that will be assigned
 to each plate. Its length should be equal to the value of \code{n_plates}.}
 
 \item{file}{A character string naming the file.}
+
+\item{file_type}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} \code{file_type} will be
+removed; use \code{file} instead.}
 }
 \value{
 A csv or xlsx template file.
@@ -33,8 +33,7 @@ A csv or xlsx template file.
 Generates a csv or xlsx template for each plate type
 }
 \examples{
-\dontrun{
-build_plate(plate_type = 6, n_plates = 2)
-build_plate(plate_type = 6, n_plates = 2, file_type = "xlsx")
-}
+temp_file <- tempfile(fileext = ".csv")
+
+build_plate(plate_type = 6, n_plates = 2, file = temp_file)
 }
