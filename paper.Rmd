@@ -1,0 +1,190 @@
+---
+title: "tidyplate: A Versatile R Package for Microplate Data Transformation"
+author: "Shubham Dutta"
+output: word_document
+date: "2024-11-04"
+editor_options: 
+  markdown: 
+    wrap: 72
+csl: mdpi.csl
+bibliography: references.bib
+---
+
+## Abstract
+
+Microtiter plates are critical tools in research and diagnostic
+settings, enabling efficient, high-throughput analysis in assays like
+ELISA, PCR, and immunoassays. However, working with plate-shaped data
+present several challenges for data manipulation and analysis. While it
+is easier to visualize plate-shaped data it is not ideal for downstream
+data analysis and vice-versa. The *tidyplate* package addresses these
+issues by transforming microplate-shaped data into tidy data back for
+easy visualization and data analysis. *tidyplate* supports a variety of
+standard plate formats and provides robust functions to validate,
+convert, and export plate data. Here, we introduce the primary functions
+of *tidyplate*, illustrate its applications, and discuss its benefits
+for researchers.
+
+## Introduction
+
+Microtiter plates are standard tools in laboratories, offering
+advantages in high-throughput applications, including tissue culture,
+immunoassays, and diagnostic tests for infectious diseases such as HIV
+and COVID-19. By allowing the handling of numerous samples in a compact
+format, microplates streamline data collection and analysis, making them
+highly efficient and versatile. Yet, the challenges associated with
+transforming microplate data into analyzable formats remain significant.
+On one hand it is easier to visualize plate-shaped data but on the other
+hand it becomes difficult to perform data manipulation or data analysis.
+
+Tidy dataframes are essential in data analysis because they offer a
+standardized structure that makes data easier to understand and
+manipulate [@tidy, @tibble]. In a tidy data, each variable forms a column,
+each observation forms a row, and each type of observational unit forms
+a table. This structure minimizes confusion and reduces errors in
+analysis, as each element is clearly defined and easily accessible. Tidy
+data facilitates interoperability between different data analysis tools
+and packages, such as those in the R (Tidyverse) and python (Pandas),
+which are designed to work seamlessly with tidy data [@tidyverse;
+@mckinney-proc-scipy-2010]. By following a consistent format, tidy
+dataframes enable analysts to write more efficient and readable code,
+streamline workflows, and maintain reproducibility, making it easier to
+share and scale analyses across projects and collaborators.
+
+The *tidyplate* R package aims to bridge this gap, helping users
+transforming various microplate layouts (6-well, 12-well, 24-well,
+48-well, 96-well, 384-well, and 1536-well) from CSV or Excel files into
+tidy data and back to original plate-shaped format (Figure
+\@ref(fig:illus)). This enables researchers to view their data and when
+necessary make them compatible with data manipulation and visualization
+workflows in R and Python [@R; @CS-R9526]. In this article, we detail the key functions
+of *tidyplate*, demonstrate usage examples, and discuss the practical
+benefits for data-intensive applications.
+
+## Usage and examples
+
+*tidyplate* has two core functions: `tidy_plate` and `generate_plate`.
+The `tidy_plate` function takes a specifically formatted input file (csv
+or excel) as input and transforms it into tidy data (also known as a
+dataframe or tibble in R). The data for an experiment must be stored
+such that the top left corner should hold the name of the plate, the
+column names for each plate should be named as 1, 2, 3 and so on and so
+forth, the row names should be A, B, C, and finally there must be one
+empty row between each plate. Figure \@ref(fig:tidy) shows how a csv or
+excel file for a 12-well plate should be formatted and the same
+principle can be used on other plate formats as well. In this experiment
+researchers looked at the effect of antibiotics on cell lines. The
+individual plates are named *drug*, *cell_line*, and *percent_survived*.
+The row and column names are A, B, C and 1, 2, 3, 4 respectively. Each
+plate is separated by an empty row. `tidy_plate` converts it into tidy
+data by organizing each plate into columns and adding a *well* column
+for the well identifiers. On the other hand `generate_plate` does the
+opposite. It takes tidy data and reformats it back into plate-shaped
+data. The fill colors are for illustrative purposes only.
+
+Install *tidyplate*:
+
+```{r}
+#| label: install
+#| eval: false
+install.packages("tidyplate")
+```
+
+The users need to load the package using the `library` function and use
+the `tidy_plate` function to convert an example plate into tidy data.
+
+```{r}
+#| label: tidy-demo
+library(tidyplate)
+file <- system.file("extdata", "example_12_well.xlsx", package = "tidyplate")
+data <- tidy_plate(file)
+head(data)
+```
+
+Any tidy data can be transformed back into plate shaped format using the
+`generate_plate` function.
+
+```{r}
+#| label: gen-demo
+#| eval: false
+generate_plate(data, well_id = "well", plate_type = 12, file = "plate_shaped.csv")
+```
+
+In addition to the core functions, there are other helper functions to
+help the users. One of the most useful of these functions is
+`build_plate`. To assist with formatting, `build_plate` generates empty
+csv or xlsx templates for each plate type, ensuring compatibility with
+`tidy_plate`.
+
+```{r}
+#| label: build-demo
+#| eval: false
+build_plate(plate_type = 96, n_plates = 2, file = "template_96.xlsx")
+```
+
+If the users have formatted their own input files they can use the
+`check_plate` function to ensure correct formatting before data
+processing. `check_plate` verifies if a file adheres to *tidyplate*'s
+input requirements. This function detects formatting issues, such as
+incorrect row and column identifiers, ensuring smoother workflows.
+
+```{r}
+#| label: check-demo
+#| error: true
+check_plate(file) # No error for valid file
+
+invalid_file <- system.file("extdata", "incorrect_format.csv", package = "tidyplate")
+check_plate(invalid_file) # Error type displayed
+```
+
+Finally, an utility function called `view_plate_names` retrieves the
+names of individual plates within a file, providing a quick reference
+for users working with multi-plate files.
+
+```{r}
+#| label: view-demo
+view_plate_names(file)
+```
+
+## Conclusion
+
+*tidyplate* is a powerful tool for researchers and analysts, simplifying
+the transformation of microplate data into tidy formats compatible with
+R and Python [@R; @CS-R9526]. By addressing common challenges in plate data handling,
+*tidyplate* supports a wide range of research applications, from
+diagnostics to high-throughput screening. With its flexible functions,
+researchers can validate, format, and analyze microplate data
+efficiently, improving the reproducibility and accessibility of their
+workflows.
+
+## References
+
+::: {#refs}
+:::
+
+\newpage
+
+## Figures
+
+Figure 1
+
+![tidyplate transforms microwell plate-format data to tidy data and
+back](paper_fig/tidyplate_illus.png){#fig:illus}
+
+\newpage
+
+Figure 2
+
+![An illustration of how the core *tidyplate* functions `tidy_plate` and
+`generate_plate` work on a 12-well
+plate](paper_fig/tidy_plate.png){#fig:tidy}
+
+\newpage
+
+## Figure details
+
+**Figure 1**: tidyplate transforms microwell plate-format data to tidy
+data and back for visualization, data manipulation, and analysis.
+
+**Figure 2**: An illustration of how the core *tidyplate* functions
+`tidy_plate` and `generate_plate` work on a 12-well plate.

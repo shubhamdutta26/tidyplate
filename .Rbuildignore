@@ -7,6 +7,10 @@
 ^docs$
 ^pkgdown$
 ^\.github$
+^paper.rmd$
+^paper$
+^references.bib$
+^mdpi.csl$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
 ^revdep$
