@@ -1,7 +1,7 @@
 Type: Package
 Package: tidyplate
 Title: Transform Microplate Data into Tibbles
-Version: 2.2.0
+Version: 2.1.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8484-0717"))

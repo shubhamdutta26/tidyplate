@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# tidyplate <a href="http://www.shubhamdutta.com/tidyplate/"><img src="man/figures/logo.png" align="right" height="139" alt="tidyplate website" /></a>
+# tidyplate <a href="https://www.shubhamdutta.com/tidyplate//"><img src="man/figures/logo.png" align="right" height="139" alt="tidyplate website" /></a>
 
 <!-- badges: start -->
 
@@ -155,4 +155,4 @@ To cite package ‘tidyplate’ in publications use:
 Dutta S (2024). *tidyplate: Transform Microplate Data into Tibbles*. R
 package version 2.0.1.9000,
 <https://github.com/shubhamdutta26/tidyplate>,
-<https://www.shubhamdutta.com/tidyplate>.
+<https://www.shubhamdutta.com/tidyplate/>.

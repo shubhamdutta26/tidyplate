@@ -32,7 +32,7 @@ build_plate <- function(plate_type = 6,
 
   # Warn about deprecated `file_type` argument
   if (!is.null(file_type)) {
-    lifecycle::deprecate_soft("2.1.1",
+    lifecycle::deprecate_soft("2.1.0",
                               "build_plate(file_type)",
                               "build_plate(file)")
   }
