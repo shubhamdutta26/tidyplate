@@ -59,9 +59,9 @@ generate_plate <- function(x,
 
   # Check if well_id column exists in data
   if (is.character(well_id) && !well_id %in% x_colnames) {
-    rlang::abort("`well_id` must refer to an existing column in `x`.", call = NULL)
+    rlang::abort("`well_id` must refer to an existing column in the input file.", call = NULL)
   } else if (is.integer(well_id) && (well_id < 1 || well_id > ncol(x))) {
-    rlang::abort("`well_id` integer must refer to a valid column index in `x`.", call = NULL)
+    rlang::abort("`well_id` integer must refer to a valid column index in the input file.", call = NULL)
   }
 
   # Extract well column
@@ -155,7 +155,5 @@ generate_plate <- function(x,
     write.table(combined_data, file = file, sep = ",", col.names = FALSE, row.names = FALSE, na = "")
   } else if (file_ext == "xlsx") {
     openxlsx::write.xlsx(combined_data, file = file, colNames = FALSE, rowNames = FALSE)
-  } else {
-    rlang::abort("Unsupported file type. Use 'csv' or 'xlsx'.", call = NULL)
   }
 }

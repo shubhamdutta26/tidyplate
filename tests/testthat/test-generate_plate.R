@@ -88,7 +88,9 @@ test_that("generate_plate requires plate_type to be 1536 for AA-AF wells", {
 
   test_that("generate_plate throws an error if well_id column does not exist", {
     expect_error(generate_plate(df, well_id = "nonexistent", plate_type = 96, file = temp_csv),
-                 "`well_id` must refer to an existing column in `x`.")
+                 "`well_id` must refer to an existing column in")
+    expect_error(generate_plate(df, well_id = 20L, plate_type = 96, file = temp_csv),
+                 "`well_id` integer must refer to a valid column")
   })
 
   test_that("generate_plate throws an error if well_id integer index is out of bounds", {
