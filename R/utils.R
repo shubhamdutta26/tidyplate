@@ -7,21 +7,15 @@ read_data <- function(file, sheet = NULL) {
 
   # Check for supported file extensions
   if (file_ext == "csv") {
-    raw_data <- tryCatch({
+    raw_data <-
       suppressWarnings(
         tibble::as_tibble(data.table::fread(file, sep = ",", header = FALSE, na.strings = ""))
       )
-    }, error = function(e) {
-      rlang::abort("Error reading CSV file: ", e$message, call = NULL)
-    })
   } else if (file_ext %in% c("xls", "xlsx")) {
-    raw_data <- tryCatch({
+    raw_data <-
       suppressMessages(
         readxl::read_excel(file, sheet = sheet, col_names = FALSE)
       )
-    }, error = function(e) {
-      rlang::abort("Error reading Excel file: ", e$message, call = NULL)
-    })
   } else {
     rlang::abort(c(
       "Unsupported file format. Please use CSV or Excel files.",
