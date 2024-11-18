@@ -1,6 +1,8 @@
 # Define temporary paths for file outputs
 temp_csv <- tempfile(fileext = ".csv")
 temp_xlsx <- tempfile(fileext = ".xlsx")
+temp_null <- tempfile(fileext = "")
+temp_wrong <- tempfile(fileext = ".txt")
 
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
@@ -35,43 +37,70 @@ for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   })
 }
 
-testthat::test_that("Throws error when plate_type argument is bad", {
-  testthat::expect_error(
+test_that("Throws error when plate_type argument is bad", {
+  expect_error(
     build_plate(plate_type = "x"),
     regexp = "Invalid `plate_type` provided")
-  testthat::expect_error(
+  expect_error(
     build_plate(plate_type = TRUE),
     regexp = "Invalid `plate_type` provided")
-  testthat::expect_error(
+  expect_error(
     build_plate(plate_type = 2.4),
     regexp = "Invalid `plate_type` provided")
 })
 
-testthat::test_that("Throws error when n_plates value is invalid", {
-  testthat::expect_error(
+test_that("Deprecation message", {
+  expect_warning(
+    build_plate(plate_type = 6L, n_plates = 2, plate_names = c("alpha", "beta"), file = temp_csv, file_type = "csv")
+    )
+})
+
+test_that("Throws error when n_plates value is invalid", {
+  expect_error(
     build_plate(plate_type = 6, n_plates = 0),
     "Invalid `n_plates` value provided.")
-  testthat::expect_error(
+  expect_error(
     build_plate(plate_type = 6, n_plates = 1.5),
     "Invalid `n_plates` value provided.")
-  testthat::expect_error(
+  expect_error(
     build_plate(plate_type = 6, n_plates = TRUE),
     "Invalid `n_plates` value provided.")
 })
 
-testthat::test_that("Throws error when n_plate & plate_names argument don't match", {
-  testthat::expect_error(
+test_that("Throws error when n_plate & plate_names argument don't match", {
+  expect_error(
     build_plate(plate_type = 6L, n_plates = 2, plate_names = c("alpha")),
     "The length of `plate_names` must match `n_plates`.")
 })
 
-testthat::test_that("plate_names and file values are invalid", {
-  testthat::expect_error(
+test_that("Throws error if duplicate `plate_names`", {
+  expect_error(
+    build_plate(plate_type = 6L, n_plates = 2, plate_names = c("alpha", "alpha")),
+    "`plate_names` cannot have duplicates")
+})
+
+test_that("plate_names and file values are invalid", {
+  expect_error(
     build_plate(plate_type = 6, n_plates = 2, plate_names = c(1, 2)),
     "`plate_names` must be a character vector.")
-  testthat::expect_error(
+  expect_error(
     build_plate(plate_type = 6, n_plates = 1, plate_names = "1", file = 1),
     "`file` must be a character string.")
+})
+
+test_that("when no `file` provided", {
+  expect_silent(
+    build_plate(plate_type = 6, n_plates = 2, plate_names = c("alpha", "beta"))
+    )
+  expect_silent(
+    build_plate(plate_type = 6, n_plates = 2, plate_names = c("alpha", "beta"), file = temp_null)
+  )
+})
+
+test_that("Wrong file extension provided", {
+  expect_error(
+    build_plate(plate_type = 6, n_plates = 2, plate_names = c("alpha", "beta"), file = temp_wrong)
+  )
 })
 
 # Set up cleanup to remove files after test
