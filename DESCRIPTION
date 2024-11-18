@@ -1,34 +1,39 @@
-Package: tidyplate
 Type: Package
+Package: tidyplate
 Title: Transform Microplate Data into Tibbles
-Version: 2.0.1.9000
+Version: 2.2.0
 Authors@R: 
     person("Shubham", "Dutta", , "shubhamdutta26@gmail.com", role = c("aut", "cre", "cph"),
            comment = c(ORCID = "0000-0001-8484-0717"))
 Maintainer: Shubham Dutta <shubhamdutta26@gmail.com>
-Description: The goal of 'tidyplate' is to help researchers convert different types of
-    microplates into tibbles which can be used in data analysis. It accepts xlsx and
-    csv files formatted in a specific way as input. It supports all types of 
-    standard microplate formats such as 6-well, 12-well, 24-well, 48-well, 96-well, 384-well,
-    and, 1536-well plates.
+Description: The goal of 'tidyplate' is to help researchers convert
+    different types of microplates into tibbles which can be used in data
+    analysis. It accepts xlsx and csv files formatted in a specific way as
+    input. It supports all types of standard microplate formats such as
+    6-well, 12-well, 24-well, 48-well, 96-well, 384-well, and, 1536-well
+    plates.
+License: MIT + file LICENSE
+URL: https://www.shubhamdutta.com/tidyplate/,
+    https://github.com/shubhamdutta26/tidyplate
+BugReports: https://github.com/shubhamdutta26/tidyplate/issues
 Imports: 
     data.table,
-    readxl,
-    tibble,
-    rlang,
+    lifecycle,
     openxlsx,
-    lifecycle
-License: MIT + file LICENSE
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
-URL: https://www.shubhamdutta.com/tidyplate, https://github.com/shubhamdutta26/tidyplate
-BugReports: https://github.com/shubhamdutta26/tidyplate/issues
+    readxl,
+    rlang,
+    tibble,
+    tools,
+    utils
 Suggests: 
     knitr,
     rmarkdown,
     spelling,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
 Config/testthat/edition: 3
-VignetteBuilder: knitr
+Encoding: UTF-8
 Language: en-US
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2

@@ -1,4 +1,6 @@
-# tidyplate 2.1.1
+# tidyplate 2.2.0
+
+# tidyplate 2.1.0
 
 ### New features
 -   `generate_plate()`: Exports a tibble into plate-shaped csv or xlsx file.
@@ -13,6 +15,7 @@ valid with a warning.
 -   Improved error and warning messages.
 -   Polished README and vignettes.
 -   Added description field for each function.
+-   Added more tests.
 
 # tidyplate 2.0.1
 
