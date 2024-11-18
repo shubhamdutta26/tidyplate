@@ -107,4 +107,6 @@ test_that("Wrong file extension provided", {
 on.exit({
   if (file.exists(temp_csv)) unlink(temp_csv)
   if (file.exists(temp_xlsx)) unlink(temp_xlsx)
+  if (file.exists(temp_null)) unlink(temp_null)
+  if (file.exists(temp_wrong)) unlink(temp_wrong)
 })

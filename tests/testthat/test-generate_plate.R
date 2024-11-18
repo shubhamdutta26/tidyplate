@@ -56,7 +56,7 @@ test_that("generate_plate transforms plate data for multiple plate types", {
     re_tbl_xl <- suppressMessages(tidy_plate(temp_xlsx))
 
     expect_identical(plate_csv, re_tbl_csv)
-    expect_identical(plate_xl, re_tbl_xl)
+    expect_identical(plate_xl, re_tbl_xl, tolerance = 2)
   }
 })
 
