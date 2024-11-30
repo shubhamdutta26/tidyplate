@@ -2,7 +2,7 @@
 
 ### Minor changes
 -   Added vignette with `plater::read_plate()` comparison.
--   Added comparion code in `inst` folder.
+-   Added comparison code in `inst` folder.
 
 # tidyplate 2.1.0
 

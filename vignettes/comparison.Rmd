@@ -17,11 +17,11 @@ knitr::opts_chunk$set(
 )
 ```
 
-The `plater` package was an inspiration for me to write `tidyplate`. However there were two issues with `plater::read_plate()` function that I wanted to fix. These were:
+The `plater` package was an inspiration for me to write `tidyplate`. However there are two issues with `plater::read_plate()` function that I wanted to fix. These are:
 
 1.  Performance.
 2.  Incompatibility with excel files.
 
 After running several tests I can say that `tidyplate::tidy_plate()` was significantly faster than `plater::read_plate()`. The benchmarking code is in the `inst` folder.
 
-![](images/comparison_plot.png){width="523"}
+![](images/comparison_plot.png){width="620"}
