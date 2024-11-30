@@ -1,4 +1,8 @@
-# tidyplate (development version)
+# tidyplate 2.1.1 (development version)
+
+### Minor changes
+-   Added vignette with `plater::read_plate()` comparison.
+-   Added comparion code in `inst` folder.
 
 # tidyplate 2.1.0
 

@@ -31,13 +31,14 @@ standard microplate formats namely: 6-well, 12-well, 24-well, 48-well,
 
 `tidyplate` has five functions:
 
-- `tidy_plate`: Transforms the input file (xlsx or csv) into a tibble.
+- `tidy_plate`: Transforms the input file (excel or csv) into a tibble.
 - `generate_plate`: Exports a tibble into plate-shaped csv or xlsx file.
 - `check_plate`: Checks whether the input file is valid for use with
   `tidy_plate()`.
 - `view_plate_names`: Returns names/ id(s) of each plate in the input
   file.
-- `build_plate`: Generates a csv or xlsx template for each plate type.
+- `build_plate`: Generates a empty csv or xlsx template for each plate
+  type.
 
 <div class="figure">
 
