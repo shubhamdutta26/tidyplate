@@ -46,6 +46,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="articles/advanced.html">Read data from several files using `tidyplate`</a></li>
+    <li><a class="dropdown-item" href="articles/comparison.html">Speed comparison with `plater::read_plate()`</a></li>
     <li><a class="dropdown-item" href="articles/getting_started.html">Transform microwell plates with `tidyplate`</a></li>
   </ul>
 </li>
@@ -83,7 +84,7 @@
 <p><code>tidyplate</code> has five functions:</p>
 <ul>
 <li>
-<code>tidy_plate</code>: Transforms the input file (xlsx or csv) into a tibble.</li>
+<code>tidy_plate</code>: Transforms the input file (excel or csv) into a tibble.</li>
 <li>
 <code>generate_plate</code>: Exports a tibble into plate-shaped csv or xlsx file.</li>
 <li>
@@ -91,7 +92,7 @@
 <li>
 <code>view_plate_names</code>: Returns names/ id(s) of each plate in the input file.</li>
 <li>
-<code>build_plate</code>: Generates a csv or xlsx template for each plate type.</li>
+<code>build_plate</code>: Generates a empty csv or xlsx template for each plate type.</li>
 </ul>
 <div class="figure">
 <img src="reference/figures/README_tidy_plate.png" alt="This figure demonstrates how to format the 12-well plate input file. Colors are for visualization purposes only." width="100%"><p class="caption">
