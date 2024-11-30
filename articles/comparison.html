@@ -84,18 +84,19 @@
     
     
 <p>The <code>plater</code> package was an inspiration for me to write
-<code>tidyplate</code>. However there are two issues with
+<code>tidyplate</code>. There are two issues with
 <code>plater::read_plate()</code> function that I wanted to fix. These
 are:</p>
 <ol style="list-style-type: decimal">
 <li>Performance.</li>
 <li>Incompatibility with excel files.</li>
 </ol>
-<p>After running several tests I can say that
+<p><code><a href="../reference/tidy_plate.html">tidyplate::tidy_plate()</a></code> can accept excel files as input
+and after running several performance tests I can say that
 <code><a href="../reference/tidy_plate.html">tidyplate::tidy_plate()</a></code> was significantly faster than
 <code>plater::read_plate()</code>. The benchmarking code is in the
 <code>inst</code> folder.</p>
-<p><img src="images%2Fcomparison_plot.png" width="620"></p>
+<p><img src="images%2Fcomparison_plot.png" width="900"></p>
   </main>
 </div>
 
