@@ -1,4 +1,6 @@
-# tidyplate 2.1.1 (development version)
+# tidyplate 2.2.0
+
+# tidyplate 2.2.0 (development version)
 
 ### Minor changes
 -   Fixed type mismatch in plate validation when comparing column identifiers.
