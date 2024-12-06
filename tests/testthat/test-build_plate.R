@@ -4,6 +4,14 @@ temp_xlsx <- tempfile(fileext = ".xlsx")
 temp_null <- tempfile(fileext = "")
 temp_wrong <- tempfile(fileext = ".txt")
 
+# Set up cleanup to remove files immediately after defining them
+on.exit({
+  if (file.exists(temp_csv)) unlink(temp_csv)
+  if (file.exists(temp_xlsx)) unlink(temp_xlsx)
+  if (file.exists(temp_null)) unlink(temp_null)
+  if (file.exists(temp_wrong)) unlink(temp_wrong)
+}, add = TRUE)
+
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
 
   # Test for CSV output
@@ -101,12 +109,4 @@ test_that("Wrong file extension provided", {
   expect_error(
     build_plate(plate_type = 6, n_plates = 2, plate_names = c("alpha", "beta"), file = temp_wrong)
   )
-})
-
-# Set up cleanup to remove files after test
-on.exit({
-  if (file.exists(temp_csv)) unlink(temp_csv)
-  if (file.exists(temp_xlsx)) unlink(temp_xlsx)
-  if (file.exists(temp_null)) unlink(temp_null)
-  if (file.exists(temp_wrong)) unlink(temp_wrong)
 })

@@ -187,7 +187,10 @@ valid_plate <- function(raw_data,
   expected_col <- rep(plate_parameters[[7]], plate_parameters[[1]])
 
   ## Initialize flags for errors
-  row_check <- identical(expected_row, first_row)
+  row_check <- identical(
+    as.character(expected_row),
+    as.character(first_row)
+  )
   col_check <- identical(expected_col, first_col)
 
   ## Check for both errors

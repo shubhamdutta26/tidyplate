@@ -1,6 +1,18 @@
 for (i in c(6, 12, 24, 48, 96, 384, 1536)) {
   path <- paste0("test_data/", i, "/")
 
+  test_that("tidy_plate works for same data type for all plates in a single file", {
+    csv_num <- paste0(path, "allPlatesNumeric.csv")
+    xlsx_num <- paste0(path, "allPlatesNumeric.xlsx")
+    csv_char <- paste0(path, "allPlatesChar.csv")
+    xlsx_char <- paste0(path, "allPlatesChar.xlsx")
+
+    expect_no_error(suppressMessages(tidy_plate(csv_num, well_id = "wells")))
+    expect_no_error(suppressMessages(tidy_plate(xlsx_num, well_id = "wells")))
+    expect_no_error(suppressMessages(tidy_plate(csv_char, well_id = "wells")))
+    expect_no_error(suppressMessages(tidy_plate(xlsx_char, well_id = "wells")))
+  })
+
   test_that("tidy_plate works for complete valid data", {
     csv_file <- paste0(path, "allWellIds.csv")
     xlsx_file <- paste0(path, "allWellIds.xlsx")
